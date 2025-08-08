@@ -1,0 +1,8 @@
+.wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background-color: var(--primary-bg);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
