@@ -7,8 +7,8 @@ function App() {
   return (
     <Router>
       <Wrapper>
-        <h1>BASH STASH</h1>
-        <p>Let's Stash some Bash!</p>
+        <h1>PALETTES</h1>
+        {/* <p style={{ color: "var(--color-primary)" }}>BASH STASH</p> */}
         <div className="page-card">
           <Dashboard />
           <input className="input" placeholder="Enter your email" />

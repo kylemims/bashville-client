@@ -1,7 +1,7 @@
-const Wrapper = ({ children }) => {
+const Wrapper = ({ children, wide = false }) => {
   return (
-    <div className="wrapper">
-      <div className="container flex flex-col items-center">{children}</div>
+    <div className={`wrapper ${wide ? "wrapper--wide" : ""}`}>
+      <div className={wide ? "container-wide" : "container"}>{children}</div>
     </div>
   );
 };

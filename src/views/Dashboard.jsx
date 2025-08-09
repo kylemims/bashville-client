@@ -14,7 +14,7 @@ export const Dashboard = () => {
 
   return (
     <main style={{ padding: "2rem" }}>
-      <h1>🎨 Your Color Palettes</h1>
+      <h2 className="card-title">Neon Dreams</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
       <ul>
         {palettes.map((palette) => (
