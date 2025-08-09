@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { getColorPalettes } from "../services/api";
+import { USER_TOKEN } from "../services/api";
 
-export default function Dashboard() {
+export const Dashboard = () => {
   const [palettes, setPalettes] = useState([]);
   const [error, setError] = useState(null);
 
-  // 👇 Replace with your real token for now
-  const token = "481744eba6ed9bad5ad77d74e36f7c054e398dd3";
-
   useEffect(() => {
-    getColorPalettes(token)
+    getColorPalettes(USER_TOKEN)
       .then((data) => setPalettes(data))
       .catch((err) => setError(err.message));
   }, []);
@@ -28,4 +26,4 @@ export default function Dashboard() {
       </ul>
     </main>
   );
-}
+};

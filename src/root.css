@@ -4,8 +4,8 @@
   --color-secondary: #d26e66; /* accents / danger-ish */
   --color-accent: #46cba7; /* success / action */
   --bg-primary: #0c0806; /* page background */
-  --bg-secondary: #545458; /* cards/forms */
-  --bg-input: #0c0806; /* inputs background */
+  --bg-secondary: #1b171a; /* cards/forms */
+  --bg-input: #212121; /* inputs background */
 
   --text: #f5f5f5;
   --muted: #c6c6c6;
@@ -91,7 +91,7 @@ a:hover {
   width: 100%;
   background: var(--bg-input);
   color: var(--text);
-  border: 1px solid #2b2b2b;
+  border: 1px solid #545458;
   padding: 0.75rem 0.9rem;
   border-radius: var(--radius);
   outline: none;

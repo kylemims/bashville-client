@@ -1,6 +1,7 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import Wrapper from "./components/Wrapper.jsx";
 import "./root.css";
+import { Dashboard } from "./views/Dashboard.jsx";
 
 function App() {
   return (
@@ -9,9 +10,10 @@ function App() {
         <h1>BASH STASH</h1>
         <p>Let's Stash some Bash!</p>
         <div className="page-card">
-          {/* Other components or routes can be added here */}
-          <p>Welcome to the Bash Stash App!</p>
+          <Dashboard />
+          <input className="input" placeholder="Enter your email" />
           <button className="button">Get Started</button>
+          <button className="button secondary">Get Started</button>
         </div>
       </Wrapper>
     </Router>
