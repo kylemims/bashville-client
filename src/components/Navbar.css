@@ -95,7 +95,7 @@
     padding: 1rem 0;
     border-bottom: 1px solid #333;
     width: 100%;
-    text-align: center;
+    text-align: left;
     color: var(--text);
     font-weight: 600;
   }

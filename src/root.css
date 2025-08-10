@@ -31,7 +31,7 @@ body {
   color: var(--text);
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  padding: 16px;
+  padding: 8px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
@@ -119,13 +119,13 @@ a:hover {
 .container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
 }
 
 .container-wide {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
 }
 
 @media (min-width: 768px) {
@@ -218,9 +218,9 @@ a:hover {
   flex: 1;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .page-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
 }
 
