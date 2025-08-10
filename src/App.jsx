@@ -1,23 +1,28 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import Wrapper from "./components/Wrapper.jsx";
+// src/App.jsx
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import Wrapper from "./components/Wrapper";
+import { Navbar } from "./components/Navbar";
+import { ApplicationViews } from "./ApplicationViews";
 import "./root.css";
-import { Dashboard } from "./views/Dashboard.jsx";
 
-function App() {
+// Helper component to access location inside Router
+const AppShell = () => {
+  const location = useLocation();
+  const wideRoutes = ["/", "/template"]; // HomePage.jsx is the only current wide route
+  const isWide = wideRoutes.includes(location.pathname);
+
+  return (
+    <Wrapper wide={isWide}>
+      <Navbar />
+      <ApplicationViews />
+    </Wrapper>
+  );
+};
+
+export default function App() {
   return (
     <Router>
-      <Wrapper>
-        <h1>PALETTES</h1>
-        {/* <p style={{ color: "var(--color-primary)" }}>BASH STASH</p> */}
-        <div className="page-card">
-          <Dashboard />
-          <input className="input" placeholder="Enter your email" />
-          <button className="button">Get Started</button>
-          <button className="button secondary">Get Started</button>
-        </div>
-      </Wrapper>
+      <AppShell />
     </Router>
   );
 }
-
-export default App;

@@ -1,10 +1,12 @@
-const API_URL = "http://localhost:8000";
-const USER_TOKEN = process.env.REACT_APP_USER_TOKEN;
+// src/services/api.js
+import { getToken } from "./auth";
 
-export const getColorPalettes = () => {
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
+
+export const getColorPalettes = (token = getToken()) => {
   return fetch(`${API_URL}/colorpalettes`, {
     headers: {
-      Authorization: `Token ${USER_TOKEN}`,
+      Authorization: `Token ${token}`,
     },
   }).then((res) => {
     if (!res.ok) throw new Error("Failed to fetch palettes");
@@ -12,4 +14,4 @@ export const getColorPalettes = () => {
   });
 };
 
-export { USER_TOKEN };
+export { API_URL };

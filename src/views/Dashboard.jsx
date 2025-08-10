@@ -1,29 +1,39 @@
+// src/views/Dashboard.jsx
 import { useEffect, useState } from "react";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { getColorPalettes } from "../services/api";
-import { USER_TOKEN } from "../services/api";
 
 export const Dashboard = () => {
+  useDocumentTitle("Dashboard • Bash Stash");
+
   const [palettes, setPalettes] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    getColorPalettes(USER_TOKEN)
-      .then((data) => setPalettes(data))
+    getColorPalettes()
+      .then(setPalettes)
       .catch((err) => setError(err.message));
   }, []);
 
   return (
-    <main style={{ padding: "2rem" }}>
-      <h2 className="card-title">Neon Dreams</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <ul>
-        {palettes.map((palette) => (
-          <li key={palette.id}>
-            <strong>{palette.name}</strong>:{palette.primary_hex}, {palette.secondary_hex},{" "}
-            {palette.accent_hex}, {palette.background_hex}
-          </li>
-        ))}
-      </ul>
+    <main id="main-content" role="main" aria-labelledby="page-title" className="mt-4">
+      <h1 id="page-title" className="text-2xl mb-4">
+        Your Projects
+      </h1>
+
+      {/* Showing palettes until Project.jsx is ready */}
+      <section className="page-card">
+        <h2 className="text-xl mb-2">Color Palettes (seed data)</h2>
+        {error && <p style={{ color: "red" }}>{error}</p>}
+        <ul className="mt-2">
+          {palettes.map((p) => (
+            <li key={p.id} className="mb-2">
+              <strong>{p.name}</strong>: {p.primary_hex}, {p.secondary_hex}, {p.accent_hex},{" "}
+              {p.background_hex}
+            </li>
+          ))}
+        </ul>
+      </section>
     </main>
   );
 };
