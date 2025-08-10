@@ -1,6 +1,6 @@
 // src/components/Navbar.jsx
 import { Link, NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Navbar.css"; // Assuming you have a CSS file for styling
 
 export const Navbar = () => {
@@ -11,14 +11,32 @@ export const Navbar = () => {
     fontWeight: isActive ? 800 : 600,
   });
 
-  const toggleMenu = () => {
+  const toggleMenu = (e) => {
+    e.stopPropagation();
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+    if (isMenuOpen) {
+      document.addEventListener("keydown", handleEscape);
+    }
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [isMenuOpen]);
   return (
     <header className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand" onClick={closeMenu}>
           BASH STASH
         </Link>
 
@@ -29,13 +47,13 @@ export const Navbar = () => {
         </button>
 
         <nav className={`navbar-nav ${isMenuOpen ? "navbar-nav--open" : ""}`}>
-          <NavLink to="/" style={linkStyle} onClick={() => setIsMenuOpen(false)}>
+          <NavLink to="/" style={linkStyle} onClick={closeMenu}>
             Home
           </NavLink>
-          <NavLink to="/dashboard" style={linkStyle} onClick={() => setIsMenuOpen(false)}>
+          <NavLink to="/dashboard" style={linkStyle} onClick={closeMenu}>
             Dashboard
           </NavLink>
-          <NavLink to="/template" style={linkStyle} onClick={() => setIsMenuOpen(false)}>
+          <NavLink to="/template" style={linkStyle} onClick={closeMenu}>
             Template
           </NavLink>
           {/* cooking: <NavLink to="/projects" style={linkStyle}>Projects</NavLink> */}
