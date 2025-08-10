@@ -201,7 +201,7 @@ a:hover {
   background: var(--bg-secondary);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 1.25rem;
+  padding: 1.5rem 2.5rem;
   margin: 1rem auto;
 }
 

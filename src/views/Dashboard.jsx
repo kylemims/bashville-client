@@ -23,7 +23,7 @@ export const Dashboard = () => {
 
       {/* Showing palettes until Project.jsx is ready */}
       <section className="page-card">
-        <h2 className="text-xl mb-2">Color Palettes (seed data)</h2>
+        <h2 className="text-xl mb-2 card-title">Project Name</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
         <ul className="mt-2">
           {palettes.map((p) => (
