@@ -16,24 +16,28 @@ export const Dashboard = () => {
   }, []);
 
   return (
-    <main id="main-content" role="main" aria-labelledby="page-title" className="mt-4">
-      <h1 id="page-title" className="text-2xl mb-4">
-        Your Projects
-      </h1>
+    <div className="page-content">
+      <h1 className="text-2xl mb-6">Your Projects</h1>
 
-      {/* Showing palettes until Project.jsx is ready */}
-      <section className="page-card">
-        <h2 className="text-xl mb-2 card-title">Project Name</h2>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <ul className="mt-2">
+      <div className="page-card">
+        <h2 className="card-title">Project Name</h2>
+        {error && <p style={{ color: "var(--color-secondary)" }}>{error}</p>}
+
+        <ul className="mt-4">
           {palettes.map((p) => (
-            <li key={p.id} className="mb-2">
-              <strong>{p.name}</strong>: {p.primary_hex}, {p.secondary_hex}, {p.accent_hex},{" "}
-              {p.background_hex}
+            <li
+              key={p.id}
+              className="mb-3 p-3"
+              style={{ background: "var(--bg-input)", borderRadius: "8px" }}>
+              <strong style={{ color: "var(--color-primary)" }}>{p.name}</strong>
+              <br />
+              <span className="text-sm" style={{ color: "var(--muted)" }}>
+                {p.primary_hex} • {p.secondary_hex} • {p.accent_hex} • {p.background_hex}
+              </span>
             </li>
           ))}
         </ul>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 };

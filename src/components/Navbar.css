@@ -1,0 +1,123 @@
+/* ========= Navbar Component ========= */
+.navbar {
+  background: transparent;
+  border-bottom: 1px solid;
+  border-color: #222;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-brand {
+  color: var(--color-primary) !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+  font-size: 1.25rem;
+}
+
+.navbar-toggle {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
+}
+
+.hamburger-line {
+  width: 25px;
+  height: 3px;
+  background: var(--text);
+  margin: 2px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar-nav a {
+  padding: 0.5rem 0;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+/* Mobile Navbar */
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 0 1rem;
+  }
+
+  .navbar-toggle {
+    display: flex;
+  }
+
+  .navbar-nav {
+    position: fixed;
+    top: 80px;
+    left: 0;
+    right: 0;
+    background: var(--bg-secondary);
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    width: 100%;
+    z-index: 1000;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+  }
+
+  .navbar-nav--open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .navbar-nav a {
+    padding: 1rem 0;
+    border-bottom: 1px solid #333;
+    width: 100%;
+    text-align: center;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .navbar-nav a:last-child {
+    border-bottom: none;
+  }
+
+  .navbar-nav a:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Hamburger Animation */
+  .navbar-nav--open ~ .navbar-toggle .hamburger-line:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+  }
+
+  .navbar-nav--open ~ .navbar-toggle .hamburger-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .navbar-nav--open ~ .navbar-toggle .hamburger-line:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+  }
+}
