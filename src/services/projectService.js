@@ -22,6 +22,19 @@ export const getProjects = (token = getToken()) => {
   });
 };
 
+export const getProjectById = (projectId, token = getToken()) => {
+  return fetch(`${API_BASE_URL}/projects/${projectId}`, {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error("Failed to fetch project");
+    }
+    return res.json();
+  });
+};
+
 export const createProject = (projectData, token = getToken()) => {
   return fetch(`${API_BASE_URL}/projects`, {
     method: "POST",
@@ -49,5 +62,21 @@ export const deleteProject = (projectId, token = getToken()) => {
       throw new Error("Failed to delete project");
     }
     return res.ok;
+  });
+};
+
+export const updateProject = (projectId, projectData, token = getToken()) => {
+  return fetch(`${API_BASE_URL}/projects/${projectId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify(projectData),
+  }).then((res) => {
+    if (!res.ok) {
+      throw new Error("Failed to update project");
+    }
+    return res.json();
   });
 };
