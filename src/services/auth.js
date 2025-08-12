@@ -18,7 +18,7 @@ export const getToken = () => {
 export const registerUser = (username, email, password) => {
   console.log("📡 API: Sending registration request");
 
-  return fetch(`${API_BASE_URL}/auth/register`, {
+  return fetch(`${API_BASE_URL}/auth/register/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

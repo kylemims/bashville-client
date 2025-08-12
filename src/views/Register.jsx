@@ -48,7 +48,11 @@ export const Register = () => {
     try {
       const response = await registerUser(formData.username, formData.email, formData.password);
 
-      login(response.token, response.user);
+      login(response.token, {
+        id: response.user_id,
+        username: response.username,
+        email: formData.email, // Since Django doesn't return email
+      });
 
       navigate(ROUTES.DASHBOARD);
     } catch (error) {
