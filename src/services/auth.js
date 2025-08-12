@@ -1,17 +1,23 @@
 // src/services/auth.js
+const TOKEN_KEY = "authToken";
+const USER_KEY = "userData";
+
 export const getToken = () => {
-  return process.env.REACT_APP_USER_TOKEN || "";
-  //TODO: return localStorage.getItem("authToken") || "";
+  if (process.env.REACT_APP_USER_TOKEN) {
+    return process.env.REACT_APP_USER_TOKEN;
+  }
+  return localStorage.getItem(TOKEN_KEY) || "";
 };
 
-export const setToken = (t) => {
-  //TODO: (come back after building login):
-  //* localStorage.setItem("authToken", t);
-  console.log("Token set:", t);
+export const setToken = (token) => {
+  if (token) {
+    localStorage.setItem(TOKEN_KEY, token);
+    console.log("Token saved to localStorage");
+  }
 };
 
 export const clearToken = () => {
-  //TODO: (come back after building login):
-  //* localStorage.removeItem("authToken");
-  console.log("Token cleared");
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
+  console.log("Token and user data cleared");
 };
