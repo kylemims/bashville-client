@@ -1,48 +1,52 @@
-// src/ApplicationViews.jsx
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider } from "./contexts/AuthContext";
 import { Login } from "./views/Login";
 import { Register } from "./views/Register.jsx";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { NewProject } from "./views/NewProject";
+// import { ProjectDetail } from "./views/ProjectDetail";
 import { Dashboard } from "./views/Dashboard";
-import { ROUTES } from "./utils/constants.js";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PageTemplate } from "./views/PageTemplate";
 import { HomePage } from "./views/HomePage";
-import { NewProject } from "./views/NewProject.jsx";
 
 export const ApplicationViews = () => {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route path={ROUTES.LOGIN} element={<Login />} />
-        <Route path={ROUTES.REGISTER} element={<Register />} />
+    <Routes>
+      {/* Public routes */}
+      <Route path="/" element={<HomePage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/template" element={<PageTemplate />} />
 
-        {/* Protected routes */}
-        <Route
-          path={ROUTES.DASHBOARD}
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/projects/new"
-          element={
-            <ProtectedRoute>
-              <NewProject />
-            </ProtectedRoute>
-          }
-        />
+      {/* Protected routes */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        }
+      />
 
-        {/* Public routes */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/template" element={<PageTemplate />} />
+      <Route
+        path="/projects/new"
+        element={
+          <ProtectedRoute>
+            <NewProject />
+          </ProtectedRoute>
+        }
+      />
 
-        {/* Redirect any unknown routes to HomePage */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-      {/* </Router> */}
-    </AuthProvider>
+      {/* <Route
+        path="/projects/:projectId"
+        element={
+          <ProtectedRoute>
+            <ProjectDetail />
+          </ProtectedRoute>
+        }
+      /> */}
+
+      {/* Redirect any unknown routes to HomePage */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 };

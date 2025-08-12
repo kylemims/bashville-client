@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth.jsx";
-import { registerUser } from "../services/auth.js";
-import { ROUTES } from "../utils/constants.js";
+import { useAuth } from "../hooks/useAuth";
+import { registerUser } from "../services/auth";
+import { ROUTES } from "../utils/constants";
+import { useDocumentTitle } from "../hooks/useDocumentTitle";
 
 export const Register = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+
+  useDocumentTitle("Register • BASH STASH");
 
   const [formData, setFormData] = useState({
     username: "",
@@ -17,46 +20,24 @@ export const Register = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Clear error when user starts typing
   const handleInputChange = (e) => {
-    if (error) setError("");
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
+    if (error) setError("");
   };
 
-  // Check if form is valid
-  const validateForm = () => {
-    if (!formData.username || !formData.email || !formData.password) {
-      setError("All fields are required");
-      return false;
-    }
-    return true;
-  };
-
-  // Handle form submission (when user clicks "Create Account")
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("✏️ User trying to register...");
-
-    if (!validateForm()) return;
-
     setLoading(true);
     setError("");
 
     try {
       const response = await registerUser(formData.username, formData.email, formData.password);
-
-      login(response.token, {
-        id: response.user_id,
-        username: response.username,
-        email: formData.email, // Since Django doesn't return email
-      });
-
-      navigate(ROUTES.DASHBOARD);
+      login(response.token, response.user);
+      navigate(ROUTES.DASHBOARD, { replace: true });
     } catch (error) {
-      console.error("❌ Registration failed:", error);
       setError(`Registration failed: ${error.message}`);
     } finally {
       setLoading(false);
@@ -65,42 +46,85 @@ export const Register = () => {
 
   return (
     <div className="page-content">
-      <h2 className="page-title">Register</h2>
-      {error && <p className="error">{error}</p>}
+      <h1 className="text-2xl mb-6">Join Bash Stash</h1>
+
       <div className="page-card">
+        <h2 className="card-title">Create Account</h2>
+
+        {error && (
+          <p className="mb-4" style={{ color: "var(--color-secondary)" }}>
+            {error}
+          </p>
+        )}
+
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-          <button type="submit" disabled={loading}>
-            Register
+          <div className="mb-4">
+            <label htmlFor="username" className="text-sm mb-2" style={{ display: "block" }}>
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleInputChange}
+              className="input"
+              placeholder="Choose a username"
+              required
+              disabled={loading}
+              autoFocus
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="email" className="text-sm mb-2" style={{ display: "block" }}>
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              className="input"
+              placeholder="your@email.com"
+              required
+              disabled={loading}
+            />
+          </div>
+
+          <div className="mb-6">
+            <label htmlFor="password" className="text-sm mb-2" style={{ display: "block" }}>
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              className="input"
+              placeholder="Create a password"
+              required
+              disabled={loading}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading || !formData.username || !formData.email || !formData.password}
+            className="button mb-4"
+            style={{ width: "100%" }}>
+            {loading ? "Creating Account..." : "Sign Up"}
           </button>
         </form>
+
+        <div className="text-center">
+          <Link to={ROUTES.LOGIN} style={{ color: "var(--color-accent)" }}>
+            Already have an account? Sign in
+          </Link>
+        </div>
       </div>
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
     </div>
   );
 };
