@@ -56,6 +56,9 @@ export const Navbar = () => {
           <NavLink to="/template" style={linkStyle} onClick={closeMenu}>
             Template
           </NavLink>
+          <NavLink to="/register" style={linkStyle} onClick={closeMenu}>
+            Register
+          </NavLink>
           {/* cooking: <NavLink to="/projects" style={linkStyle}>Projects</NavLink> */}
         </nav>
       </div>
