@@ -1,3 +1,4 @@
+import "./ColorPaletteCard.css";
 import { ActionButton } from "./ActionButton.jsx";
 
 export const ColorPaletteCard = ({ palette, isSelected, onClick, onEdit, onDelete, disabled }) => {
