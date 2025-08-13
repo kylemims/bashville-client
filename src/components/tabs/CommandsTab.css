@@ -1,0 +1,163 @@
+/* Main tab container */
+.commands-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Section containers */
+.section {
+  background: var(--bg-secondary);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Command dropdown */
+.command-dropdown {
+  margin-bottom: 1.5rem;
+}
+
+.dropdown-select {
+  width: 100%;
+  background: var(--bg-input);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: not-allowed;
+}
+
+.dropdown-select:disabled {
+  opacity: 0.6;
+  color: var(--muted);
+}
+
+/* Command list (for project commands) */
+.command-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Available commands grid */
+.available-commands-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .available-commands-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .available-commands-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Command card (for available commands selection) */
+.command-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.command-card:hover {
+  border-color: var(--color-accent);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.command-card.selected {
+  border-color: var(--color-primary);
+  background: rgba(254, 227, 148, 0.05);
+}
+
+.command-card-content {
+  margin-bottom: 0.75rem;
+}
+
+.command-card-content h4 {
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.command-card-content code {
+  background: var(--bg-input);
+  color: var(--color-accent);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: "Courier New", monospace;
+  display: block;
+}
+
+.command-card-actions {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.command-card:hover .command-card-actions {
+  opacity: 1;
+}
+
+/* Empty message */
+.empty-message {
+  text-align: center;
+  color: var(--muted);
+  font-style: italic;
+  padding: 2rem;
+  background: var(--bg-primary);
+  border-radius: 6px;
+  border: 1px dashed var(--border);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .commands-tab {
+    gap: 1.5rem;
+  }
+
+  .section {
+    padding: 1rem;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .available-commands-grid {
+    grid-template-columns: 1fr;
+  }
+}

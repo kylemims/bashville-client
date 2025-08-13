@@ -1,7 +1,7 @@
 // src/components/Navbar.jsx
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth.jsx";
 import "./Navbar.css";
 
 export const Navbar = () => {

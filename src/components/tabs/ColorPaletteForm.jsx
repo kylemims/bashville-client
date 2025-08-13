@@ -1,13 +1,15 @@
+/* filepath: src/components/tabs/ColorPaletteForm.jsx */
 import { useState } from "react";
-import { FormField } from "../common/FormField";
-import { ActionButton } from "../common/ActionButton";
+import { FormField } from "../common/FormField.jsx";
+import { ActionButton } from "../common/ActionButton.jsx";
+import "./ColorPaletteForm.css";
 
 const DEFAULT_COLORS = {
   name: "",
-  primary_hex: "#000000",
-  secondary_hex: "#404040",
-  accent_hex: "#0EA5E9",
-  background_hex: "#FFFFFF",
+  primary_hex: "#fee394",
+  secondary_hex: "#d46a6a",
+  accent_hex: "#46cba7",
+  background_hex: "#0c0806",
 };
 
 export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEditing = false }) => {
@@ -25,14 +27,15 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
   };
 
   const colorFields = [
-    { name: "primary_hex", label: "Primary", placeholder: "#000000" },
-    { name: "secondary_hex", label: "Secondary", placeholder: "#404040" },
-    { name: "accent_hex", label: "Accent", placeholder: "#0EA5E9" },
-    { name: "background_hex", label: "Background", placeholder: "#FFFFFF" },
+    { name: "primary_hex", label: "Primary", placeholder: "#fee394" },
+    { name: "secondary_hex", label: "Secondary", placeholder: "#d46a6a" },
+    { name: "accent_hex", label: "Accent", placeholder: "#46cba7" },
+    { name: "background_hex", label: "Background", placeholder: "#0c0806" },
   ];
 
   return (
     <div className="palette-form-container">
+      <h3>{isEditing ? "Edit Color Palette" : "Create New Color Palette"}</h3>
       <form onSubmit={handleSubmit} className="palette-form">
         <FormField
           label="Palette Name"
@@ -47,18 +50,28 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
 
         <div className="color-fields-grid">
           {colorFields.map((field) => (
-            <FormField
-              key={field.name}
-              label={field.label}
-              type="color"
-              value={formData[field.name]}
-              onChange={(value) => handleChange(field.name, value)}
-              disabled={disabled}
-            />
+            <div key={field.name} className="color-field">
+              <FormField
+                label={field.label}
+                type="color"
+                value={formData[field.name]}
+                onChange={(value) => handleChange(field.name, value)}
+                disabled={disabled}
+              />
+              <FormField
+                type="text"
+                value={formData[field.name]}
+                onChange={(value) => handleChange(field.name, value)}
+                placeholder={field.placeholder}
+                disabled={disabled}
+                className="hex-input"
+              />
+            </div>
           ))}
         </div>
 
         <div className="palette-preview-live">
+          <h4>Preview</h4>
           <div className="color-swatch-row">
             {colorFields.map((field) => (
               <div
@@ -73,7 +86,7 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
 
         <div className="form-actions">
           <ActionButton type="submit" variant="primary" disabled={disabled || !formData.name.trim()}>
-            {isEditing ? "Update Palette" : "Add New"}
+            {isEditing ? "Update Palette" : "Create Palette"}
           </ActionButton>
           <ActionButton type="button" variant="secondary" onClick={onCancel} disabled={disabled}>
             Cancel

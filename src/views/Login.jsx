@@ -4,9 +4,9 @@ import { useAuth } from "../hooks/useAuth";
 import { loginUser } from "../services/auth.js";
 import { ROUTES } from "../utils/constants";
 import { useDocumentTitle } from "../hooks/useDocumentTitle.js";
-import { FormField } from "../components/FormField.jsx";
-import { ActionButton } from "../components/ActionButton.jsx";
-import { ErrorMessage } from "../components/ErrorMessage.jsx";
+import { FormField } from "../components/common/FormField.jsx";
+import { ActionButton } from "../components/common/ActionButton.jsx";
+import { ErrorMessage } from "../components/common/ErrorMessage.jsx";
 
 export const Login = () => {
   const { login } = useAuth();
