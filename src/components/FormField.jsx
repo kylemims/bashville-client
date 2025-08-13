@@ -1,3 +1,5 @@
+import "./FormField.css";
+
 export const FormField = ({
   label,
   type = "text",

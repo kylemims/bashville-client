@@ -4,6 +4,9 @@ import { useAuth } from "../hooks/useAuth";
 import { registerUser } from "../services/auth";
 import { ROUTES } from "../utils/constants";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
+import { FormField } from "../components/FormField.jsx";
+import { ActionButton } from "../components/ActionButton.jsx";
+import { ErrorMessage } from "../components/ErrorMessage.jsx";
 
 export const Register = () => {
   const { login } = useAuth();
@@ -20,11 +23,8 @@ export const Register = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (error) setError("");
   };
 
@@ -44,6 +44,8 @@ export const Register = () => {
     }
   };
 
+  const isFormValid = formData.username && formData.email && formData.password;
+
   return (
     <div className="page-content">
       <h1 className="text-2xl mb-6">Join Bash Stash</h1>
@@ -51,72 +53,45 @@ export const Register = () => {
       <div className="page-card">
         <h2 className="card-title">Create Account</h2>
 
-        {error && (
-          <p className="mb-4" style={{ color: "var(--color-secondary)" }}>
-            {error}
-          </p>
-        )}
+        <ErrorMessage message={error} />
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="username" className="text-sm mb-2" style={{ display: "block" }}>
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              className="input"
-              placeholder="Choose a username"
-              required
-              disabled={loading}
-              autoFocus
-            />
-          </div>
+          <FormField
+            label="Username"
+            type="text"
+            value={formData.username}
+            onChange={(value) => handleInputChange("username", value)}
+            placeholder="Choose a username"
+            required
+            disabled={loading}
+            autoFocus
+          />
+          <FormField
+            label="Email"
+            type="email"
+            value={formData.email}
+            onChange={(value) => handleInputChange("email", value)}
+            placeholder="your.email@example.com"
+            required
+            disabled={loading}
+          />
+          <FormField
+            label="Password"
+            type="password"
+            value={formData.password}
+            onChange={(value) => handleInputChange("password", value)}
+            placeholder="Create a password"
+            required
+            disabled={loading}
+          />
 
-          <div className="mb-4">
-            <label htmlFor="email" className="text-sm mb-2" style={{ display: "block" }}>
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="input"
-              placeholder="your@email.com"
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <div className="mb-6">
-            <label htmlFor="password" className="text-sm mb-2" style={{ display: "block" }}>
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="input"
-              placeholder="Create a password"
-              required
-              disabled={loading}
-            />
-          </div>
-
-          <button
+          <ActionButton
             type="submit"
-            disabled={loading || !formData.username || !formData.email || !formData.password}
-            className="button mb-4"
-            style={{ width: "100%" }}>
+            variant="primary"
+            disabled={loading || !isFormValid}
+            style={{ width: "100%", marginBottom: "1rem" }}>
             {loading ? "Creating Account..." : "Sign Up"}
-          </button>
+          </ActionButton>
         </form>
 
         <div className="text-center">
