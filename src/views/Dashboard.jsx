@@ -79,7 +79,7 @@ export const Dashboard = () => {
           <p className="dashboard-subtitle">Manage your development project stashes</p>
         </div>
         <Link to="/projects/new" className="button">
-          Create New
+          Create Project
         </Link>
       </div>
 

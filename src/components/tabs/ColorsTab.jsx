@@ -18,6 +18,30 @@ export const ColorsTab = ({ project, availablePalettes, onSave, onPalettesUpdate
 
   const currentPalette = project.color_palette_preview;
 
+  const handleQuickColorEdit = async (paletteId, colorUpdate) => {
+    try {
+      setLoading(true);
+      const palette = availablePalettes.find((p) => p.id === paletteId);
+      const updatedPaletteData = { ...palette, ...colorUpdate };
+
+      const updatedPalette = await updateColorPalette(paletteId, updatedPaletteData);
+      const updatedPalettes = availablePalettes.map((palette) =>
+        palette.id === paletteId ? updatedPalette : palette
+      );
+
+      onPalettesUpdate(updatedPalettes);
+
+      // If this is the current project's palette, refresh the project
+      if (project.color_palette?.id === paletteId) {
+        // The project data will be refreshed automatically by the parent component
+      }
+    } catch (err) {
+      setError(`Failed to update color: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSelectPalette = async (paletteId) => {
     try {
       setSelectedPaletteId(paletteId);
@@ -98,6 +122,7 @@ export const ColorsTab = ({ project, availablePalettes, onSave, onPalettesUpdate
               isSelected={true}
               onEdit={() => setEditingPalette(currentPalette.id)}
               onDelete={() => handleDeletePalette(currentPalette.id)}
+              onQuickColorEdit={handleQuickColorEdit}
               disabled={loading}
             />
           </div>
@@ -133,6 +158,7 @@ export const ColorsTab = ({ project, availablePalettes, onSave, onPalettesUpdate
               onClick={() => handleSelectPalette(palette.id)}
               onEdit={() => setEditingPalette(palette.id)}
               onDelete={() => handleDeletePalette(palette.id)}
+              onQuickColorEdit={handleQuickColorEdit}
               disabled={loading}
             />
           ))}

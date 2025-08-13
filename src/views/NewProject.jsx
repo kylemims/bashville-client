@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { createProject } from "../services/projectService";
+import { FormField } from "../components/common/FormField.jsx";
+import { ActionButton } from "../components/common/ActionButton.jsx";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { ROUTES } from "../utils/constants";
+import { ErrorMessage } from "../components/common/ErrorMessage.jsx";
 
 export const NewProject = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
+    title: "",
     description: "",
   });
   const [loading, setLoading] = useState(false);
@@ -14,10 +18,10 @@ export const NewProject = () => {
 
   useDocumentTitle("New Project • Bash Stash");
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (field, value) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [field]: value,
     });
     if (error) setError("");
   };
@@ -25,8 +29,8 @@ export const NewProject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name.trim()) {
-      setError("Project name is required");
+    if (!formData.title.trim()) {
+      setError("Project title is required");
       return;
     }
 
@@ -34,14 +38,10 @@ export const NewProject = () => {
     setError("");
 
     try {
-      // TODO: Implement createProject service
-      // const newProject = await createProject(formData);
-      console.log("Creating project:", formData);
+      const newProject = await createProject(formData);
+      console.log("Creating project:", newProject);
 
-      // Simulate success - navigate to dashboard
-      setTimeout(() => {
-        navigate(ROUTES.DASHBOARD);
-      }, 1000);
+      navigate(`/projects/${newProject.id}`, { replace: true });
     } catch (err) {
       setError(`Failed to create project: ${err.message}`);
     } finally {
@@ -49,72 +49,56 @@ export const NewProject = () => {
     }
   };
 
+  const isFormValid = formData.title.trim();
+
   return (
     <div className="page-content">
-      <h1 className="text-2xl mb-6">Create New Project</h1>
+      <div className="container">
+        <div className="page-card" style={{ maxWidth: "600px", margin: "0 auto" }}>
+          <h1 className="card-title">Create New Project</h1>
 
-      <div className="page-card">
-        <h2 className="card-title">Project Details</h2>
+          <ErrorMessage message={error} onDismiss={() => setError("")} />
 
-        {error && (
-          <div className="mb-4">
-            <p style={{ color: "var(--color-secondary)" }}>{error}</p>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit}>
-          <div className="form-section">
-            <label htmlFor="name" className="form-label">
-              Project Title
-            </label>
-            <input
+          <form onSubmit={handleSubmit}>
+            <FormField
+              label="Project Title"
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              className="input"
+              value={formData.title}
+              onChange={(value) => handleInputChange("title", value)}
               placeholder="my-awesome-project"
               required
               disabled={loading}
               autoFocus
             />
-          </div>
 
-          <div className="form-section">
-            <label htmlFor="description" className="form-label">
-              Description
-            </label>
-            <textarea
-              id="description"
-              name="description"
+            <FormField
+              label="Description"
+              type="textarea"
               value={formData.description}
-              onChange={handleInputChange}
-              className="input"
+              onChange={(value) => handleInputChange("description", value)}
               placeholder="Brief description of your project..."
               disabled={loading}
-              rows={4}
             />
-          </div>
 
-          <div className="flex gap-4">
-            <button
-              type="submit"
-              disabled={loading || !formData.name.trim()}
-              className="button"
-              style={{ flex: 1 }}>
-              {loading ? "Creating Project..." : "Create Project"}
-            </button>
+            <div className="form-actions">
+              <ActionButton
+                type="submit"
+                variant="primary"
+                disabled={loading || !isFormValid}
+                style={{ flex: 1 }}>
+                {loading ? "Creating Project..." : "Create Project"}
+              </ActionButton>
 
-            <button
-              type="button"
-              onClick={() => navigate(ROUTES.DASHBOARD)}
-              className="button secondary"
-              disabled={loading}>
-              Cancel
-            </button>
-          </div>
-        </form>
+              <ActionButton
+                type="button"
+                onClick={() => navigate(ROUTES.DASHBOARD)}
+                variant="secondary"
+                disabled={loading}>
+                Cancel
+              </ActionButton>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

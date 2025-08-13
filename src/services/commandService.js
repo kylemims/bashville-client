@@ -1,69 +1,94 @@
 import { API_BASE_URL } from "../utils/constants.js";
 
 const getToken = () => {
-  // Development: Use env token
   if (process.env.REACT_APP_USER_TOKEN) {
     return process.env.REACT_APP_USER_TOKEN;
   }
-  // Production: Use localStorage
   return localStorage.getItem("bashville_auth_token") || "";
 };
 
-export const getCommands = (token = getToken()) => {
-  return fetch(`${API_BASE_URL}/commands`, {
+const handleResponse = async (response) => {
+  if (response.status === 401) {
+    localStorage.removeItem("bashville_auth_token");
+    localStorage.removeItem("bashville_user_data");
+    window.location.href = "/login";
+    throw new Error("Your session has expired. Please log in again.");
+  }
+
+  if (!response.ok) {
+    let errorMessage = `Request failed with status ${response.status}`;
+    try {
+      const errorData = await response.json();
+      errorMessage = errorData.message || errorData.error || errorMessage;
+    } catch (parseError) {
+      console.warn("Could not parse error response:", parseError);
+    }
+    throw new Error(errorMessage);
+  }
+
+  return response.json();
+};
+
+// ✅ Remove trailing slashes from ALL endpoints
+export const getCommands = async () => {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/commands`, {
+    // ✅ NO trailing slash
     headers: {
       Authorization: `Token ${token}`,
     },
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error("Failed to fetch commands");
-    }
-    return res.json();
   });
+  return handleResponse(response);
 };
 
-export const createCommand = (commandData, token = getToken()) => {
-  return fetch(`${API_BASE_URL}/commands`, {
+export const createCommand = async (commandData) => {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/commands`, {
+    // ✅ NO trailing slash
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Token ${token}`,
     },
     body: JSON.stringify(commandData),
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error("Failed to create command");
-    }
-    return res.json();
   });
+  return handleResponse(response);
 };
 
-export const updateCommand = (commandId, commandData, token = getToken()) => {
-  return fetch(`${API_BASE_URL}/commands/${commandId}`, {
+export const updateCommand = async (commandId, commandData) => {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/commands/${commandId}`, {
+    // ✅ NO trailing slash
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Token ${token}`,
     },
     body: JSON.stringify(commandData),
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error("Failed to update command");
-    }
-    return res.json();
   });
+  return handleResponse(response);
 };
 
-export const deleteCommand = (commandId, token = getToken()) => {
-  return fetch(`${API_BASE_URL}/commands/${commandId}`, {
+export const deleteCommand = async (commandId) => {
+  const token = getToken();
+  const response = await fetch(`${API_BASE_URL}/commands/${commandId}`, {
+    // ✅ NO trailing slash
     method: "DELETE",
     headers: {
       Authorization: `Token ${token}`,
     },
-  }).then((res) => {
-    if (!res.ok) {
-      throw new Error("Failed to delete command");
-    }
-    return res.ok;
   });
+
+  if (response.status === 401) {
+    localStorage.removeItem("bashville_auth_token");
+    localStorage.removeItem("bashville_user_data");
+    window.location.href = "/login";
+    throw new Error("Your session has expired. Please log in again.");
+  }
+
+  if (!response.ok) {
+    throw new Error("Failed to delete command");
+  }
+
+  return true;
 };

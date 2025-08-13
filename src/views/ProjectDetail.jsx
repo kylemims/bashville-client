@@ -11,6 +11,7 @@ import { ErrorMessage } from "../components/common/ErrorMessage";
 import { ActionButton } from "../components/common/ActionButton";
 import { ProjectHeader } from "../components/project/ProjectHeader";
 import { ProjectTabs } from "../components/project/ProjectTabs";
+import { SetupGenerator } from "../components/project/SetupGenerator.jsx";
 import { ROUTES } from "../utils/constants";
 
 export const ProjectDetail = () => {
@@ -25,9 +26,11 @@ export const ProjectDetail = () => {
     error: null,
     activeTab: "commands",
   });
-
+  const [showSetupGenerator, setShowSetupGenerator] = useState(false);
   useDocumentTitle(state.project ? `${state.project.title} • Bash Stash` : "Project • Bash Stash");
-
+  const handleGenerateSetup = () => {
+    setShowSetupGenerator(true);
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -64,11 +67,19 @@ export const ProjectDetail = () => {
 
   const handleSaveProject = async (updatedData) => {
     try {
-      const savedProject = await updateProject(projectId, updatedData);
-      updateState({ project: savedProject });
-      return savedProject;
-    } catch (err) {
-      throw new Error(`Failed to save project: ${err.message}`);
+      console.log("Saving project with data:", updatedData);
+      console.log("Project ID:", projectId);
+
+      const updatedProject = await updateProject(projectId, updatedData);
+      console.log("Project updated successfully:", updatedProject);
+
+      // Update the local state with the new project data
+      updateState({ project: updatedProject });
+
+      return updatedProject;
+    } catch (error) {
+      console.error("Failed to save project:", error);
+      throw new Error(`Failed to save project: ${error.message}`);
     }
   };
 
@@ -100,24 +111,33 @@ export const ProjectDetail = () => {
 
   return (
     <div className="page-content">
-      <ProjectHeader title={state.project.title} onBack={() => navigate(ROUTES.DASHBOARD)} />
+      <div className="project-detail">
+        <ProjectHeader
+          title={state.project.title}
+          onBack={() => navigate(ROUTES.DASHBOARD)}
+          onGenerateSetup={handleGenerateSetup}
+        />
 
-      <ProjectTabs activeTab={state.activeTab} onTabChange={(tab) => updateState({ activeTab: tab })} />
+        <ProjectTabs activeTab={state.activeTab} onTabChange={(tab) => updateState({ activeTab: tab })} />
 
-      <div className="tab-content">
-        {state.activeTab === "commands" ? (
-          <CommandsTab
-            {...tabProps}
-            availableCommands={state.availableCommands}
-            onCommandsUpdate={(commands) => updateState({ availableCommands: commands })}
-          />
-        ) : (
-          <ColorsTab
-            {...tabProps}
-            availablePalettes={state.availablePalettes}
-            onPalettesUpdate={(palettes) => updateState({ availablePalettes: palettes })}
-          />
-        )}
+        <div className="tab-content">
+          {state.activeTab === "commands" ? (
+            <CommandsTab
+              {...tabProps}
+              availableCommands={state.availableCommands}
+              onCommandsUpdate={(commands) => updateState({ availableCommands: commands })}
+            />
+          ) : (
+            <ColorsTab
+              {...tabProps}
+              availablePalettes={state.availablePalettes}
+              onPalettesUpdate={(palettes) => updateState({ availablePalettes: palettes })}
+            />
+          )}
+          {showSetupGenerator && (
+            <SetupGenerator project={state.project} onClose={() => setShowSetupGenerator(false)} />
+          )}
+        </div>
       </div>
     </div>
   );
