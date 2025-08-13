@@ -12,7 +12,7 @@ const getToken = () => {
 };
 
 export const getColorPalettes = (token = getToken()) => {
-  return fetch(`${API_BASE_URL}/color-palettes`, {
+  return fetch(`${API_BASE_URL}/colorpalettes`, {
     headers: {
       Authorization: `Token ${token}`,
     },
@@ -25,7 +25,7 @@ export const getColorPalettes = (token = getToken()) => {
 };
 
 export const createColorPalette = (paletteData, token = getToken()) => {
-  return fetch(`${API_BASE_URL}/color-palettes`, {
+  return fetch(`${API_BASE_URL}/colorpalettes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export const createColorPalette = (paletteData, token = getToken()) => {
 };
 
 export const updateColorPalette = (paletteId, paletteData, token = getToken()) => {
-  return fetch(`${API_BASE_URL}/color-palettes/${paletteId}`, {
+  return fetch(`${API_BASE_URL}/colorpalettes/${paletteId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export const updateColorPalette = (paletteId, paletteData, token = getToken()) =
 };
 
 export const deleteColorPalette = (paletteId, token = getToken()) => {
-  return fetch(`${API_BASE_URL}/color-palettes/${paletteId}`, {
+  return fetch(`${API_BASE_URL}/colorpalettes/${paletteId}`, {
     method: "DELETE",
     headers: {
       Authorization: `Token ${token}`,

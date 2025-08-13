@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { createCommand, updateCommand, deleteCommand } from "../services/commandService.js";
+import { ErrorMessage } from "./ErrorMessage.jsx";
+import { CommandItem } from "./CommandItem.jsx";
+import { NewCommandForm } from "./NewCommandForm.jsx";
 
 export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpdate }) => {
   const [selectedCommands, setSelectedCommands] = useState(project.commands_preview?.map((c) => c.id) || []);
@@ -75,6 +78,73 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
       <div className="section">
         <div className="section-header">
           <h2 className="section-title">Command Stash</h2>
+          <button className="add-button" onClick={() => setShowNewCommandForm(true)} disabled={loading}>
+            +
+          </button>
+        </div>
+        <ErrorMessage message={error} />
+        <div className="command-dropdown">
+          <select className="dropdown-select">
+            <option>Install Dependencies: npm install</option>
+          </select>
+        </div>
+
+        <div className="command-list">
+          {projectCommands.map((command) => (
+            <CommandItem
+              key={command.id}
+              command={command}
+              isEditing={editingCommand === command.id}
+              onEdit={() => setEditingCommand(command.id)}
+              onSave={(data) => handleUpdateCommand(command.id, data)}
+              onCancel={() => setEditingCommand(null)}
+              onDelete={() => handleDeleteCommand(command.id)}
+              disabled={loading}
+            />
+          ))}
+        </div>
+
+        {showNewCommandForm && (
+          <NewCommandForm
+            onSave={handleCreateCommand}
+            onCancel={() => setShowNewCommandForm(false)}
+            disabled={loading}
+          />
+        )}
+      </div>
+
+      <div className="section">
+        <h2 className="section-title">Available Commands</h2>
+        <div className="available-commands-grid">
+          {availableCommands.map((command) => (
+            <div
+              key={command.id}
+              className={`command-card ${selectedCommands.includes(command.id) ? "selected" : ""}`}
+              onClick={() => handleToggleCommand(command.id)}>
+              <div className="command-card-content">
+                <h4>{command.label}</h4>
+                <code>{command.command_text}</code>
+              </div>
+              <div className="command-card-actions">
+                <button
+                  className="action-btn edit-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setEditingCommand(command.id);
+                  }}>
+                  ✏️
+                </button>
+                <button
+                  className="action-btn delete-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteCommand(command.id);
+                  }}>
+                  🗑️
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
