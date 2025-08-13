@@ -1,0 +1,25 @@
+.project-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.project-title {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0;
+  font-family: "Courier New", monospace;
+}
+
+@media (max-width: 768px) {
+  .project-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .project-title {
+    font-size: 1.25rem;
+  }
+}

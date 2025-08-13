@@ -4,11 +4,13 @@ import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { getProjectById, updateProject } from "../services/projectService";
 import { getCommands } from "../services/commandService";
 import { getColorPalettes } from "../services/colorPaletteService";
-import { CommandsTab } from "../components/CommandsTab";
-import { ColorsTab } from "../components/ColorsTab";
-import { LoadingSpinner } from "../components/LoadingSpinner";
-import { ErrorMessage } from "../components/ErrorMessage";
-import { ActionButton } from "../components/ActionButton";
+import { CommandsTab } from "../components/tabs/CommandsTab";
+import { ColorsTab } from "../components/tabs/ColorsTab";
+import { LoadingSpinner } from "../components/common/LoadingSpinner";
+import { ErrorMessage } from "../components/common/ErrorMessage";
+import { ActionButton } from "../components/common/ActionButton";
+import { ProjectHeader } from "../components/project/ProjectHeader";
+import { ProjectTabs } from "../components/project/ProjectTabs";
 import { ROUTES } from "../utils/constants";
 
 export const ProjectDetail = () => {
@@ -117,35 +119,6 @@ export const ProjectDetail = () => {
           />
         )}
       </div>
-    </div>
-  );
-};
-
-const ProjectHeader = ({ title, onBack }) => (
-  <div className="project-header">
-    <ActionButton onClick={onBack} variant="back" aria-label="Back to Dashboard">
-      ←
-    </ActionButton>
-    <h1 className="project-title">&lt;{title} /&gt;</h1>
-  </div>
-);
-
-const ProjectTabs = ({ activeTab, onTabChange }) => {
-  const tabs = [
-    { key: "commands", label: "Commands" },
-    { key: "colors", label: "Colors" },
-  ];
-
-  return (
-    <div className="project-tabs">
-      {tabs.map((tab) => (
-        <ActionButton
-          key={tab.key}
-          variant={activeTab === tab.key ? "tab-active" : "tab"}
-          onClick={() => onTabChange(tab.key)}>
-          {tab.label}
-        </ActionButton>
-      ))}
     </div>
   );
 };

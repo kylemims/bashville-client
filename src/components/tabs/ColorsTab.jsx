@@ -1,9 +1,13 @@
 import { useState } from "react";
-import { createColorPalette, updateColorPalette, deleteColorPalette } from "../services/colorPaletteService";
+import {
+  createColorPalette,
+  updateColorPalette,
+  deleteColorPalette,
+} from "../../services/colorPaletteService";
 import { ColorPaletteForm } from "./ColorPaletteForm";
 import { ColorPaletteCard } from "./ColorPaletteCard";
-import { ActionButton } from "./ActionButton";
-import { ErrorMessage } from "./ErrorMessage";
+import { ActionButton } from "../common/ActionButton";
+import { ErrorMessage } from "../common/ErrorMessage";
 
 export const ColorsTab = ({ project, availablePalettes, onSave, onPalettesUpdate }) => {
   const [selectedPaletteId, setSelectedPaletteId] = useState(project.color_palette?.id || null);

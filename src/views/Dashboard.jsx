@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { getProjects, deleteProject } from "../services/projectService";
-import { LoadingSpinner } from "../components/LoadingSpinner";
-import { ErrorMessage } from "../components/ErrorMessage";
-import { ActionButton } from "../components/ActionButton";
+import { LoadingSpinner } from "../components/common/LoadingSpinner";
+import { ErrorMessage } from "../components/common/ErrorMessage";
+import { ProjectCard } from "../components/project/ProjectCard";
+import { EmptyState } from "../components/project/EmptyState";
 import "./Dashboard.css";
 
 export const Dashboard = () => {
@@ -107,79 +108,6 @@ export const Dashboard = () => {
           </div>
         </div>
       )}
-    </div>
-  );
-};
-
-const EmptyState = () => (
-  <div className="empty-state">
-    <div className="empty-state-content">
-      <div className="empty-state-icon">📁</div>
-      <h2 className="empty-state-title">No Projects Yet</h2>
-      <p className="empty-state-description">
-        Create your first project to start organizing your development commands and color palettes!
-      </p>
-      <Link to="/projects/new" className="button">
-        Create Your First Project
-      </Link>
-    </div>
-  </div>
-);
-
-const ProjectCard = ({ project, onDelete, onLaunch, isDeleting }) => {
-  const hasCommands = project.commands_preview && project.commands_preview.length > 0;
-  const hasColors = project.color_palette_preview;
-
-  return (
-    <div className="project-card">
-      <div className="project-card-header">
-        <h3 className="project-title">{project.title}</h3>
-        <div className="project-actions">
-          <Link
-            to={`/projects/${project.id}`}
-            className="action-btn edit-btn"
-            title="Edit Project"
-            aria-label="Edit project">
-            ✏️
-          </Link>
-          <ActionButton
-            onClick={() => onDelete(project.id)}
-            variant="delete"
-            size="sm"
-            disabled={isDeleting}
-            title="Delete Project"
-            aria-label="Delete project">
-            {isDeleting ? "⏳" : "🗑️"}
-          </ActionButton>
-          <ActionButton
-            onClick={() => onLaunch(project)}
-            variant="launch"
-            size="sm"
-            title="Launch Project"
-            aria-label="Launch project">
-            🚀
-          </ActionButton>
-        </div>
-      </div>
-
-      {project.description && <p className="project-description">{project.description}</p>}
-
-      <div className="project-stats">
-        <div className="project-stat">
-          <span className="stat-icon">⚡</span>
-          <span className="stat-text">
-            {hasCommands ? `${project.commands_preview.length} commands` : "No commands"}
-          </span>
-        </div>
-        <div className="project-stat">
-          <span className="stat-icon">🎨</span>
-          <span className="stat-text">{hasColors ? project.color_palette_preview.name : "No palette"}</span>
-        </div>
-      </div>
-
-      <Link to={`/projects/${project.id}`} className="project-view-btn">
-        VIEW PROJECT
-      </Link>
     </div>
   );
 };

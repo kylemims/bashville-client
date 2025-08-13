@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { createCommand, updateCommand, deleteCommand } from "../services/commandService.js";
-import { ErrorMessage } from "./ErrorMessage.jsx";
+import { createCommand, updateCommand, deleteCommand } from "../../services/commandService.js";
+import { ErrorMessage } from "../common/ErrorMessage.jsx";
 import { CommandItem } from "./CommandItem.jsx";
 import { NewCommandForm } from "./NewCommandForm.jsx";
 
