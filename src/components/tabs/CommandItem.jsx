@@ -1,4 +1,6 @@
 import { useState } from "react";
+import "./CommandItem.css";
+import { ActionButton } from "../common/ActionButton.jsx";
 
 export const CommandItem = ({ command, isEditing, onEdit, onSave, onCancel, onDelete, disabled }) => {
   const [formData, setFormData] = useState({
@@ -33,12 +35,12 @@ export const CommandItem = ({ command, isEditing, onEdit, onSave, onCancel, onDe
             disabled={disabled}
           />
           <div className="edit-actions">
-            <button onClick={handleSave} className="save-btn" disabled={disabled}>
+            <ActionButton onClick={handleSave} variant="primary" size="sm" disabled={disabled}>
               ✓
-            </button>
-            <button onClick={onCancel} className="cancel-btn" disabled={disabled}>
+            </ActionButton>
+            <ActionButton onClick={onCancel} variant="secondary" size="sm" disabled={disabled}>
               ✕
-            </button>
+            </ActionButton>
           </div>
         </div>
       </div>
@@ -52,12 +54,12 @@ export const CommandItem = ({ command, isEditing, onEdit, onSave, onCancel, onDe
         <div className="command-text">{command.command_text}</div>
       </div>
       <div className="command-actions">
-        <button onClick={onEdit} className="action-btn edit-btn" disabled={disabled}>
+        <ActionButton onClick={onEdit} variant="edit" size="sm" disabled={disabled}>
           ✏️
-        </button>
-        <button onClick={onDelete} className="action-btn delete-btn" disabled={disabled}>
+        </ActionButton>
+        <ActionButton onClick={onDelete} variant="delete" size="sm" disabled={disabled}>
           🗑️
-        </button>
+        </ActionButton>
       </div>
     </div>
   );
