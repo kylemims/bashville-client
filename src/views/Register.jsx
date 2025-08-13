@@ -87,7 +87,7 @@ export const Register = () => {
 
           <ActionButton
             type="submit"
-            variant="primary"
+            variant="secondary"
             disabled={loading || !isFormValid}
             style={{ width: "100%", marginBottom: "1rem" }}>
             {loading ? "Creating Account..." : "Sign Up"}

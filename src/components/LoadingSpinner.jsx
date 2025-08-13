@@ -1,3 +1,5 @@
+import "./LoadingSpinner.css";
+
 export const LoadingSpinner = ({ size = "md", text }) => {
   return (
     <div className={`loading loading--${size}`}>

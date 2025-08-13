@@ -6,6 +6,7 @@ import { getProjects, deleteProject } from "../services/projectService";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { ErrorMessage } from "../components/ErrorMessage";
 import { ActionButton } from "../components/ActionButton";
+import "./Dashboard.css";
 
 export const Dashboard = () => {
   const { user } = useAuth();

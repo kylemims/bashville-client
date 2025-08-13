@@ -4,6 +4,9 @@ import { useAuth } from "../hooks/useAuth";
 import { loginUser } from "../services/auth.js";
 import { ROUTES } from "../utils/constants";
 import { useDocumentTitle } from "../hooks/useDocumentTitle.js";
+import { FormField } from "../components/FormField.jsx";
+import { ActionButton } from "../components/ActionButton.jsx";
+import { ErrorMessage } from "../components/ErrorMessage.jsx";
 
 export const Login = () => {
   const { login } = useAuth();
@@ -22,37 +25,28 @@ export const Login = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (error) setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("🔐 User trying to login...");
-
     setLoading(true);
     setError("");
 
     try {
       const response = await loginUser(formData.username, formData.password);
-
-      login(response.token);
-
-      console.log("🎉 Login successful! Welcome back!");
-
+      login(response.token, response.user);
       navigate(from, { replace: true });
-    } catch (error) {
-      console.error("❌ Login failed:", error);
-      setError(`Login failed: ${error.message}`);
+    } catch (err) {
+      setError(`Login failed: ${err.message}`);
     } finally {
       setLoading(false);
     }
   };
+
+  const isFormValid = formData.username && formData.password;
 
   return (
     <div className="page-content">
@@ -67,55 +61,37 @@ export const Login = () => {
           </p>
         )}
 
-        {error && (
-          <p className="mb-4" style={{ color: "var(--color-secondary)" }}>
-            {error}
-          </p>
-        )}
+        <ErrorMessage message={error} />
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="username" className="text-sm mb-2" style={{ display: "block" }}>
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              className="input"
-              placeholder="Your username"
-              required
-              disabled={loading}
-              autoFocus
-            />
-          </div>
+          <FormField
+            label="Username"
+            type="text"
+            value={formData.username}
+            onChange={(value) => handleInputChange("username", value)}
+            placeholder="Your username"
+            required
+            disabled={loading}
+            autoFocus
+          />
 
-          <div className="mb-6">
-            <label htmlFor="password" className="text-sm mb-2" style={{ display: "block" }}>
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="input"
-              placeholder="Your password"
-              required
-              disabled={loading}
-            />
-          </div>
+          <FormField
+            label="Password"
+            type="password"
+            value={formData.password}
+            onChange={(value) => handleInputChange("password", value)}
+            placeholder="Your password"
+            required
+            disabled={loading}
+          />
 
-          <button
+          <ActionButton
             type="submit"
-            disabled={loading || !formData.username || !formData.password}
-            className="button mb-4"
-            style={{ width: "100%" }}>
+            variant="secondary"
+            disabled={loading || !isFormValid}
+            style={{ width: "100%", marginBottom: "1rem" }}>
             {loading ? "Signing In..." : "Sign In"}
-          </button>
+          </ActionButton>
         </form>
 
         <div className="text-center">

@@ -3,7 +3,7 @@ import "./ActionButton.css";
 export const ActionButton = ({
   children,
   onClick,
-  variant = "primary",
+  variant = "secondary",
   size = "md",
   disabled = false,
   type = "button",

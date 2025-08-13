@@ -28,8 +28,19 @@
   background: var(--color-accent);
   transform: translateY(-1px);
 }
-
 .action-button--secondary {
+  background: var(--color-secondary);
+  color: var(--text);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+.action-button--secondary:hover:not(:disabled) {
+  background: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.action-button--bgsecondary {
   background: var(--bg-secondary);
   color: var(--text);
   border: 1px solid var(--border);
@@ -37,7 +48,7 @@
   font-size: 0.9rem;
 }
 
-.action-button--secondary:hover:not(:disabled) {
+.action-button--bgsecondary:hover:not(:disabled) {
   background: var(--bg-primary);
   border-color: var(--color-accent);
 }
@@ -126,4 +137,18 @@
 .action-button--lg {
   padding: 1rem 2rem;
   font-size: 1rem;
+}
+
+.action-button--launch {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+.action-button--launch:hover:not(:disabled) {
+  background: rgba(70, 203, 167, 0.2);
 }

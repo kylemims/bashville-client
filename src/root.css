@@ -1,7 +1,7 @@
 /* ========= Variables ========= */
 :root {
   --color-primary: #fee394; /* text highlight / headings */
-  --color-secondary: #d26e66; /* accents / danger-ish */
+  --color-secondary: #d46a6a; /* accents / danger-ish */
   --color-accent: #46cba7; /* success / action */
   --bg-primary: #0c0806; /* page background */
   --bg-secondary: #1b171a; /* cards/forms */
@@ -200,7 +200,8 @@ a:hover {
   }
 }
 
-/* ========= Project Cards ========= */
+/** ========= Project Cards ========= */
+
 .project-grid {
   display: grid;
   gap: 1.5rem;
@@ -217,38 +218,6 @@ a:hover {
   .project-grid {
     grid-template-columns: repeat(3, 1fr);
   }
-}
-
-.dashboard-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-  gap: 1rem;
-}
-
-@media (max-width: 768px) {
-  .dashboard-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}
-
-.dashboard-title-section {
-  flex: 1;
-}
-
-.dashboard-title {
-  color: var(--color-primary);
-  font-size: 1.75rem;
-  font-weight: 800;
-  margin: 0 0 0.5rem 0;
-}
-
-.dashboard-subtitle {
-  color: var(--muted);
-  font-size: 0.95rem;
-  margin: 0;
 }
 
 .projects-section {
@@ -268,40 +237,6 @@ a:hover {
   color: var(--muted);
   font-size: 0.9rem;
   font-weight: 600;
-}
-
-/* ========= Empty State ========= */
-.empty-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
-  padding: 2rem;
-}
-
-.empty-state-content {
-  text-align: center;
-  max-width: 400px;
-}
-
-.empty-state-icon {
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-  opacity: 0.6;
-}
-
-.empty-state-title {
-  color: var(--color-primary);
-  font-size: 1.5rem;
-  font-weight: 800;
-  margin: 0 0 1rem 0;
-}
-
-.empty-state-description {
-  color: var(--muted);
-  font-size: 1rem;
-  line-height: 1.6;
-  margin: 0 0 2rem 0;
 }
 
 .project-card {
@@ -395,7 +330,43 @@ a:hover {
   transform: translateY(-1px);
 }
 
-/* ========= Responsive Text ========= */
+/** ========= Empty State ========= */
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 2rem;
+}
+
+.empty-state-content {
+  text-align: center;
+  max-width: 400px;
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+
+.empty-state-title {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin: 0 0 1rem 0;
+}
+
+.empty-state-description {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
+}
+
+/** ========= Responsive Text ========= */
+
 .text-sm {
   font-size: 0.875rem;
 }
@@ -456,7 +427,8 @@ a:hover {
   }
 }
 
-/* ========= Accessibility & UX ========= */
+/** ========= Accessibility & UX ========= */
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -476,28 +448,4 @@ a:hover {
 
 html {
   scroll-behavior: smooth;
-}
-
-.loading {
-  opacity: 0.8;
-  pointer-events: none;
-}
-
-.loading .spinner {
-  border: 2px solid var(--bg-secondary);
-  border-top: 2px solid var(--color-accent);
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  margin: 0 auto 1rem;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
