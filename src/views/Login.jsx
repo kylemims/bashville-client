@@ -56,7 +56,7 @@ export const Login = () => {
 
         {from !== ROUTES.DASHBOARD && (
           <p className="mb-4" style={{ color: "var(--color-accent)" }}>
-            Please sign in to access {from}
+            Please sign in to access your projects
           </p>
         )}
 
