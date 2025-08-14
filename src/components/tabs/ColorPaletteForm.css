@@ -24,16 +24,20 @@
 .color-fields-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
+
+  /* grid-template-columns: repeat(4, 1fr); */
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .color-fields-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+
+    /* grid-template-columns: repeat(2, 1fr); */
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1271px) {
   .color-fields-grid {
     grid-template-columns: repeat(4, 1fr);
   }

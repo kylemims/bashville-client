@@ -98,7 +98,7 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
     <div className="commands-tab">
       <div className="section">
         <div className="section-header">
-          <h2 className="section-title">Command Stash</h2>
+          <h2 className="section-title">Project Commands</h2>
           <ActionButton
             onClick={() => setShowNewCommandForm(true)}
             disabled={loading}
@@ -110,12 +110,13 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
 
         <ErrorMessage message={error} onDismiss={() => setError("")} />
 
-        <div className="command-dropdown">
-          <select className="dropdown-select" disabled>
-            <option>Quick Actions (Coming Soon)</option>
-          </select>
-        </div>
-
+        {showNewCommandForm && (
+          <NewCommandForm
+            onSave={handleCreateCommand}
+            onCancel={() => setShowNewCommandForm(false)}
+            disabled={loading}
+          />
+        )}
         <div className="command-list">
           {projectCommands.length > 0 ? (
             projectCommands.map((command) => (
@@ -134,55 +135,62 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
             <p className="empty-message">No commands in this project yet.</p>
           )}
         </div>
-
-        {showNewCommandForm && (
-          <NewCommandForm
-            onSave={handleCreateCommand}
-            onCancel={() => setShowNewCommandForm(false)}
-            disabled={loading}
-          />
-        )}
       </div>
 
       <div className="section">
-        <h2 className="section-title">Available Commands</h2>
+        <h2 className="section-title-available">Command Stash</h2>
         <div className="available-commands-grid">
           {availableCommands.length > 0 ? (
             availableCommands.map((command) => (
-              <div
-                key={command.id}
-                className={`command-card ${selectedCommands.includes(command.id) ? "selected" : ""}`}
-                onClick={() => handleToggleCommand(command.id)}
-                role="button"
-                tabIndex={0}>
-                <div className="command-card-content">
-                  <h4>{command.label}</h4>
-                  <code>{command.command_text}</code>
-                </div>
-                <div className="command-card-actions">
-                  <ActionButton
-                    variant="edit"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setEditingCommand(command.id);
-                    }}
+              <div key={command.id} className="available-command-wrapper">
+                {editingCommand === command.id ? (
+                  // ✅ Show CommandItem in edit mode
+                  <CommandItem
+                    command={command}
+                    isEditing={true}
+                    onEdit={() => setEditingCommand(command.id)}
+                    onSave={(data) => handleUpdateCommand(command.id, data)}
+                    onCancel={() => setEditingCommand(null)}
+                    onDelete={() => handleDeleteCommand(command.id)}
                     disabled={loading}
-                    aria-label={`Edit ${command.label}`}>
-                    ✏️
-                  </ActionButton>
-                  <ActionButton
-                    variant="delete"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteCommand(command.id);
-                    }}
-                    disabled={loading}
-                    aria-label={`Delete ${command.label}`}>
-                    🗑️
-                  </ActionButton>
-                </div>
+                  />
+                ) : (
+                  // ✅ Show normal command card
+                  <div
+                    className={`command-card ${selectedCommands.includes(command.id) ? "selected" : ""}`}
+                    onClick={() => handleToggleCommand(command.id)}
+                    role="button"
+                    tabIndex={0}>
+                    <div className="command-card-content">
+                      <h4>{command.label}</h4>
+                      <code>{command.command_text}</code>
+                    </div>
+                    <div className="command-card-actions">
+                      <ActionButton
+                        variant="edit"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditingCommand(command.id);
+                        }}
+                        disabled={loading}
+                        aria-label={`Edit ${command.label}`}>
+                        <span className="material-symbols-outlined available-edit">edit_square</span>{" "}
+                      </ActionButton>
+                      <ActionButton
+                        variant="delete"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteCommand(command.id);
+                        }}
+                        disabled={loading}
+                        aria-label={`Delete ${command.label}`}>
+                        <span className="material-symbols-outlined available-delete">delete</span>{" "}
+                      </ActionButton>
+                    </div>
+                  </div>
+                )}
               </div>
             ))
           ) : (

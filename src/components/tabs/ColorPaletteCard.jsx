@@ -3,8 +3,6 @@ import { ActionButton } from "../common/ActionButton.jsx";
 import { ColorEditor } from "./ColorEditor.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./ColorPaletteCard.css";
-import "./ColorPaletteForm.css";
-import "./ColorEditor.css";
 
 export const ColorPaletteCard = ({
   palette,
@@ -36,34 +34,58 @@ export const ColorPaletteCard = ({
   };
 
   return (
-    <div className={`color-palette-card ${isSelected ? "selected" : ""}`}>
+    <div className={`color-palette-card ${isSelected ? "selected" : ""}`} onClick={onClick}>
+      {/* Header with name and actions */}
       <div className="palette-header">
-        <h3 className="palette-name" onClick={onClick}>
-          {palette.name}
-        </h3>
+        <h3 className="palette-name">{palette.name}</h3>
+        {isSelected && (
+          <div className="selection-indicator">
+            <MaterialIcon icon="check_circle" size={16} />
+            <span>Current Palette</span>
+          </div>
+        )}
         <div className="palette-actions">
           <ActionButton
-            onClick={onEdit}
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit();
+            }}
             variant="edit"
             size="sm"
             disabled={disabled}
             aria-label={`Edit ${palette.name}`}>
-            <MaterialIcon icon="edit" size={23} color="var(--muted)" className="hover-primary" />
+            <span className="material-symbols-outlined available-edit">edit_square</span>{" "}
           </ActionButton>
           <ActionButton
-            onClick={onDelete}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete();
+            }}
             variant="delete"
             size="sm"
             disabled={disabled}
             aria-label={`Delete ${palette.name}`}>
-            <MaterialIcon icon="delete" size={23} color="var(--muted)" className="hover-primary" />
+            <span className="material-symbols-outlined available-delete">delete</span>{" "}
           </ActionButton>
         </div>
       </div>
 
-      <div className="color-swatches">
+      {/* Color preview banner */}
+      <div className="color-banner">
         {colorFields.map((color) => (
-          <div key={color.key} className="color-item">
+          <div
+            key={color.key}
+            className="color-segment"
+            style={{ backgroundColor: color.value }}
+            title={`${color.name}: ${color.value}`}
+          />
+        ))}
+      </div>
+
+      {/* Color details grid */}
+      <div className="color-details">
+        {colorFields.map((color) => (
+          <div key={color.key} className="color-detail-item">
             {editingColor === color.key ? (
               <ColorEditor
                 colorName={color.name}
@@ -73,30 +95,24 @@ export const ColorPaletteCard = ({
                 disabled={disabled}
               />
             ) : (
-              <div className="color-display">
-                <div
-                  className="color-swatch clickable"
-                  style={{ backgroundColor: color.value }}
-                  onClick={() => setEditingColor(color.key)}
-                  title={`Click to edit ${color.name} color`}
-                />
-                <div className="color-info">
-                  <span className="color-label">{color.name}</span>
-                  <span className="color-hex">{color.value}</span>
-                  <ActionButton
-                    onClick={() => setEditingColor(color.key)}
-                    variant="edit"
-                    size="xs"
-                    disabled={disabled}
-                    aria-label={`Quick edit ${color.name}`}>
-                    <MaterialIcon icon="edit" size={14} color="var(--muted)" className="hover-primary" />
-                  </ActionButton>
+              <div
+                className="color-info"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditingColor(color.key);
+                }}>
+                <div className="color-info-header">
+                  <div className="color-dot" style={{ backgroundColor: color.value }} />
+                  <span className="color-name">{color.name}</span>
                 </div>
+                <div className="color-hex">{color.value}</div>
               </div>
             )}
           </div>
         ))}
       </div>
+
+      {/* Selection indicator */}
     </div>
   );
 };

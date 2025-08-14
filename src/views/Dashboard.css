@@ -13,6 +13,17 @@
   }
 }
 
+.dashboard-header .button {
+  text-align: center;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+}
+.dashboard-header .button:hover {
+  background-color: var(--color-primary);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
 .dashboard-title-section {
   flex: 1;
 }

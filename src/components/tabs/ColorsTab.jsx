@@ -116,7 +116,7 @@ export const ColorsTab = ({ project, availablePalettes, onSave, onPalettesUpdate
 
         {currentPalette && (
           <div className="current-palette">
-            <h3 className="subsection-title">Current Palette</h3>
+            {/* <h3 className="subsection-title">Current Palette</h3> */}
             <ColorPaletteCard
               palette={currentPalette}
               isSelected={true}
