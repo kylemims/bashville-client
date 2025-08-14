@@ -6,7 +6,6 @@ import "./SetupGenerator.css";
 export const SetupGenerator = ({ project, onClose }) => {
   const [activeTab, setActiveTab] = useState("bash");
 
-  // Generate bash script
   const generateBashScript = () => {
     const commands = project.commands_preview || [];
     const palette = project.color_palette_preview;
@@ -15,7 +14,6 @@ export const SetupGenerator = ({ project, onClose }) => {
       new Date().toISOString().split("T")[0]
     }\n\n`;
 
-    // Add description if available
     if (project.description) {
       script += `# Description: ${project.description}\n\n`;
     }

@@ -8,10 +8,6 @@ import { NewCommandForm } from "./NewCommandForm.jsx";
 import "./CommandsTab.css";
 
 export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpdate }) => {
-  // ✅ Add debug logging for props
-  console.log("🔧 DEBUG: CommandsTab received props:");
-  console.log("  - project.commands_preview:", project.commands_preview);
-  console.log("  - availableCommands:", availableCommands);
   console.log(
     "  - availableCommands types:",
     availableCommands?.map((cmd) => ({ id: cmd.id, type: typeof cmd.id }))
@@ -26,37 +22,22 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
   const projectCommands = project.commands_preview || [];
 
   const handleToggleCommand = async (commandId) => {
-    // ✅ Ensure commandId is a number
     const numericCommandId = typeof commandId === "string" ? parseInt(commandId) : commandId;
-
-    console.log("🔧 DEBUG: Original commandId:", commandId, typeof commandId);
-    console.log("🔧 DEBUG: Numeric commandId:", numericCommandId, typeof numericCommandId);
-    console.log("🔧 DEBUG: Current selected commands:", selectedCommands);
-    console.log("🔧 DEBUG: Project ID:", project.id);
 
     const newSelected = selectedCommands.includes(numericCommandId)
       ? selectedCommands.filter((id) => id !== numericCommandId)
       : [...selectedCommands, numericCommandId];
 
-    console.log("🔧 DEBUG: New selected commands:", newSelected);
-    console.log(
-      "🔧 DEBUG: All IDs are numbers?",
-      newSelected.every((id) => typeof id === "number")
-    );
     setSelectedCommands(newSelected);
 
     try {
       const updateData = { command_ids: newSelected };
-      console.log("🔧 DEBUG: Sending update data:", updateData);
 
       await onSave(updateData);
-      console.log("✅ SUCCESS: Commands updated");
       setError("");
     } catch (err) {
       console.error("❌ FAILED:", err);
-      console.error("❌ Full error object:", err);
       setError(`Failed to update commands: ${err.message}`);
-      // Revert on error
       setSelectedCommands(selectedCommands);
     }
   };

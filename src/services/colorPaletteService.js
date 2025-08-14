@@ -29,11 +29,9 @@ const handleResponse = async (response) => {
   return response.json();
 };
 
-// ✅ Remove trailing slashes from ALL endpoints
 export const getColorPalettes = async () => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/colorpalettes`, {
-    // ✅ NO trailing slash
     headers: {
       Authorization: `Token ${token}`,
     },
@@ -44,7 +42,6 @@ export const getColorPalettes = async () => {
 export const createColorPalette = async (paletteData) => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/colorpalettes`, {
-    // ✅ NO trailing slash
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -58,7 +55,6 @@ export const createColorPalette = async (paletteData) => {
 export const updateColorPalette = async (paletteId, paletteData) => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/colorpalettes/${paletteId}`, {
-    // ✅ NO trailing slash
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -72,7 +68,6 @@ export const updateColorPalette = async (paletteId, paletteData) => {
 export const deleteColorPalette = async (paletteId) => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/colorpalettes/${paletteId}`, {
-    // ✅ NO trailing slash
     method: "DELETE",
     headers: {
       Authorization: `Token ${token}`,

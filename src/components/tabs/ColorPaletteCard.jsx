@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { ColorEditor } from "./ColorEditor.jsx";
+import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./ColorPaletteCard.css";
+import "./ColorPaletteForm.css";
+import "./ColorEditor.css";
 
 export const ColorPaletteCard = ({
   palette,
@@ -45,7 +48,7 @@ export const ColorPaletteCard = ({
             size="sm"
             disabled={disabled}
             aria-label={`Edit ${palette.name}`}>
-            ✏️
+            <MaterialIcon icon="edit" size={23} color="var(--muted)" className="hover-primary" />
           </ActionButton>
           <ActionButton
             onClick={onDelete}
@@ -53,7 +56,7 @@ export const ColorPaletteCard = ({
             size="sm"
             disabled={disabled}
             aria-label={`Delete ${palette.name}`}>
-            🗑️
+            <MaterialIcon icon="delete" size={23} color="var(--muted)" className="hover-primary" />
           </ActionButton>
         </div>
       </div>
@@ -86,7 +89,7 @@ export const ColorPaletteCard = ({
                     size="xs"
                     disabled={disabled}
                     aria-label={`Quick edit ${color.name}`}>
-                    ✏️
+                    <MaterialIcon icon="edit" size={14} color="var(--muted)" className="hover-primary" />
                   </ActionButton>
                 </div>
               </div>

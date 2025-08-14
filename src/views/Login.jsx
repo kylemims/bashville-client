@@ -50,9 +50,8 @@ export const Login = () => {
 
   return (
     <div className="page-content">
-      <h1 className="text-2xl mb-6">Welcome Back</h1>
-
       <div className="page-card">
+        <h1 className="text-2xl mb-6">Welcome Back</h1>
         <h2 className="card-title">Sign In</h2>
 
         {from !== ROUTES.DASHBOARD && (

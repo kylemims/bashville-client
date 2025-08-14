@@ -3,6 +3,8 @@ import { useState } from "react";
 import { FormField } from "../common/FormField.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
 import "./ColorPaletteForm.css";
+import "./ColorPaletteCard.css";
+import "./ColorEditor.css";
 
 const DEFAULT_COLORS = {
   name: "",

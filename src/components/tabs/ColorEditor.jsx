@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ActionButton } from "../common/ActionButton.jsx";
 import "./ColorEditor.css";
+import "./ColorPaletteForm.css";
+import "./ColorPaletteCard.css";
 
 export const ColorEditor = ({ colorName, colorValue, onSave, onCancel, disabled = false }) => {
   const [hexValue, setHexValue] = useState(colorValue);

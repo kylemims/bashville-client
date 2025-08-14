@@ -1,8 +1,6 @@
 import { STORAGE_KEYS, API_BASE_URL } from "../utils/constants.js";
 
 export const getToken = () => {
-  // 🚀 DEPLOYMENT READY: Always use localStorage for user tokens
-  // Environment variables are for system config (API URLs, etc.), not user data
   return localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN) || "";
 };
 

@@ -9,8 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Admin: AuthProvider mounted");
-
     const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
     const userData = localStorage.getItem(STORAGE_KEYS.USER_DATA);
 
@@ -30,7 +28,6 @@ export const AuthProvider = ({ children }) => {
       setUser(userData);
     }
     setIsAuthenticated(true);
-    console.log("User logged in!");
   };
 
   const logout = () => {
@@ -38,7 +35,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem(STORAGE_KEYS.USER_DATA);
     setIsAuthenticated(false);
     setUser(null);
-    console.log("User logged out!");
   };
 
   const getToken = () => {

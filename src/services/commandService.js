@@ -29,11 +29,9 @@ const handleResponse = async (response) => {
   return response.json();
 };
 
-// ✅ Remove trailing slashes from ALL endpoints
 export const getCommands = async () => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/commands`, {
-    // ✅ NO trailing slash
     headers: {
       Authorization: `Token ${token}`,
     },
@@ -44,7 +42,6 @@ export const getCommands = async () => {
 export const createCommand = async (commandData) => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/commands`, {
-    // ✅ NO trailing slash
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -58,7 +55,6 @@ export const createCommand = async (commandData) => {
 export const updateCommand = async (commandId, commandData) => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/commands/${commandId}`, {
-    // ✅ NO trailing slash
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -72,7 +68,6 @@ export const updateCommand = async (commandId, commandData) => {
 export const deleteCommand = async (commandId) => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/commands/${commandId}`, {
-    // ✅ NO trailing slash
     method: "DELETE",
     headers: {
       Authorization: `Token ${token}`,
