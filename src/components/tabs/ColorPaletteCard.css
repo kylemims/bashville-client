@@ -61,7 +61,7 @@
 .palette-colors {
   color: var(--muted);
   font-size: 0.7rem;
-  font-family: "Courier New", monospace;
+  font-family: "Fira Code", monospace;
 }
 
 /* Card actions */

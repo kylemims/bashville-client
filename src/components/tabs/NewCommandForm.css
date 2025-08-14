@@ -47,7 +47,7 @@
 
 /* Command text input styling */
 .new-command-form .form-field:last-of-type input {
-  font-family: "Courier New", monospace;
+  font-family: "Fira Code", monospace;
   font-size: 0.9rem;
 }
 

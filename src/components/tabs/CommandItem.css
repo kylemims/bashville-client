@@ -37,7 +37,7 @@
 }
 
 .command-text {
-  font-family: "Courier New", monospace;
+  font-family: "Fira Code", monospace;
   color: var(--color-accent);
   font-size: 0.85rem;
   background: var(--bg-input);
