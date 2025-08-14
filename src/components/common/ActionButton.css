@@ -28,6 +28,18 @@
   background: var(--color-accent);
   transform: translateY(-1px);
 }
+.action-button--accent {
+  background: var(--color-accent);
+  color: var(--bg-primary);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border-radius: 10%;
+}
+
+.action-button--accent:hover:not(:disabled) {
+  background: var(--color-secondary);
+  transform: translateY(-1px);
+}
 .action-button--secondary {
   background: var(--color-secondary);
   color: var(--text);
