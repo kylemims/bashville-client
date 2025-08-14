@@ -57,9 +57,9 @@ export const Navbar = () => {
         </button>
 
         <nav className={`navbar-nav ${isMenuOpen ? "navbar-nav--open" : ""}`}>
-          <NavLink to="/" style={linkStyle} onClick={closeMenu}>
+          {/* <NavLink to="/" style={linkStyle} onClick={closeMenu}>
             Home
-          </NavLink>
+          </NavLink> */}
 
           {isAuthenticated ? (
             // Authenticated user menu
@@ -70,9 +70,9 @@ export const Navbar = () => {
               <NavLink to="/projects/new" style={linkStyle} onClick={closeMenu}>
                 New Project
               </NavLink>
-              <NavLink to="/template" style={linkStyle} onClick={closeMenu}>
+              {/* <NavLink to="/template" style={linkStyle} onClick={closeMenu}>
                 Template
-              </NavLink>
+              </NavLink> */}
 
               <div className="navbar-user-section">
                 <span className="navbar-user-greeting">Hey, {user?.username || "User"}!</span>
@@ -90,9 +90,9 @@ export const Navbar = () => {
               <NavLink to="/login" style={linkStyle} onClick={closeMenu}>
                 Login
               </NavLink>
-              <NavLink to="/template" style={linkStyle} onClick={closeMenu}>
+              {/* <NavLink to="/template" style={linkStyle} onClick={closeMenu}>
                 Template
-              </NavLink>
+              </NavLink> */}
             </>
           )}
         </nav>

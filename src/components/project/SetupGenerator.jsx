@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ActionButton } from "../common/ActionButton.jsx";
+import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./SetupGenerator.css";
 
 export const SetupGenerator = ({ project, onClose }) => {
@@ -133,9 +134,9 @@ export const SetupGenerator = ({ project, onClose }) => {
     <div className="setup-generator-overlay">
       <div className="setup-generator-modal">
         <div className="setup-generator-header">
-          <h2>📋 Generate Setup Files</h2>
+          <h2>Generate Setup Files</h2>
           <ActionButton onClick={onClose} variant="secondary" size="sm">
-            ✕
+            <MaterialIcon icon="close" size={20} color="var(--text)" className="hover-primary" />
           </ActionButton>
         </div>
 

@@ -55,7 +55,7 @@ export const NewProject = () => {
     <div className="page-content">
       <div className="container">
         <div className="page-card" style={{ maxWidth: "600px", margin: "0 auto" }}>
-          <h1 className="card-title">Create New Project</h1>
+          <h1 className="card-title text-2xl">New Project</h1>
 
           <ErrorMessage message={error} onDismiss={() => setError("")} />
 
@@ -65,7 +65,7 @@ export const NewProject = () => {
               type="text"
               value={formData.title}
               onChange={(value) => handleInputChange("title", value)}
-              placeholder="my-awesome-project"
+              placeholder="name your project"
               required
               disabled={loading}
               autoFocus

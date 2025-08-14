@@ -1,9 +1,12 @@
+// Fixed projectService.js - Remove the hardcoded token logic
+
 import { API_BASE_URL } from "../utils/constants.js";
 
 const getToken = () => {
-  if (process.env.REACT_APP_USER_TOKEN) {
-    return process.env.REACT_APP_USER_TOKEN;
-  }
+  // 🚀 DEPLOYMENT READY: Use environment variables for system config, not user tokens
+  // Environment variables should contain API URLs, database connections, etc.
+  // User tokens should ALWAYS come from localStorage after login
+
   const token = localStorage.getItem("bashville_auth_token");
   if (!token) {
     throw new Error("No authentication token found. Please log in again.");
@@ -44,11 +47,9 @@ const handleResponse = async (response) => {
   return response.json();
 };
 
-// ✅ Remove trailing slashes from ALL endpoints
 export const getProjects = async () => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/projects`, {
-    // ✅ NO trailing slash
     headers: {
       Authorization: `Token ${token}`,
     },
@@ -59,7 +60,6 @@ export const getProjects = async () => {
 export const getProjectById = async (projectId) => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
-    // ✅ NO trailing slash
     headers: {
       Authorization: `Token ${token}`,
     },
@@ -73,7 +73,6 @@ export const createProject = async (projectData) => {
   console.log("Project data:", projectData);
 
   const response = await fetch(`${API_BASE_URL}/projects`, {
-    // ✅ NO trailing slash
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -90,7 +89,6 @@ export const updateProject = async (projectId, projectData) => {
   console.log("Updating project:", projectId, "with data:", projectData);
 
   const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
-    // ✅ NO trailing slash
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -105,7 +103,6 @@ export const updateProject = async (projectId, projectData) => {
 export const deleteProject = async (projectId) => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
-    // ✅ NO trailing slash
     method: "DELETE",
     headers: {
       Authorization: `Token ${token}`,

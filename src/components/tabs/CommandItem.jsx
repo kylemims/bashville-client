@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./CommandItem.css";
 import { ActionButton } from "../common/ActionButton.jsx";
+import { MaterialIcon } from "../common/MaterialIcon.jsx";
 
 export const CommandItem = ({ command, isEditing, onEdit, onSave, onCancel, onDelete, disabled }) => {
   const [formData, setFormData] = useState({
@@ -36,10 +37,15 @@ export const CommandItem = ({ command, isEditing, onEdit, onSave, onCancel, onDe
           />
           <div className="edit-actions">
             <ActionButton onClick={handleSave} variant="primary" size="sm" disabled={disabled}>
-              ✓
+              <MaterialIcon
+                icon="check_circle"
+                size={22}
+                color="var(--color-secondary)"
+                className="hover-primary"
+              />
             </ActionButton>
             <ActionButton onClick={onCancel} variant="secondary" size="sm" disabled={disabled}>
-              ✕
+              <MaterialIcon icon="cancel" size={22} color="var(--color-primary)" className="hover-primary" />
             </ActionButton>
           </div>
         </div>
@@ -55,10 +61,10 @@ export const CommandItem = ({ command, isEditing, onEdit, onSave, onCancel, onDe
       </div>
       <div className="command-actions">
         <ActionButton onClick={onEdit} variant="edit" size="sm" disabled={disabled}>
-          ✏️
+          <MaterialIcon icon="edit_square" size={23} color="var(--muted)" className="hover-primary" />
         </ActionButton>
         <ActionButton onClick={onDelete} variant="delete" size="sm" disabled={disabled}>
-          🗑️
+          <MaterialIcon icon="delete" size={26} color="var(--color-secondary)" className="hover-primary" />
         </ActionButton>
       </div>
     </div>
