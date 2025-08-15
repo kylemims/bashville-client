@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
-import { getProjectById, updateProject } from "../services/projectService";
+import { getProjectById, updateProject, deleteProject } from "../services/projectService";
 import { getCommands } from "../services/commandService";
 import { getColorPalettes } from "../services/colorPaletteService";
 import { CommandsTab } from "../components/tabs/CommandsTab";
@@ -17,7 +17,7 @@ import { ROUTES } from "../utils/constants";
 export const ProjectDetail = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
-
+  const [showSetupGenerator, setShowSetupGenerator] = useState(false);
   const [state, setState] = useState({
     project: null,
     availableCommands: [],
@@ -26,7 +26,7 @@ export const ProjectDetail = () => {
     error: null,
     activeTab: "commands",
   });
-  const [showSetupGenerator, setShowSetupGenerator] = useState(false);
+
   useDocumentTitle(state.project ? `${state.project.title} • Bash Stash` : "Project • Bash Stash");
   const handleGenerateSetup = () => {
     setShowSetupGenerator(true);
@@ -67,9 +67,6 @@ export const ProjectDetail = () => {
 
   const handleSaveProject = async (updatedData) => {
     try {
-      console.log("Saving project with data:", updatedData);
-      console.log("Project ID:", projectId);
-
       const updatedProject = await updateProject(projectId, updatedData);
       console.log("Project updated successfully:", updatedProject);
 
@@ -104,6 +101,28 @@ export const ProjectDetail = () => {
     );
   }
 
+  const handleProjectUpdate = async (updatedData) => {
+    try {
+      const updatedProject = await updateProject(projectId, updatedData);
+      updateState({ project: updatedProject });
+      return updatedProject;
+    } catch (error) {
+      console.error("❌ Failed to update project:", error);
+      throw error;
+    }
+  };
+
+  const handleDeleteProject = async (projectId) => {
+    if (window.confirm("Are you sure you want to delete this project?")) {
+      try {
+        await deleteProject(state.project.id);
+        navigate(ROUTES.DASHBOARD);
+      } catch (error) {
+        console.error("Failed to delete project:", error);
+      }
+    }
+  };
+
   const tabProps = {
     project: state.project,
     onSave: handleSaveProject,
@@ -116,6 +135,8 @@ export const ProjectDetail = () => {
           title={state.project.title}
           onBack={() => navigate(ROUTES.DASHBOARD)}
           onGenerateSetup={handleGenerateSetup}
+          onProjectDelete={handleDeleteProject}
+          onProjectUpdate={handleProjectUpdate}
         />
 
         <ProjectTabs activeTab={state.activeTab} onTabChange={(tab) => updateState({ activeTab: tab })} />

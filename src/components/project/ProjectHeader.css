@@ -1,4 +1,4 @@
-.project-header {
+/* .project-header {
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -21,5 +21,172 @@
 
   .project-title {
     font-size: 1.25rem;
+  }
+} */
+
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 2px solid white;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.project-title-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.project-title-display {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.project-title {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--color-primary);
+  margin: 0;
+  font-family: var(--font-mono, "Fira Code", monospace);
+  text-transform: uppercase;
+}
+
+/* Edit mode styles */
+.project-title-edit {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+/* .title-bracket {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: var(--font-mono, "Fira Code", monospace);
+} */
+
+.project-title-input {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  font-family: var(--font-mono, "Fira Code", monospace);
+  background: var(--bg-secondary);
+  border: 2px solid var(--color-primary);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  min-width: 200px;
+  max-width: 400px;
+}
+
+.project-title-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(254, 227, 148, 0.2);
+}
+
+.project-title-input.error {
+  border-color: var(--color-error, #ef4444);
+}
+
+.title-edit-actions {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+}
+
+.title-edit-error {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-error, #ef4444);
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  margin-top: 0.5rem;
+  z-index: 10;
+}
+
+.title-edit-error::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid var(--color-error, #ef4444);
+}
+
+.project-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .project-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .project-title-section {
+    order: 1;
+  }
+
+  .project-actions {
+    order: 2;
+    justify-content: center;
+  }
+
+  .project-title-input {
+    font-size: 1.5rem;
+    min-width: 180px;
+    max-width: 300px;
+  }
+
+  .title-bracket {
+    font-size: 1.5rem;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+  }
+
+  .title-edit-actions {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-title-edit {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .title-edit-actions {
+    flex-direction: row;
+  }
+
+  .title-edit-error {
+    position: static;
+    transform: none;
+    margin-top: 0.5rem;
+  }
+
+  .title-edit-error::before {
+    display: none;
   }
 }

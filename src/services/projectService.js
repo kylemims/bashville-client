@@ -3,10 +3,6 @@
 import { API_BASE_URL } from "../utils/constants.js";
 
 const getToken = () => {
-  // 🚀 DEPLOYMENT READY: Use environment variables for system config, not user tokens
-  // Environment variables should contain API URLs, database connections, etc.
-  // User tokens should ALWAYS come from localStorage after login
-
   const token = localStorage.getItem("bashville_auth_token");
   if (!token) {
     throw new Error("No authentication token found. Please log in again.");
