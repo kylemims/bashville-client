@@ -49,6 +49,7 @@
 /* Command actions (display mode) */
 .command-actions {
   display: flex;
+  align-items: flex-end;
   gap: 0.5rem;
   flex-shrink: 0;
 }

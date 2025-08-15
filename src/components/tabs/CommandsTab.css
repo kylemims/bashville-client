@@ -98,6 +98,7 @@
   .commands-tab {
     display: flex;
     flex-direction: row;
+    gap: 2rem;
   }
   .available-commands-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -105,17 +106,24 @@
   .section-title-available {
     margin-bottom: 1.5rem;
   }
+  .section {
+    align-items: center;
+    margin: 0 auto;
+  }
 }
 
 /* Command card (for available commands selection) */
 .command-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   background: var(--bg-primary);
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  position: relative;
+  /* position: relative; */
 }
 
 .command-card:hover {
@@ -150,13 +158,17 @@
 }
 
 .command-card-actions {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
+  /* position: absolute; */
+  /* top: 0.5rem; */
+  /* right: 0.5rem; */
   display: flex;
-  gap: 0.25rem;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 0rem;
   opacity: 0;
   transition: opacity 0.2s ease;
+  padding: 0px;
+  margin: 0px;
 }
 
 .command-card:hover .command-card-actions {
@@ -179,6 +191,9 @@
 }
 .available-delete {
   color: var(--color-secondary);
+}
+.available-add {
+  color: var(--color-background);
 }
 
 /* Responsive adjustments */

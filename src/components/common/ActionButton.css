@@ -37,7 +37,7 @@
 }
 
 .action-button--accent:hover:not(:disabled) {
-  background: var(--color-secondary);
+  background: var(--color-primary);
   transform: translateY(-1px);
 }
 .action-button--secondary {
@@ -49,6 +49,17 @@
 
 .action-button--secondary:hover:not(:disabled) {
   background: var(--color-accent);
+  transform: translateY(-1px);
+}
+.action-button--muted {
+  background: var(--mutedx);
+  color: var(--text);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+}
+
+.action-button--muted:hover:not(:disabled) {
+  background: var(--color-primary);
   transform: translateY(-1px);
 }
 
@@ -67,7 +78,7 @@
 
 .action-button--back {
   background: var(--bg-secondary);
-  color: var(--text);
+  color: var(--muted);
   border: 1px solid var(--border);
   padding: 0.5rem;
   font-size: 1.2rem;
@@ -76,16 +87,30 @@
 }
 
 .action-button--back:hover:not(:disabled) {
-  background: var(--bg-primary);
+  background: var(--mutedx);
   color: var(--color-accent);
+}
+.action-button--back-secondary {
+  background: var(--bg-secondary);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 0.5rem;
+  font-size: 1.2rem;
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.action-button--back-secondary:hover:not(:disabled) {
+  background: var(--mutedx);
+  color: var(--color-secondary);
 }
 
 .action-button--add {
   background: var(--color-accent);
   color: var(--bg-primary);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  border-radius: 10%;
+  width: 30px;
+  height: 30px;
   font-size: 1.2rem;
   font-weight: 700;
 }
@@ -140,6 +165,11 @@
   background: rgba(210, 110, 102, 0.2);
 }
 
+/* Button Sizes */
+.action-button--xs {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.7rem;
+}
 /* Button Sizes */
 .action-button--sm {
   padding: 0.5rem 1rem;

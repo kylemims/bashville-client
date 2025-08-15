@@ -60,11 +60,11 @@ export const CommandItem = ({ command, isEditing, onEdit, onSave, onCancel, onDe
         <div className="command-text">{command.command_text}</div>
       </div>
       <div className="command-actions">
-        <ActionButton onClick={onEdit} variant="edit" size="sm" disabled={disabled}>
-          <MaterialIcon icon="edit_square" size={23} color="var(--muted)" className="hover-primary" />
+        <ActionButton onClick={onEdit} variant="edit" size="xs" disabled={disabled}>
+          <MaterialIcon icon="edit" size={20} color="var(--muted)" className="hover-primary" />
         </ActionButton>
-        <ActionButton onClick={onDelete} variant="delete" size="sm" disabled={disabled}>
-          <MaterialIcon icon="delete" size={26} color="var(--color-secondary)" className="hover-primary" />
+        <ActionButton onClick={onDelete} variant="delete" size="xs" disabled={disabled}>
+          <MaterialIcon icon="delete" size={20} color="var(--color-secondary)" className="hover-primary" />
         </ActionButton>
       </div>
     </div>

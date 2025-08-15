@@ -103,8 +103,9 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
             onClick={() => setShowNewCommandForm(true)}
             disabled={loading}
             variant="add"
+            size="xs"
             aria-label="Add new command">
-            +
+            <span className="material-symbols-outlined available-add">add</span>{" "}
           </ActionButton>
         </div>
 
@@ -168,25 +169,25 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
                     <div className="command-card-actions">
                       <ActionButton
                         variant="edit"
-                        size="sm"
+                        size="xs"
                         onClick={(e) => {
                           e.stopPropagation();
                           setEditingCommand(command.id);
                         }}
                         disabled={loading}
                         aria-label={`Edit ${command.label}`}>
-                        <span className="material-symbols-outlined available-edit">edit_square</span>{" "}
+                        <span className="material-symbols-outlined available-edit text-lg">edit</span>{" "}
                       </ActionButton>
                       <ActionButton
                         variant="delete"
-                        size="sm"
+                        size="xs"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleDeleteCommand(command.id);
                         }}
                         disabled={loading}
                         aria-label={`Delete ${command.label}`}>
-                        <span className="material-symbols-outlined available-delete">delete</span>{" "}
+                        <span className="material-symbols-outlined available-delete text-lg">delete</span>{" "}
                       </ActionButton>
                     </div>
                   </div>
