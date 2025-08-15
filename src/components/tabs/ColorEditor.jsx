@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ActionButton } from "../common/ActionButton.jsx";
+import { validateHex } from "../../utils/validateHex.js";
 import "./ColorEditor.css";
 import "./ColorPaletteForm.css";
 import "./ColorPaletteCard.css";
@@ -7,11 +8,6 @@ import "./ColorPaletteCard.css";
 export const ColorEditor = ({ colorName, colorValue, onSave, onCancel, disabled = false }) => {
   const [hexValue, setHexValue] = useState(colorValue);
   const [error, setError] = useState("");
-
-  const validateHex = (hex) => {
-    const hexRegex = /^#[0-9A-Fa-f]{6}$/;
-    return hexRegex.test(hex);
-  };
 
   const handleSave = () => {
     if (!validateHex(hexValue)) {

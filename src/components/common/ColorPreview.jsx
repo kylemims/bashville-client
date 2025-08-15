@@ -1,6 +1,9 @@
+import { useState } from "react";
 import "./ColorPreview.css";
 
 export const ColorPreview = ({ palette, size = "sm", showTooltip = false }) => {
+  const [copiedColor, setCopiedColor] = useState(null);
+
   if (!palette) return null;
 
   const colors = [
@@ -10,15 +13,57 @@ export const ColorPreview = ({ palette, size = "sm", showTooltip = false }) => {
     { name: "Background", hex: palette.background_hex },
   ];
 
+  const copyToClipboard = async (text, colorName) => {
+    try {
+      await navigator.clipboard.writeText(text);
+
+      // Show visual feedback
+      setCopiedColor(colorName);
+      setTimeout(() => setCopiedColor(null), 1500);
+
+      // Optional: Show a subtle toast instead of alert
+      console.log(`✅ ${colorName} color ${text} copied to clipboard!`);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+      // Fallback for browsers that don't support clipboard API
+      fallbackCopyToClipboard(text);
+    }
+  };
+
+  // Fallback for older browsers
+  const fallbackCopyToClipboard = (text) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      document.execCommand("copy");
+      console.log(`✅ ${text} copied to clipboard!`);
+    } catch (err) {
+      console.error("Fallback: Could not copy text: ", err);
+    }
+
+    document.body.removeChild(textArea);
+  };
+
   return (
     <div className={`color-preview color-preview--${size}`}>
       {colors.map((color, index) => (
         <div
-          key={color.name}
-          className="color-swatch"
+          key={`${color.name}-${index}`}
+          className={`color-swatch ${copiedColor === color.name ? "copied" : ""}`}
           style={{ backgroundColor: color.hex }}
-          title={showTooltip ? `${color.name}: ${color.hex}` : undefined}
-          aria-label={`${color.name} color: ${color.hex}`}
+          title={showTooltip ? `${color.name}: ${color.hex} • Click to copy` : `Click to copy ${color.hex}`}
+          aria-label={`${color.name} color: ${color.hex}. Click to copy.`}
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering parent onClick
+            copyToClipboard(color.hex, color.name);
+          }}
         />
       ))}
     </div>
