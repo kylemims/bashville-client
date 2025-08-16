@@ -52,7 +52,7 @@ export const NewProject = () => {
   const isFormValid = formData.title.trim();
 
   return (
-    <div className="page-content">
+    <div className="page-content page-enter">
       <div className="container">
         <div className="page-card" style={{ maxWidth: "600px", margin: "0 auto" }}>
           <h1 className="card-title text-2xl">New Project</h1>

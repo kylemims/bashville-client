@@ -47,7 +47,7 @@ export const Register = () => {
   const isFormValid = formData.username && formData.email && formData.password;
 
   return (
-    <div className="page-content">
+    <div className="page-content page-enter">
       <div className="page-card">
         <h1 className="text-2xl mb-6">Join Bash Stash</h1>
         <h2 className="card-title">Create Account</h2>

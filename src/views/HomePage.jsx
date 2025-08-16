@@ -5,7 +5,7 @@ export const HomePage = () => {
   useDocumentTitle("Home • BASH STASH");
 
   return (
-    <main id="main-content" role="main" aria-labelledby="page-title" className="mt-4">
+    <main id="main-content" role="main" aria-labelledby="page-title" className="mt-4 page-enter">
       <h1 id="page-title" className="text-2xl mb-4">
         Welcome to Bash Stash
       </h1>

@@ -51,8 +51,16 @@
 
 .navbar-nav a {
   padding: 0.5rem 0;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   text-decoration: none;
+}
+.navbar-nav a:hover {
+  color: black;
+  transform: translateY(-0.05px);
+  box-shadow: var(--mutedx);
+  background-color: rgba(103, 160, 145, 0.2);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
 }
 
 /* Mobile Navbar */
@@ -105,7 +113,7 @@
   }
 
   .navbar-nav a:hover {
-    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
   }
 
   /* Hamburger Animation */

@@ -77,7 +77,7 @@ export const Dashboard = () => {
   }
 
   return (
-    <div className="page-content">
+    <div className="page-content page-enter">
       <div className="dashboard-header">
         <div className="dashboard-title-section">
           <h1 className="dashboard-title">

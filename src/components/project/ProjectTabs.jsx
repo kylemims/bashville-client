@@ -12,7 +12,7 @@ export const ProjectTabs = ({ activeTab, onTabChange, onAddNew }) => {
       case "commands":
         return "Add New";
       case "colors":
-        return "Add Palette";
+        return "Add New";
       default:
         return "Add New";
     }

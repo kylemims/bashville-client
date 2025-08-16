@@ -139,7 +139,7 @@ export const ProjectDetail = () => {
   };
 
   return (
-    <div className="page-content">
+    <div className="page-content page-enter">
       <div className="project-detail">
         <ProjectHeader
           title={state.project.title}

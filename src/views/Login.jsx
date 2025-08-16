@@ -49,7 +49,7 @@ export const Login = () => {
   const isFormValid = formData.username && formData.password;
 
   return (
-    <div className="page-content">
+    <div className="page-content page-enter">
       <div className="page-card">
         <h1 className="text-2xl mb-6">Welcome Back</h1>
         <h2 className="card-title">Sign In</h2>
