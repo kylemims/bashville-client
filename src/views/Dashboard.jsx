@@ -7,6 +7,7 @@ import { LoadingSpinner } from "../components/common/LoadingSpinner";
 import { ErrorMessage } from "../components/common/ErrorMessage";
 import { ProjectCard } from "../components/project/ProjectCard";
 import { EmptyState } from "../components/project/EmptyState";
+import { SetupGenerator } from "../components/project/SetupGenerator";
 import "./Dashboard.css";
 
 export const Dashboard = () => {
@@ -15,6 +16,8 @@ export const Dashboard = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState(null);
+  const [showSetupGenerator, setShowSetupGenerator] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   useDocumentTitle("Dashboard • Bash Stash");
 
@@ -56,9 +59,13 @@ export const Dashboard = () => {
   };
 
   const handleLaunchProject = (project) => {
-    // TODO: Implement project launch functionality
-    console.log("🚀 Launching project:", project.title);
-    alert(`Launch functionality for "${project.title}" coming soon!`);
+    setSelectedProject(project);
+    setShowSetupGenerator(true);
+  };
+
+  const handleCloseSetupGenerator = () => {
+    setShowSetupGenerator(false);
+    setSelectedProject(null);
   };
 
   if (loading) {
@@ -107,6 +114,10 @@ export const Dashboard = () => {
             ))}
           </div>
         </div>
+      )}
+
+      {showSetupGenerator && selectedProject && (
+        <SetupGenerator project={selectedProject} onClose={handleCloseSetupGenerator} />
       )}
     </div>
   );

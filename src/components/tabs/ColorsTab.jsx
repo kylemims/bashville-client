@@ -6,12 +6,17 @@ import {
 } from "../../services/colorPaletteService";
 import { ColorPaletteForm } from "./ColorPaletteForm";
 import { ColorPaletteCard } from "./ColorPaletteCard";
-import { ActionButton } from "../common/ActionButton";
 import { ErrorMessage } from "../common/ErrorMessage";
 
-export const ColorsTab = ({ project, availablePalettes, onSave, onPalettesUpdate }) => {
+export const ColorsTab = ({
+  project,
+  availablePalettes,
+  onSave,
+  onPalettesUpdate,
+  showNewPaletteForm,
+  onNewPaletteFormChange,
+}) => {
   const [selectedPaletteId, setSelectedPaletteId] = useState(project.color_palette?.id || null);
-  const [showNewPaletteForm, setShowNewPaletteForm] = useState(false);
   const [editingPalette, setEditingPalette] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -57,7 +62,7 @@ export const ColorsTab = ({ project, availablePalettes, onSave, onPalettesUpdate
       const newPalette = await createColorPalette(paletteData);
       const updatedPalettes = [...availablePalettes, newPalette];
       onPalettesUpdate(updatedPalettes);
-      setShowNewPaletteForm(false);
+      onNewPaletteFormChange(false);
       await handleSelectPalette(newPalette.id);
     } catch (err) {
       setError(err.message);
@@ -107,16 +112,12 @@ export const ColorsTab = ({ project, availablePalettes, onSave, onPalettesUpdate
       <div className="section">
         <div className="section-header">
           <h2 className="section-title">Palette Stash</h2>
-          <ActionButton onClick={() => setShowNewPaletteForm(true)} disabled={loading} variant="add">
-            +
-          </ActionButton>
         </div>
 
         <ErrorMessage message={error} />
 
         {currentPalette && (
           <div className="current-palette">
-            {/* <h3 className="subsection-title">Current Palette</h3> */}
             <ColorPaletteCard
               palette={currentPalette}
               isSelected={true}
@@ -131,7 +132,7 @@ export const ColorsTab = ({ project, availablePalettes, onSave, onPalettesUpdate
         {showNewPaletteForm && (
           <ColorPaletteForm
             onSubmit={handleCreatePalette}
-            onCancel={() => setShowNewPaletteForm(false)}
+            onCancel={() => onNewPaletteFormChange(false)}
             disabled={loading}
           />
         )}

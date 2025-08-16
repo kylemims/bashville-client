@@ -7,14 +7,20 @@ import { CommandItem } from "./CommandItem.jsx";
 import { NewCommandForm } from "./NewCommandForm.jsx";
 import "./CommandsTab.css";
 
-export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpdate }) => {
+export const CommandsTab = ({
+  project,
+  availableCommands,
+  onSave,
+  onCommandsUpdate,
+  showNewCommandForm,
+  onNewCommandFormChange,
+}) => {
   console.log(
     "  - availableCommands types:",
     availableCommands?.map((cmd) => ({ id: cmd.id, type: typeof cmd.id }))
   );
 
   const [selectedCommands, setSelectedCommands] = useState(project.commands_preview?.map((c) => c.id) || []);
-  const [showNewCommandForm, setShowNewCommandForm] = useState(false);
   const [editingCommand, setEditingCommand] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -48,7 +54,7 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
       const newCommand = await createCommand(commandData);
       const updatedCommands = [...availableCommands, newCommand];
       onCommandsUpdate(updatedCommands);
-      setShowNewCommandForm(false);
+      onNewCommandFormChange(false);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -99,14 +105,6 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
       <div className="section">
         <div className="section-header">
           <h2 className="section-title">Project Commands</h2>
-          <ActionButton
-            onClick={() => setShowNewCommandForm(true)}
-            disabled={loading}
-            variant="add"
-            size="xs"
-            aria-label="Add new command">
-            <span className="material-symbols-outlined available-add">add</span>{" "}
-          </ActionButton>
         </div>
 
         <ErrorMessage message={error} onDismiss={() => setError("")} />
@@ -114,7 +112,7 @@ export const CommandsTab = ({ project, availableCommands, onSave, onCommandsUpda
         {showNewCommandForm && (
           <NewCommandForm
             onSave={handleCreateCommand}
-            onCancel={() => setShowNewCommandForm(false)}
+            onCancel={() => onNewCommandFormChange(false)}
             disabled={loading}
           />
         )}

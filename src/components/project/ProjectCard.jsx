@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import { ColorPreview } from "../common/ColorPreview.jsx";
+// import { SetupGenerator } from "../components/project/SetupGenerator.jsx";
 import "./ProjectCard.css";
 
-export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting }) => {
+export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerateSetup }) => {
   const hasCommands = project.commands_preview && project.commands_preview.length > 0;
   const hasColors = project.color_palette_preview;
 
@@ -63,8 +64,8 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting }) => {
           className="action-btn launch-btn"
           variant="launch"
           size="sm"
-          title="Launch Project"
-          aria-label="Launch project">
+          title="Generate Setup Scripts"
+          aria-label="Generate setup scripts">
           <MaterialIcon icon="markdown" size={26} color="var(--color-accent)" className="hover-primary" />
         </ActionButton>
       </div>

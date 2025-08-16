@@ -17,6 +17,8 @@ import { ROUTES } from "../utils/constants";
 export const ProjectDetail = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
+  const [showNewCommandForm, setShowNewCommandForm] = useState(false);
+  const [showNewPaletteForm, setShowNewPaletteForm] = useState(false);
   const [showSetupGenerator, setShowSetupGenerator] = useState(false);
   const [state, setState] = useState({
     project: null,
@@ -26,6 +28,14 @@ export const ProjectDetail = () => {
     error: null,
     activeTab: "commands",
   });
+
+  const handleAddNew = () => {
+    if (state.activeTab === "commands") {
+      setShowNewCommandForm(true);
+    } else if (state.activeTab === "colors") {
+      setShowNewPaletteForm(true);
+    }
+  };
 
   useDocumentTitle(state.project ? `${state.project.title} • Bash Stash` : "Project • Bash Stash");
   const handleGenerateSetup = () => {
@@ -139,7 +149,11 @@ export const ProjectDetail = () => {
           onProjectUpdate={handleProjectUpdate}
         />
 
-        <ProjectTabs activeTab={state.activeTab} onTabChange={(tab) => updateState({ activeTab: tab })} />
+        <ProjectTabs
+          activeTab={state.activeTab}
+          onTabChange={(tab) => updateState({ activeTab: tab })}
+          onAddNew={handleAddNew} // ← Add this prop
+        />
 
         <div className="tab-content">
           {state.activeTab === "commands" ? (
@@ -147,14 +161,19 @@ export const ProjectDetail = () => {
               {...tabProps}
               availableCommands={state.availableCommands}
               onCommandsUpdate={(commands) => updateState({ availableCommands: commands })}
+              showNewCommandForm={showNewCommandForm} // ← Pass this down
+              onNewCommandFormChange={setShowNewCommandForm} // ← Pass this down
             />
           ) : (
             <ColorsTab
               {...tabProps}
               availablePalettes={state.availablePalettes}
               onPalettesUpdate={(palettes) => updateState({ availablePalettes: palettes })}
+              showNewPaletteForm={showNewPaletteForm} // ← Pass this down
+              onNewPaletteFormChange={setShowNewPaletteForm} // ← Pass this down
             />
           )}
+
           {showSetupGenerator && (
             <SetupGenerator project={state.project} onClose={() => setShowSetupGenerator(false)} />
           )}
