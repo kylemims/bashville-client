@@ -6,13 +6,20 @@
 }
 
 /* Section containers */
-.section {
+.section-project,
+.section-stash {
   background: var(--bg-secondary);
   border-radius: 8px;
   padding: 1.5rem;
   border: 1px solid var(--border);
+  /* box-shadow: 0 4px 20px rgba(254, 227, 148, 0.2); */
 }
-
+.section-project {
+  border-color: var(--color-primary);
+  background: var(--bg-secondary);
+  transform: translateY(-1px);
+  /* box-shadow: 0 4px 20px rgba(254, 227, 148, 0.2); */
+}
 /* .section-header {
   display: flex;
   justify-content: space-between;

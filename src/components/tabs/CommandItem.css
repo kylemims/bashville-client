@@ -8,11 +8,8 @@
   justify-content: space-between;
   align-items: center;
   transition: all 0.2s ease;
-}
-
-.command-item:hover {
-  border-color: var(--color-accent);
-  background: rgba(255, 255, 255, 0.02);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 15px rgba(137, 174, 78, 0.206);
 }
 
 /* Editing state */

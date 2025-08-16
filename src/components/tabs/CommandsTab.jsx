@@ -102,7 +102,7 @@ export const CommandsTab = ({
 
   return (
     <div className="commands-tab">
-      <div className="section">
+      <div className="section-project">
         <div className="section-header">
           <h2 className="section-title">Project Commands</h2>
         </div>
@@ -136,7 +136,7 @@ export const CommandsTab = ({
         </div>
       </div>
 
-      <div className="section">
+      <div className="section-stash">
         <h2 className="section-title-available">Command Stash</h2>
         <div className="available-commands-grid">
           {availableCommands.length > 0 ? (
