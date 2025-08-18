@@ -46,10 +46,12 @@ export const Navbar = () => {
   return (
     <header className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-brand" onClick={closeMenu}>
-          BASH STASH
-        </Link>
-
+        <div className="logo-box">
+          <img src="/assets/images/box-logo.svg" alt="Bash Stash Logo" className="navbar-logo" />
+          <Link to="/" className="navbar-brand" onClick={closeMenu}>
+            BASH STASH
+          </Link>
+        </div>
         <button className="navbar-toggle" onClick={toggleMenu} aria-label="Toggle navigation">
           <span className="hamburger-line"></span>
           <span className="hamburger-line"></span>

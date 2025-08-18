@@ -27,7 +27,7 @@ export const HomePage = () => {
           </div>
         </div>
         <div className="hero-graphic">
-          <img src="/assets/images/xbsx.svg" alt="Bash Stash Hero" className="hero-image" />
+          <img src="/assets/images/bashed-logo.svg" alt="Bash Stash Hero" className="hero-image" />
         </div>
       </section>
       <section className="features-section">
