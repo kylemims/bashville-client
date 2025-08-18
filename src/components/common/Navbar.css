@@ -24,6 +24,11 @@
   font-size: 1.25rem;
 }
 
+.navbar-brand:hover {
+  transform: scale(1.03);
+  transition: transform 0.2s ease;
+}
+
 .navbar-toggle {
   display: none;
   flex-direction: column;
@@ -192,6 +197,12 @@
 .navbar-logo {
   width: 20px;
   height: 20px;
+  display: flex;
   /* border-radius: 50%; */
   /* object-fit: cover; */
+}
+
+.navbar-logo:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
 }

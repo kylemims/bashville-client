@@ -47,7 +47,9 @@ export const Navbar = () => {
     <header className="navbar">
       <div className="navbar-container">
         <div className="logo-box">
-          <img src="/assets/images/box-logo.svg" alt="Bash Stash Logo" className="navbar-logo" />
+          <Link to="/">
+            <img src="/assets/images/box-logo.svg" alt="Bash Stash Logo" className="navbar-logo" />
+          </Link>
           <Link to="/" className="navbar-brand" onClick={closeMenu}>
             BASH STASH
           </Link>

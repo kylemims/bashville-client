@@ -33,7 +33,7 @@
   color: var(--bg-primary);
   padding: 0.5rem 0.75rem;
   font-size: 0.9rem;
-  border-radius: 10%;
+  /* border-radius: 10%; */
 }
 
 .action-button--accent:hover:not(:disabled) {

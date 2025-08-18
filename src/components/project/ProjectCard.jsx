@@ -52,6 +52,7 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
         </Link>
         <ActionButton
           onClick={() => onDelete(project.id)}
+          className="action-btn delete-btn"
           variant="delete"
           size="sm"
           disabled={isDeleting}
