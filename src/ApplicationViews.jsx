@@ -7,6 +7,7 @@ import { Dashboard } from "./views/Dashboard";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PageTemplate } from "./views/PageTemplate";
 import { HomePage } from "./views/HomePage";
+import { Launch } from "./views/Launch";
 
 export const ApplicationViews = () => {
   return (
@@ -41,6 +42,14 @@ export const ApplicationViews = () => {
         element={
           <ProtectedRoute>
             <ProjectDetail />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/launch"
+        element={
+          <ProtectedRoute>
+            <Launch />
           </ProtectedRoute>
         }
       />

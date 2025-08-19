@@ -1,3 +1,5 @@
+// src/utils/generateReadme.js
+
 export const generateReadme = (project) => {
   const commands = project.commands_preview || [];
   const palette = project.color_palette_preview;

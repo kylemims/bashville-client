@@ -1,3 +1,5 @@
+// src/components/project/ProjectTabs.jsx
+
 import { ActionButton } from "../common/ActionButton.jsx";
 import "./ProjectTabs.css";
 
