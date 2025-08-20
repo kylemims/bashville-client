@@ -36,12 +36,12 @@ const handleResponse = async (response) => {
         console.warn("Could not parse error response:", parseError);
       }
     }
-
     throw new Error(errorMessage);
   }
-
   return response.json();
 };
+
+//*----------------------------------------------------------------------
 
 export const getProjects = async () => {
   const token = getToken();
@@ -53,6 +53,8 @@ export const getProjects = async () => {
   return handleResponse(response);
 };
 
+//*----------------------------------------------------------------------
+
 export const getProjectById = async (projectId) => {
   const token = getToken();
   const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
@@ -62,6 +64,8 @@ export const getProjectById = async (projectId) => {
   });
   return handleResponse(response);
 };
+
+//*----------------------------------------------------------------------
 
 export const createProject = async (projectData) => {
   const token = getToken();
@@ -76,9 +80,10 @@ export const createProject = async (projectData) => {
     },
     body: JSON.stringify(projectData),
   });
-
   return handleResponse(response);
 };
+
+//*----------------------------------------------------------------------
 
 export const updateProject = async (projectId, projectData) => {
   const token = getToken();
@@ -92,9 +97,10 @@ export const updateProject = async (projectId, projectData) => {
     },
     body: JSON.stringify(projectData),
   });
-
   return handleResponse(response);
 };
+
+//*----------------------------------------------------------------------
 
 export const deleteProject = async (projectId) => {
   const token = getToken();
@@ -115,6 +121,22 @@ export const deleteProject = async (projectId) => {
   if (!response.ok) {
     throw new Error("Failed to delete project");
   }
-
   return true;
+};
+
+//*----------------------------------------------------------------------
+
+export const saveBackendConfig = async (projectId, backendConfig) => {
+  const token = localStorage.getItem("bashville_auth_token");
+  if (!token) throw new Error("No authentication token found. Please log in again.");
+
+  const response = await fetch(`${API_BASE_URL}/projects/${projectId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
+    },
+    body: JSON.stringify({ backendConfig }),
+  });
+  return handleResponse(response);
 };

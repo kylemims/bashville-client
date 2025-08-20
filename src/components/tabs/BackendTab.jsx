@@ -1,29 +1,18 @@
 // src/components/tabs/BackendTab.jsx
 import { useEffect, useState } from "react";
 import { setBackendConfig, getBackendConfig, clearBackendConfig } from "../../utils/backendConfig";
+import { saveBackendConfig } from "../../services/projectService";
+import { generateCodeForProject } from "../../services/codeGenService";
 import { ActionButton } from "../common/ActionButton.jsx";
 import "./BackendTab.css";
 
 export const BackendTab = ({ project }) => {
   const projectId = project?.id;
   const [config, setConfig] = useState(
-    () =>
-      getBackendConfig(projectId) || {
-        models: [
-          // starter example; user can edit/add in UI
-          {
-            name: "Post",
-            fields: [
-              { name: "title", type: "CharField" },
-              { name: "body", type: "TextField" },
-            ],
-          },
-        ],
-        relationships: [
-          // { from: "Post", type: "FK", to: "User" }
-        ],
-      }
+    () => getBackendConfig(projectId) || { models: [], relationships: [] }
   );
+  const [busy, setBusy] = useState(false); // NEW
+  const [statusMsg, setStatusMsg] = useState("");
 
   useEffect(() => {
     setBackendConfig(projectId, config);
@@ -111,6 +100,45 @@ export const BackendTab = ({ project }) => {
     setConfig({ models: [], relationships: [] });
   };
 
+  const zipAndDownload = async (files, appLabel = "generated_app") => {
+    const [{ default: JSZip }, { saveAs }] = await Promise.all([import("jszip"), import("file-saver")]);
+
+    const zip = new JSZip();
+    const folder = zip.folder(appLabel);
+    Object.entries(files).forEach(([name, content]) => {
+      folder.file(name, content);
+    });
+    const blob = await zip.generateAsync({ type: "blob" });
+    saveAs(blob, `${appLabel}.zip`);
+  };
+
+  // NEW: main handler for “Generate & Write”
+  const handleGenerateAndWrite = async () => {
+    if (!projectId) return;
+    setBusy(true);
+    setStatusMsg("Saving configuration…");
+    try {
+      // 1) persist config to API (Project.backend_config)
+      await saveBackendConfig(projectId, config);
+
+      // 2) call codegen
+      setStatusMsg("Generating code…");
+      const { app_label, files } = await generateCodeForProject(projectId);
+
+      // 3) offer download as ZIP
+      setStatusMsg("Packaging files…");
+      await zipAndDownload(files, app_label);
+
+      setStatusMsg("✅ Code generated and downloaded.");
+      setTimeout(() => setStatusMsg(""), 2500);
+    } catch (err) {
+      console.error(err);
+      setStatusMsg(`❌ ${err.message || "Generation failed."}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <div className="backend-tab">
       <div className="backend-actions">
@@ -123,7 +151,17 @@ export const BackendTab = ({ project }) => {
         <ActionButton variant="back-secondary" size="sm" onClick={reset}>
           Clear
         </ActionButton>
+        <ActionButton
+          variant="accent"
+          size="sm"
+          onClick={handleGenerateAndWrite}
+          disabled={busy || !projectId}
+          aria-busy={busy}>
+          {busy ? "Working…" : "Generate & Write"}
+        </ActionButton>
       </div>
+
+      {statusMsg && <div className="backend-status">{statusMsg}</div>}
 
       <div className="backend-grid">
         <section className="backend-section">

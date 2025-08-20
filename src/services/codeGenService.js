@@ -2,12 +2,7 @@
 
 import { API_BASE_URL } from "../utils/constants.js";
 
-const getToken = () => {
-  if (process.env.REACT_APP_USER_TOKEN) {
-    return process.env.REACT_APP_USER_TOKEN;
-  }
-  return localStorage.getItem("bashville_auth_token") || "";
-};
+const getToken = () => process.env.REACT_APP_USER_TOKEN || localStorage.getItem("bashville_auth_token") || "";
 
 const handleResponse = async (response) => {
   if (response.status === 401) {
@@ -16,33 +11,27 @@ const handleResponse = async (response) => {
     window.location.href = "/login";
     throw new Error("Your session has expired. Please log in again.");
   }
-
   if (!response.ok) {
-    let errorMessage = `Request failed with status ${response.status}`;
+    let msg = `Request failed with status ${response.status}`;
     try {
-      const errorData = await response.json();
-      errorMessage = errorData.message || errorData.error || errorMessage;
-    } catch (parseError) {
-      console.warn("Could not parse error response:", parseError);
-    }
-    throw new Error(errorMessage);
+      const data = await response.json();
+      msg = data.message || data.error || msg;
+    } catch {}
+    throw new Error(msg);
   }
-
   return response.json();
 };
 
-export const generateCode = async (prompt) => {
+export const generateCodeForProject = async (projectId) => {
   const token = getToken();
-
   const response = await fetch(`${API_BASE_URL}/codegen/generate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Token ${token}`,
     },
-    body: JSON.stringify({ prompt }),
+    body: JSON.stringify({ project_id: projectId }),
   });
-
   return handleResponse(response);
 };
 

@@ -8,6 +8,15 @@
   display: flex;
   gap: 0.5rem;
 }
+.backend-status {
+  background: rgba(70, 203, 167, 0.12);
+  border: 1px solid var(--color-accent);
+  color: var(--text);
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
 .backend-grid {
   display: grid;
   gap: 1rem;
