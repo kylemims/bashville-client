@@ -4,6 +4,7 @@ import { setBackendConfig, getBackendConfig, clearBackendConfig } from "../../ut
 import { saveBackendConfig } from "../../services/projectService";
 import { generateCodeForProject } from "../../services/codeGenService";
 import { ActionButton } from "../common/ActionButton.jsx";
+import { RelationshipRow } from "./RelationshipRow.jsx";
 import "./BackendTab.css";
 
 export const BackendTab = ({ project }) => {
@@ -75,7 +76,10 @@ export const BackendTab = ({ project }) => {
   const addRelationship = () => {
     setConfig((c) => ({
       ...c,
-      relationships: [...(c.relationships || []), { from: "", type: "FK", to: "" }],
+      relationships: [
+        ...(c.relationships || []),
+        { from: "", type: "FK", to: "", on_delete: "CASCADE", related_name: "" },
+      ],
     }));
   };
 
@@ -224,8 +228,25 @@ export const BackendTab = ({ project }) => {
             <p className="empty-note">No models yet. Click “Add Model”.</p>
           )}
         </section>
-
         <section className="backend-section">
+          <h3 className="section-title">Relationships</h3>
+          {config.relationships?.length ? (
+            config.relationships.map((r, rIdx) => (
+              <RelationshipRow
+                key={rIdx}
+                rel={r}
+                rIdx={rIdx}
+                models={config.models}
+                onChange={updateRelationship}
+                onRemove={removeRelationship}
+              />
+            ))
+          ) : (
+            <p className="empty-note">No relationships yet.</p>
+          )}
+        </section>
+
+        {/* <section className="backend-section">
           <h3 className="section-title">Relationships</h3>
           {config.relationships?.length ? (
             config.relationships.map((r, rIdx) => (
@@ -258,8 +279,23 @@ export const BackendTab = ({ project }) => {
           ) : (
             <p className="empty-note">No relationships yet.</p>
           )}
+        </section> */}
+        <section className="backend-section">
+          <h3 className="section-title">ERD Outline</h3>
+          <ul className="empty-note">
+            {config.relationships?.map((r, i) => (
+              <li key={i}>
+                <code>{r.from || "?"}</code> — <strong>{r.type}</strong> → <code>{r.to || "?"}</code>
+                {r.related_name ? (
+                  <>
+                    {" "}
+                    (related_name=<code>{r.related_name}</code>)
+                  </>
+                ) : null}
+              </li>
+            ))}
+          </ul>
         </section>
-
         <section className="backend-section">
           <h3 className="section-title">Preview</h3>
           <pre className="preview">{JSON.stringify(config, null, 2)}</pre>

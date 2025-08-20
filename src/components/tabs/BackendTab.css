@@ -45,6 +45,7 @@
   margin-bottom: 0.75rem;
   background: var(--bg-primary);
 }
+
 .model-row,
 .field-row,
 .rel-row,
@@ -83,4 +84,33 @@
   color: var(--muted);
   font-size: 0.85rem;
   margin-top: 0.25rem;
+}
+.modelrel-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+.rel-row--warn {
+  outline: 1px dashed #b45309;
+  outline-offset: 3px;
+}
+.rel-hint {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.rel-hint code {
+  background: var(--bg-secondary);
+  padding: 0 0.25rem;
+  border-radius: 4px;
+}
+.rel-hint--warn {
+  color: #b45309;
+}
+.btn.btn-xs.btn-danger {
+  background: #7f1d1d;
+  color: #fff;
+  border: 1px solid #7f1d1d;
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
 }
