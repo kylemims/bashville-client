@@ -11,6 +11,7 @@ import { ErrorMessage } from "../components/common/ErrorMessage";
 import { ActionButton } from "../components/common/ActionButton";
 import { ProjectHeader } from "../components/project/ProjectHeader";
 import { ProjectTabs } from "../components/project/ProjectTabs";
+import { BackendTab } from "../components/tabs/BackendTab.jsx";
 import { SetupGenerator } from "../components/project/SetupGenerator.jsx";
 import { ROUTES } from "../utils/constants";
 
@@ -164,7 +165,7 @@ export const ProjectDetail = () => {
               showNewCommandForm={showNewCommandForm} // ← Pass this down
               onNewCommandFormChange={setShowNewCommandForm} // ← Pass this down
             />
-          ) : (
+          ) : state.activeTab === "colors" ? (
             <ColorsTab
               {...tabProps}
               availablePalettes={state.availablePalettes}
@@ -172,6 +173,8 @@ export const ProjectDetail = () => {
               showNewPaletteForm={showNewPaletteForm} // ← Pass this down
               onNewPaletteFormChange={setShowNewPaletteForm} // ← Pass this down
             />
+          ) : (
+            <BackendTab project={state.project} />
           )}
 
           {showSetupGenerator && (

@@ -1,6 +1,6 @@
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./ProjectHeader.css";
 
 export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete, onProjectUpdate }) => {
@@ -14,10 +14,14 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
     setIsEditing(true);
     setError("");
   };
+  // if project title updates elsewhere, reflect that in the field
+  useEffect(() => {
+    if (!isEditing) setEditTitle(title);
+  }, [title, isEditing]);
 
   const handleEditCancel = () => {
     setEditTitle(title);
-    setIsEditing(true);
+    setIsEditing(false);
     setError("");
   };
 
@@ -70,6 +74,7 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
             <div className="project-title-edit">
               <input
                 type="text"
+                aria-label="Project name"
                 value={editTitle}
                 onChange={(e) => setEditTitle(e.target.value)}
                 onKeyDown={handleKeyDown}

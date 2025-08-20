@@ -1,8 +1,10 @@
 // src/utils/generateReadme.js
+import { getBackendConfig } from "./backendConfig.js";
 
 export const generateReadme = (project) => {
   const commands = project.commands_preview || [];
   const palette = project.color_palette_preview;
+  const backend = getBackendConfig(project.id);
 
   let readme = `# ${project.title}\n\n`;
 
@@ -37,6 +39,14 @@ export const generateReadme = (project) => {
     readme += `  --accent-color: ${palette.accent_hex};\n`;
     readme += `  --background-color: ${palette.background_hex};\n`;
     readme += `}\n\`\`\`\n\n`;
+  }
+
+  if (backend && (backend.models?.length || backend.relationships?.length)) {
+    readme += `## 🧩 Backend Schema (Preview)\n\n`;
+    readme += `This reflects your selections in the **Backend** tab. You can pipe this into your generator later.\n\n`;
+    readme += "```json\n";
+    readme += JSON.stringify(backend, null, 2);
+    readme += "\n```\n\n";
   }
 
   // Add setup section

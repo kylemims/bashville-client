@@ -1,39 +1,59 @@
-/**
- * Generates a bash setup script from project data
- * @param {Object} project - Project object with commands and palette
- * @returns {string} - Generated bash script content
- */
+import { getBackendConfig } from "./backendConfig"; // ← add
 
 export const generateBashScript = (project) => {
   const commands = project.commands_preview || [];
   const palette = project.color_palette_preview;
+  const backend = getBackendConfig(project.id); // ← add
 
-  let script = `#!/bin/bash\n# ${project.title} - Auto-generated setup script\n# Generated on ${
-    new Date().toISOString().split("T")[0]
-  }\n\n`;
+  let script = `#!/bin/bash
+# ${project.title} - Auto-generated setup script
+# Generated on ${new Date().toISOString().split("T")[0]}
+
+`;
 
   if (project.description) {
     script += `# Description: ${project.description}\n\n`;
   }
 
-  // Add color variables if palette exists
   if (palette) {
-    script += `# Color Variables from "${palette.name}" palette\n`;
-    script += `export PRIMARY_COLOR="${palette.primary_hex}"\n`;
-    script += `export SECONDARY_COLOR="${palette.secondary_hex}"\n`;
-    script += `export ACCENT_COLOR="${palette.accent_hex}"\n`;
-    script += `export BACKGROUND_COLOR="${palette.background_hex}"\n\n`;
+    script += `# Color Variables from "${palette.name}" palette
+export PRIMARY_COLOR="${palette.primary_hex}"
+export SECONDARY_COLOR="${palette.secondary_hex}"
+export ACCENT_COLOR="${palette.accent_hex}"
+export BACKGROUND_COLOR="${palette.background_hex}"
+
+`;
   }
 
-  // Add commands
+  // ← add: optional backend section
+  if (backend && (backend.models?.length || backend.relationships?.length)) {
+    script += `# Backend Schema (preview)
+# This section reflects your current Backend tab selections.
+# You can wire this into codegen later.
+cat > backend_schema.json <<'JSON'
+${JSON.stringify(backend, null, 2)}
+JSON
+
+`;
+  }
+
   if (commands.length > 0) {
-    script += `# Project Commands\necho "🚀 Setting up ${project.title}..."\n\n`;
+    script += `# Project Commands
+echo "🚀 Setting up ${project.title}..."
+
+`;
     commands.forEach((cmd, index) => {
-      script += `# ${cmd.label}\necho "Step ${index + 1}: ${cmd.label}"\n${cmd.command_text}\n\n`;
+      script += `# ${cmd.label}
+echo "Step ${index + 1}: ${cmd.label}"
+${cmd.command_text}
+
+`;
     });
-    script += `echo "✅ ${project.title} setup complete!"\n`;
+    script += `echo "✅ ${project.title} setup complete!"
+`;
   } else {
-    script += `echo "🚀 ${project.title} - No commands configured yet"\n`;
+    script += `echo "🚀 ${project.title} - No commands configured yet"
+`;
   }
 
   return script;
