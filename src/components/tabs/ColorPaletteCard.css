@@ -196,7 +196,7 @@
 
 /* Special styling for selected state */
 .color-palette-card.selected .palette-header {
-  background: rgba(254, 227, 148, 0.1);
+  background: var(--bg-input);
 }
 
 .color-palette-card.selected .palette-name {

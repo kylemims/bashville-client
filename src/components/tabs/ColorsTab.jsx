@@ -111,7 +111,7 @@ export const ColorsTab = ({
     <div className="colors-tab">
       <div className="section">
         <div className="section-header">
-          <h2 className="section-title">Palette Stash</h2>
+          <h2 className="section-title">Project Colors</h2>
         </div>
 
         <ErrorMessage message={error} />
