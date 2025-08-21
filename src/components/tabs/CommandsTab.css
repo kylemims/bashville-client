@@ -117,10 +117,6 @@
 }
 
 @media (min-width: 1024px) {
-  /* .section-title {
-    margin-bottom: 1.5rem;
-  } */
-
   .commands-tab {
     display: flex;
     flex-direction: row;

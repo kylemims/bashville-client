@@ -12,6 +12,7 @@ import "./SetupGenerator.css";
 export const SetupGenerator = ({ project, onClose }) => {
   const [activeTab, setActiveTab] = useState("bash");
   const [copyStatus, setCopyStatus] = useState(null);
+  const [downloadStatus, setDownloadStatus] = useState(null);
 
   if (!project) {
     return null;
@@ -27,6 +28,16 @@ export const SetupGenerator = ({ project, onClose }) => {
       setTimeout(() => setCopyStatus(null), 2000);
     } catch (error) {
       console.error("Copy failed:", error);
+    }
+  };
+
+  const handleDownload = (content, filename) => {
+    try {
+      downloadFile(content, filename);
+      setDownloadStatus(filename);
+      setTimeout(() => setDownloadStatus(null), 3000);
+    } catch (err) {
+      console.error("Download failed:", err);
     }
   };
 
@@ -91,9 +102,18 @@ export const SetupGenerator = ({ project, onClose }) => {
                 <MaterialIcon icon="content_copy" size={16} />
                 {copyStatus === activeTab ? "Copied!" : "Copy"}
               </ActionButton>
+              {downloadStatus && (
+                <div className="file-status">
+                  <span className="status-icon">✅</span>
+                  <span>
+                    {downloadStatus} downloaded.
+                    {downloadStatus === "setup.sh" && " Run: chmod +x setup.sh && ./setup.sh"}
+                  </span>
+                </div>
+              )}
               <ActionButton
                 onClick={() =>
-                  downloadFile(
+                  handleDownload(
                     activeTab === "bash" ? bashScript : readmeContent,
                     activeTab === "bash" ? "setup.sh" : "README.md"
                   )

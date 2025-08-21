@@ -77,8 +77,35 @@ export const CommandsTab = ({
     }
   };
 
-  const handleDeleteCommand = async (commandId) => {
-    if (!window.confirm("Are you sure you want to delete this command?")) return;
+  const handleRemoveFromProject = async (commandId) => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const newSelected = selectedCommands.filter((id) => id !== commandId);
+      setSelectedCommands(newSelected);
+
+      const updateData = { command_ids: newSelected };
+      await onSave(updateData);
+
+      setError("");
+    } catch (err) {
+      console.error("❌ Failed to remove command from project:", err);
+      setError(`Failed to remove command from project: ${err.message}`);
+      // Revert the state change on error
+      setSelectedCommands(selectedCommands);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteFromStash = async (commandId) => {
+    if (
+      !window.confirm(
+        "Are you sure you want to permanently delete this command from your stash? This cannot be undone."
+      )
+    )
+      return;
 
     try {
       setLoading(true);
@@ -126,7 +153,7 @@ export const CommandsTab = ({
                 onEdit={() => setEditingCommand(command.id)}
                 onSave={(data) => handleUpdateCommand(command.id, data)}
                 onCancel={() => setEditingCommand(null)}
-                onDelete={() => handleDeleteCommand(command.id)}
+                onDelete={() => handleRemoveFromProject(command.id)}
                 disabled={loading}
               />
             ))
@@ -150,7 +177,7 @@ export const CommandsTab = ({
                     onEdit={() => setEditingCommand(command.id)}
                     onSave={(data) => handleUpdateCommand(command.id, data)}
                     onCancel={() => setEditingCommand(null)}
-                    onDelete={() => handleDeleteCommand(command.id)}
+                    onDelete={() => handleDeleteFromStash(command.id)}
                     disabled={loading}
                   />
                 ) : (
@@ -181,7 +208,7 @@ export const CommandsTab = ({
                         size="xs"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleDeleteCommand(command.id);
+                          handleDeleteFromStash(command.id);
                         }}
                         disabled={loading}
                         aria-label={`Delete ${command.label}`}>
