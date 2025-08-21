@@ -17,6 +17,13 @@
   justify-content: space-between;
 }
 
+@media (min-width: 1220px) {
+  .navbar-container {
+    max-width: 1800px;
+    padding: 0 2rem;
+  }
+}
+
 .navbar-brand {
   color: var(--color-primary) !important;
   font-weight: 800 !important;

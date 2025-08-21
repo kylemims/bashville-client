@@ -10,20 +10,8 @@ export const ProjectTabs = ({ activeTab, onTabChange, onAddNew }) => {
     { key: "backend", label: "Backend" },
   ];
 
-  const getAddButtonText = () => {
-    switch (activeTab) {
-      case "commands":
-        return "Add New";
-      case "colors":
-        return "Add New";
-      default:
-        return "Add New";
-    }
-  };
-
   return (
     <div className="project-tabs-container">
-      {/* Left side - Tab buttons */}
       <div className="project-tabs">
         {tabs.map((tab) => (
           <ActionButton
@@ -33,19 +21,6 @@ export const ProjectTabs = ({ activeTab, onTabChange, onAddNew }) => {
             {tab.label}
           </ActionButton>
         ))}
-      </div>
-
-      {/* Right side - Add button */}
-      <div className="project-tabs-actions">
-        <ActionButton
-          onClick={onAddNew}
-          variant="accent"
-          size="sm"
-          className="add-button"
-          aria-label={getAddButtonText()}>
-          {/* <MaterialIcon icon={getAddButtonIcon()} size={18} /> */}
-          {getAddButtonText()}
-        </ActionButton>
       </div>
     </div>
   );

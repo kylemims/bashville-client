@@ -51,7 +51,7 @@ export const ColorPaletteCard = ({
               onEdit();
             }}
             variant="edit"
-            size="sm"
+            size="xs"
             disabled={disabled}
             aria-label={`Edit ${palette.name}`}>
             <span className="material-symbols-outlined available-edit">edit_square</span>{" "}
@@ -62,7 +62,7 @@ export const ColorPaletteCard = ({
               onDelete();
             }}
             variant="delete"
-            size="sm"
+            size="xs"
             disabled={disabled}
             aria-label={`Delete ${palette.name}`}>
             <span className="material-symbols-outlined available-delete">delete</span>{" "}

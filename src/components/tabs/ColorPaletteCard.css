@@ -67,6 +67,7 @@
 .palette-actions {
   display: flex;
   gap: 0.25rem;
+  align-items: center;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -210,4 +211,13 @@
   padding: 0.75rem;
   border-radius: 8px;
   margin: 0;
+}
+
+.available-edit {
+  font-size: 1rem;
+  cursor: pointer;
+}
+.available-delete {
+  font-size: 1rem;
+  cursor: pointer;
 }

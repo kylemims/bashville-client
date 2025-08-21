@@ -4,7 +4,7 @@ import { setBackendConfig, getBackendConfig, clearBackendConfig } from "../../ut
 import { saveBackendConfig } from "../../services/projectService";
 import { generateCodeForProject } from "../../services/codeGenService";
 import { ActionButton } from "../common/ActionButton.jsx";
-import { RelationshipRow } from "./RelationshipRow.jsx";
+import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./BackendTab.css";
 
 export const BackendTab = ({ project }) => {
@@ -12,7 +12,7 @@ export const BackendTab = ({ project }) => {
   const [config, setConfig] = useState(
     () => getBackendConfig(projectId) || { models: [], relationships: [] }
   );
-  const [busy, setBusy] = useState(false); // NEW
+  const [busy, setBusy] = useState(false);
   const [statusMsg, setStatusMsg] = useState("");
 
   useEffect(() => {
@@ -147,13 +147,31 @@ export const BackendTab = ({ project }) => {
     <div className="backend-tab">
       <div className="backend-actions">
         <ActionButton variant="primary" size="sm" onClick={addModel}>
-          Add Model
+          {"Model"}
+          <MaterialIcon
+            icon="add_box"
+            size={20}
+            color="var(--bg-primary)"
+            className="hover-primary remove-icon"
+          />
         </ActionButton>
         <ActionButton variant="secondary" size="sm" onClick={addRelationship}>
-          Add Relationship
+          {"Relationship"}
+          <MaterialIcon
+            icon="add_box"
+            size={20}
+            color="var(--text-primary)"
+            className="hover-primary remove-icon"
+          />
         </ActionButton>
-        <ActionButton variant="back-secondary" size="sm" onClick={reset}>
-          Clear
+        <ActionButton variant="clear" size="sm" onClick={reset}>
+          {"Clear"}
+          <MaterialIcon
+            icon="clear_all"
+            size={20}
+            color="var(--text-primary)"
+            className="hover-primary remove-icon"
+          />{" "}
         </ActionButton>
         <ActionButton
           variant="accent"
@@ -181,7 +199,12 @@ export const BackendTab = ({ project }) => {
                     onChange={(e) => updateModelName(mIdx, e.target.value)}
                   />
                   <ActionButton variant="delete" size="xs" onClick={() => removeModel(mIdx)}>
-                    Delete
+                    <MaterialIcon
+                      icon="delete"
+                      size={18}
+                      color="var(--mutedx)"
+                      className="hover-primary remove-icon"
+                    />{" "}
                   </ActionButton>
                 </div>
 
@@ -214,7 +237,12 @@ export const BackendTab = ({ project }) => {
                           <option>ManyToManyField</option>
                         </select>
                         <ActionButton variant="delete" size="xs" onClick={() => removeField(mIdx, fIdx)}>
-                          Remove
+                          <MaterialIcon
+                            icon="remove"
+                            size={14}
+                            color="var(--mutedx)"
+                            className="hover-primary"
+                          />{" "}
                         </ActionButton>
                       </div>
                     ))
@@ -228,7 +256,7 @@ export const BackendTab = ({ project }) => {
             <p className="empty-note">No models yet. Click “Add Model”.</p>
           )}
         </section>
-        <section className="backend-section">
+        {/* <section className="backend-section">
           <h3 className="section-title">Relationships</h3>
           {config.relationships?.length ? (
             config.relationships.map((r, rIdx) => (
@@ -244,10 +272,30 @@ export const BackendTab = ({ project }) => {
           ) : (
             <p className="empty-note">No relationships yet.</p>
           )}
-        </section>
+        </section> */}
 
-        {/* <section className="backend-section">
-          <h3 className="section-title">Relationships</h3>
+        <section className="backend-section">
+          <h3 className="section-title rel-title">
+            Relationships
+            <span
+              className="rel-help"
+              title={
+                "FK (ForeignKey): Many-to-One. Example: Many Book -> one Author\n" +
+                "M2M (ManyToMany): Many-to-Many. Example: Post <-> Tag\n" +
+                "O2O (OneToOne): One-to-One. Example: User <-> Profile\n\n" +
+                "Tips:\n" +
+                "• Put the FK on the Many side (e.g., Book.author -> Author)\n" +
+                "• M2M creates a join table automatically\n" +
+                "• O2O is like a unique FK (1:1)"
+              }
+              aria-label="Relationship help">
+              {MaterialIcon ? (
+                <MaterialIcon icon="help" size={16} />
+              ) : (
+                <span className="rel-help-fallback">?</span>
+              )}
+            </span>
+          </h3>
           {config.relationships?.length ? (
             config.relationships.map((r, rIdx) => (
               <div key={rIdx} className="rel-row">
@@ -272,30 +320,15 @@ export const BackendTab = ({ project }) => {
                   onChange={(e) => updateRelationship(rIdx, { to: e.target.value })}
                 />
                 <ActionButton variant="delete" size="xs" onClick={() => removeRelationship(rIdx)}>
-                  Remove
+                  <MaterialIcon icon="remove" size={14} color="var(--mutedx)" className="hover-primary" />{" "}
                 </ActionButton>
               </div>
             ))
           ) : (
             <p className="empty-note">No relationships yet.</p>
           )}
-        </section> */}
-        <section className="backend-section">
-          <h3 className="section-title">ERD Outline</h3>
-          <ul className="empty-note">
-            {config.relationships?.map((r, i) => (
-              <li key={i}>
-                <code>{r.from || "?"}</code> — <strong>{r.type}</strong> → <code>{r.to || "?"}</code>
-                {r.related_name ? (
-                  <>
-                    {" "}
-                    (related_name=<code>{r.related_name}</code>)
-                  </>
-                ) : null}
-              </li>
-            ))}
-          </ul>
         </section>
+
         <section className="backend-section">
           <h3 className="section-title">Preview</h3>
           <pre className="preview">{JSON.stringify(config, null, 2)}</pre>
