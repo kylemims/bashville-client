@@ -66,6 +66,17 @@ export SECONDARY_COLOR="${palette.secondary_hex}"
 export ACCENT_COLOR="${palette.accent_hex}"
 export BACKGROUND_COLOR="${palette.background_hex}"
 
+# Also write CSS variables for your app
+mkdir -p styles
+cat > styles/colors.css <<'CSSVARS'
+:root {
+  --primary-color: ${palette.primary_hex};
+  --secondary-color: ${palette.secondary_hex};
+  --accent-color: ${palette.accent_hex};
+  --background-color: ${palette.background_hex};
+}
+CSSVARS
+
 `;
   }
 

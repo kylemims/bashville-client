@@ -1,11 +1,23 @@
 // src/components/HomePage/FutureSneakPeek.jsx
 import { ActionButton } from "../common/ActionButton.jsx";
+import { addCommandsToStash } from "../../utils/addToStash.js";
+import { DJANGO_STARTER_COMMANDS } from "../../utils/templates/djangoCrudStarter.js";
 import "./FutureSneakPeek.css";
 
 export const FutureSneakPeek = () => {
   const templates = [
-    { id: "crud-django", title: "Django CRUD Starter", tags: ["API", "Auth", "DRF"] },
-    { id: "react-tailwind", title: "React + Tailwind Dashboard", tags: ["UI", "Charts"] },
+    {
+      id: "crud-django",
+      title: "Django CRUD Starter",
+      tags: ["API", "Auth", "DRF"],
+      image: "assets/images/django-dash.png",
+    },
+    {
+      id: "react-tailwind",
+      title: "React + Tailwind Dashboard",
+      tags: ["UI", "Charts"],
+      image: "assets/images/tail-dash.png",
+    },
     {
       id: "saas-min",
       title: "Mini SaaS Boilerplate",
@@ -13,6 +25,21 @@ export const FutureSneakPeek = () => {
       image: "assets/images/vivid3.png",
     },
   ];
+
+  const handleTryTemplate = async (tplId) => {
+    if (tplId !== "crud-django") return;
+    try {
+      const added = await addCommandsToStash(DJANGO_STARTER_COMMANDS);
+      const msg =
+        added.length > 0
+          ? `✅ Added ${added.length} command${added.length > 1 ? "s" : ""} to your Command Stash.`
+          : "• Those commands are already in your stash.";
+      alert(`${msg}\n\nOpen a project → Commands tab to use them.`);
+    } catch (e) {
+      console.error(e);
+      alert("❌ Failed to add commands. Please check your login/session.");
+    }
+  };
 
   const palettes = [
     { id: "neon-dusk", name: "Neon Dusk", swatches: ["#1f2937", "#3b82f6", "#f59e0b", "#0b0f1a"] },
@@ -40,31 +67,48 @@ export const FutureSneakPeek = () => {
         </div>
 
         <div className="future-cards">
-          {templates.map((t) => (
-            <article key={t.id} className="future-card">
-              <div className="card-thumb card-thumb--template">
-                <img className="card-image" src={t.image} alt="" />
-              </div>
-              <div className="card-body">
-                <h4 className="card-title">{t.title}</h4>
-                <div className="card-tags">
-                  {t.tags.map((tag) => (
-                    <span key={tag} className="tag">
-                      {tag}
-                    </span>
-                  ))}
+          {templates.map((t) => {
+            const isDjango = t.id === "crud-django";
+            return (
+              <article key={t.id} className="future-card">
+                <div className="card-thumb card-thumb--template" aria-hidden="true">
+                  {/* Only render an <img> if you provided a path */}
+                  {t.image ? <img className="card-image" src={t.image} alt={`${t.title} preview`} /> : null}
                 </div>
-                <div className="card-actions">
-                  <ActionButton size="xs" variant="primary" disabled title="Demo build (soon)">
-                    Try Template
-                  </ActionButton>
-                  <ActionButton size="xs" variant="tab" onClick={() => (window.location.href = "/templates")}>
-                    Learn More
-                  </ActionButton>
+
+                <div className="card-body">
+                  <h4 className="card-title">{t.title}</h4>
+
+                  <div className="card-tags">
+                    {t.tags.map((tag) => (
+                      <span key={tag} className="tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="card-actions">
+                    <ActionButton
+                      size="xs"
+                      variant={isDjango ? "primary" : "tab"}
+                      onClick={() => (isDjango ? handleTryTemplate(t.id) : null)}
+                      disabled={!isDjango}
+                      aria-disabled={!isDjango}
+                      title={isDjango ? "Add starter commands to your stash" : "Demo build (soon)"}>
+                      {isDjango ? "Try Template" : "Try Template"}
+                    </ActionButton>
+
+                    <ActionButton
+                      size="xs"
+                      variant="tab"
+                      onClick={() => (window.location.href = "/templates")}>
+                      Learn More
+                    </ActionButton>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       </div>
 
