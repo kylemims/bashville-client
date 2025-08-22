@@ -62,8 +62,8 @@ export const SetupGenerator = ({ project, onClose }) => {
       <div className="setup-generator-modal">
         <div className="setup-generator-header">
           <h2>Generate Setup Files</h2>
-          <ActionButton onClick={onClose} variant="ghost" size="sm">
-            <MaterialIcon icon="close" size={20} />
+          <ActionButton onClick={onClose} variant="back-secondary" size="sm">
+            <MaterialIcon icon="close" size={24} />
           </ActionButton>
         </div>
 

@@ -1,8 +1,10 @@
 // src/views/HomePage.jsx
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { ActionButton } from "../components/common/ActionButton.jsx";
+import { HomeWhySection } from "../components/home/HomeWhySection.jsx";
+import { FutureSneakPeek } from "../components/home/FutureSneakPeek.jsx";
 import { useNavigate } from "react-router-dom";
-import "./HomePage.css"; // Assuming you have some styles for the HomePage
+import "./HomePage.css";
 
 export const HomePage = () => {
   useDocumentTitle("Home • BASH STASH");
@@ -30,32 +32,8 @@ export const HomePage = () => {
           <img src="/assets/images/bashed-logo.svg" alt="Bash Stash Hero" className="hero-image" />
         </div>
       </section>
-      <section className="features-section">
-        <h2>Why Bash Stash?</h2>
-        <div className="feature-cards">
-          {/* Reuse ProjectCard or make simple cards */}
-          <div className="feature-card">Stash Commands: Save and reuse CLI magic.</div>
-          <div className="feature-card">Color Palettes: Theme projects instantly.</div>
-          <div className="feature-card">One-Click Scripts: Generate bash and README.</div>
-        </div>
-      </section>
+      <HomeWhySection />
+      <FutureSneakPeek />
     </main>
   );
 };
-//       <section className="page-card" style={{ maxWidth: "1000px", margin: "0 auto" }}>
-//         <h2 className="text-xl mb-2">Launch projects faster.</h2>
-//         <p className="text-base mb-4">
-//           Spin up templates, stash your favorite commands, and bootstrap README + bash scripts.
-//         </p>
-//         <div className="flex gap-4">
-//           <a href="/dashboard" className="button">
-//             Go to Dashboard
-//           </a>
-//           <a href="/projects/new" className="button secondary">
-//             Create New Project
-//           </a>
-//         </div>
-//       </section>
-//     </main>
-//   );
-// };

@@ -8,6 +8,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PageTemplate } from "./views/PageTemplate";
 import { HomePage } from "./views/HomePage";
 import { Launch } from "./views/Launch";
+import { FeaturesShowcase } from "./views/FeaturesShowcase.jsx";
 
 export const ApplicationViews = () => {
   return (
@@ -17,6 +18,7 @@ export const ApplicationViews = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/template" element={<PageTemplate />} />
+      <Route path="/features" element={<FeaturesShowcase />} />
 
       {/* Protected routes */}
       <Route

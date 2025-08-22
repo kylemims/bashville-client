@@ -5,6 +5,7 @@ import { ErrorMessage } from "../common/ErrorMessage.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { CommandItem } from "./CommandItem.jsx";
 import { NewCommandForm } from "./NewCommandForm.jsx";
+import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./CommandsTab.css";
 
 export const CommandsTab = ({
@@ -131,7 +132,7 @@ export const CommandsTab = ({
     <div className="commands-tab">
       <div className="section-project">
         <div className="section-header">
-          <h2 className="section-title">Project Commands</h2>
+          <h3 className="section-title">Project Commands</h3>
         </div>
 
         <ErrorMessage message={error} onDismiss={() => setError("")} />
@@ -164,7 +165,18 @@ export const CommandsTab = ({
       </div>
 
       <div className="section-stash">
-        <h2 className="section-title-available">Command Stash</h2>
+        <div className="command-header-row">
+          <h3 className="section-title-available">Command Stash</h3>
+          <div className="command-gradient-line"></div>
+          <ActionButton
+            variant="add-field"
+            size="xs"
+            onClick={() => onNewCommandFormChange(true)}
+            // className="section-action-button"
+            title="Add Model">
+            <MaterialIcon icon="add" size={26} color="var(--muted)" />
+          </ActionButton>
+        </div>
         <div className="available-commands-grid">
           {availableCommands.length > 0 ? (
             availableCommands.map((command) => (

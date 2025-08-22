@@ -63,8 +63,8 @@
 
 .section-title-with-line {
   color: var(--color-primary);
-  font-weight: 700;
-  font-size: 1rem;
+  /* font-weight: 700; */
+  /* font-size: 1rem; */
   margin: 0;
   white-space: nowrap;
 }
@@ -85,8 +85,8 @@
 /* Legacy section title (for sections without action buttons) */
 .section-title {
   color: var(--color-primary);
-  margin-bottom: 0.5rem;
-  font-weight: 700;
+  margin-bottom: 1.5rem;
+  /* font-weight: 700; */
 }
 
 /* Relationship title with help icon */
