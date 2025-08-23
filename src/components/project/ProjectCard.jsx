@@ -9,10 +9,48 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
   const hasCommands = project.commands_preview && project.commands_preview.length > 0;
   const hasColors = project.color_palette_preview;
 
+  // Project type configuration
+  const getProjectTypeConfig = (type) => {
+    const configs = {
+      "static-tailwind": {
+        label: "Static + Tailwind",
+        icon: "bolt",
+        color: "var(--color-accent)",
+        complexity: "Simple",
+      },
+      "static-css": {
+        label: "Static + CSS",
+        icon: "palette",
+        color: "var(--color-accent)",
+        complexity: "Simple",
+      },
+      "fullstack-tailwind": {
+        label: "Full-Stack + Tailwind",
+        icon: "rocket_launch",
+        color: "var(--color-secondary)",
+        complexity: "Advanced",
+      },
+      "fullstack-css": {
+        label: "Full-Stack + CSS",
+        icon: "settings",
+        color: "var(--color-secondary)",
+        complexity: "Advanced",
+      },
+    };
+    return configs[type] || configs["static-tailwind"];
+  };
+
+  const typeConfig = getProjectTypeConfig(project.project_type);
+
   return (
     <div className="project-card">
       <div className="project-card-header">
         <h3 className="project-title">{project.title}</h3>
+        <div className="project-type-badge" style={{ borderColor: typeConfig.color }}>
+          <MaterialIcon icon={typeConfig.icon} />
+          <span className="project-type-label">{typeConfig.label}</span>
+          <span className="project-complexity">{typeConfig.complexity}</span>
+        </div>
 
         {project.description && <p className="project-description">{project.description}</p>}
 

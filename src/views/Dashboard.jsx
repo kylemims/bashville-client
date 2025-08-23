@@ -18,6 +18,7 @@ export const Dashboard = () => {
   const [deletingId, setDeletingId] = useState(null);
   const [showSetupGenerator, setShowSetupGenerator] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [filterType, setFilterType] = useState("all");
 
   useDocumentTitle("Dashboard • Bash Stash");
 
@@ -63,6 +64,21 @@ export const Dashboard = () => {
     setShowSetupGenerator(true);
   };
 
+  // Filter projects based on selected type
+  const filteredProjects = projects.filter((project) => {
+    if (filterType === "all") return true;
+    return project.project_type === filterType;
+  });
+
+  // Get unique project types for filter options
+  const projectTypes = [
+    { value: "all", label: "All Projects" },
+    { value: "static-tailwind", label: "Static + Tailwind" },
+    { value: "static-css", label: "Static + CSS" },
+    { value: "fullstack-tailwind", label: "Full-Stack + Tailwind" },
+    { value: "fullstack-css", label: "Full-Stack + CSS" },
+  ];
+
   const handleCloseSetupGenerator = () => {
     setShowSetupGenerator(false);
     setSelectedProject(null);
@@ -85,25 +101,46 @@ export const Dashboard = () => {
           </h1>
           <p className="dashboard-subtitle">Manage your development project stashes</p>
         </div>
-        <Link to="/projects/new" className="button">
-          Create Project
-        </Link>
+        <div className="dashboard-controls">
+          <select
+            className="project-type-filter"
+            value={filterType}
+            onChange={(e) => setFilterType(e.target.value)}>
+            {projectTypes.map((type) => (
+              <option key={type.value} value={type.value}>
+                {type.label}
+              </option>
+            ))}
+          </select>
+          <Link to="/projects/new" className="button">
+            Create Project
+          </Link>
+        </div>
       </div>
 
       <ErrorMessage message={error} onDismiss={() => setError(null)} />
 
-      {projects.length === 0 ? (
-        <EmptyState />
+      {filteredProjects.length === 0 ? (
+        projects.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <div className="projects-section">
+            <div className="projects-stats">
+              <span className="stats-text">No projects match the selected filter</span>
+            </div>
+          </div>
+        )
       ) : (
         <div className="projects-section">
           <div className="projects-stats">
             <span className="stats-text">
-              {projects.length} project{projects.length !== 1 ? "s" : ""} total
+              {filteredProjects.length} of {projects.length} project{projects.length !== 1 ? "s" : ""}
+              {filterType !== "all" && ` (${projectTypes.find((t) => t.value === filterType)?.label})`}
             </span>
           </div>
 
           <div className="project-grid">
-            {projects.map((project) => (
+            {filteredProjects.map((project) => (
               <ProjectCard
                 key={project.id}
                 project={project}

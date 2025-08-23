@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createProject } from "../services/projectService";
 import { FormField } from "../components/common/FormField.jsx";
 import { ActionButton } from "../components/common/ActionButton.jsx";
+import { LayoutSelector } from "../components/project/LayoutSelector.jsx";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { ROUTES } from "../utils/constants";
 import { ErrorMessage } from "../components/common/ErrorMessage.jsx";
@@ -12,6 +13,7 @@ export const NewProject = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
+    project_type: "static-tailwind", // Default to simplest option
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -34,6 +36,11 @@ export const NewProject = () => {
       return;
     }
 
+    if (!formData.project_type) {
+      setError("Please select a project layout type");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
@@ -49,12 +56,12 @@ export const NewProject = () => {
     }
   };
 
-  const isFormValid = formData.title.trim();
+  const isFormValid = formData.title.trim() && formData.project_type;
 
   return (
     <div className="page-content page-enter">
       <div className="container">
-        <div className="page-card" style={{ maxWidth: "600px", margin: "0 auto" }}>
+        <div className="page-card" style={{ maxWidth: "800px", margin: "0 auto" }}>
           <h1 className="card-title text-2xl">New Project</h1>
 
           <ErrorMessage message={error} onDismiss={() => setError("")} />
@@ -79,6 +86,17 @@ export const NewProject = () => {
               placeholder="Brief description of your project..."
               disabled={loading}
             />
+
+            <div className="form-field">
+              <label className="form-label">
+                Project Layout <span className="required">*</span>
+              </label>
+              <LayoutSelector
+                selectedType={formData.project_type}
+                onTypeChange={(type) => handleInputChange("project_type", type)}
+                disabled={loading}
+              />
+            </div>
 
             <div className="form-actions">
               <ActionButton
