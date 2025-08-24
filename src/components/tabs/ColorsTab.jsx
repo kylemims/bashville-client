@@ -7,6 +7,8 @@ import {
 import { ColorPaletteForm } from "./ColorPaletteForm";
 import { ColorPaletteCard } from "./ColorPaletteCard";
 import { ErrorMessage } from "../common/ErrorMessage";
+import { ActionButton } from "../common/ActionButton.jsx";
+import { MaterialIcon } from "../common/MaterialIcon.jsx";
 
 export const ColorsTab = ({
   project,
@@ -110,8 +112,9 @@ export const ColorsTab = ({
   return (
     <div className="colors-tab">
       <div className="section">
-        <div className="section-header">
-          <h3 className="section-title">Project Colors</h3>
+        <div className="command-header-row">
+          <h3 className="section-title-available">Project Colors</h3>
+          <div className="command-gradient-line"></div>
         </div>
 
         <ErrorMessage message={error} />
@@ -149,7 +152,18 @@ export const ColorsTab = ({
       </div>
 
       <div className="section">
-        <h2 className="section-title">Available Palettes</h2>
+        <div className="command-header-row">
+          <h3 className="section-title-available">Available Palettes</h3>
+          <div className="command-gradient-line"></div>
+          <ActionButton
+            variant="add-field"
+            size="xs"
+            onClick={() => onNewPaletteFormChange(true)}
+            // className="section-action-button"
+            title="Add Model">
+            <MaterialIcon icon="add" size={26} color="var(--muted)" />
+          </ActionButton>
+        </div>
         <div className="palette-grid">
           {availablePalettes.map((palette) => (
             <ColorPaletteCard
