@@ -83,6 +83,12 @@ export const LayoutSelector = ({ selectedType, onTypeChange, disabled = false })
               color={isSelected ? "var(--color-primary)" : "var(--muted)"}
             />
           </div>
+          {isSelected && (
+            <div className="layout-select-indicator">
+              <MaterialIcon icon="check_circle" size={20} color="var(--bg-primary)" />
+              <span className="selected-span-text">selected</span>
+            </div>
+          )}
           <div className="layout-complexity">
             <span className="complexity-badge" style={{ color: getComplexityColor(type.complexity) }}>
               {type.complexity}
@@ -113,12 +119,6 @@ export const LayoutSelector = ({ selectedType, onTypeChange, disabled = false })
             </div>
           )}
         </div>
-
-        {isSelected && (
-          <div className="layout-select-indicator">
-            <MaterialIcon icon="check_circle" size={20} color="var(--bg-primary)" />
-          </div>
-        )}
       </div>
     );
   };

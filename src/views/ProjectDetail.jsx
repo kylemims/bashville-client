@@ -12,7 +12,7 @@ import { ActionButton } from "../components/common/ActionButton";
 import { ProjectHeader } from "../components/project/ProjectHeader";
 import { ProjectTabs } from "../components/project/ProjectTabs";
 import { BackendTab } from "../components/tabs/BackendTab.jsx";
-import { SetupGenerator } from "../components/project/SetupGenerator.jsx";
+import GenerateProjectModal from "../components/project/GenerateProjectModal.jsx";
 import { ROUTES } from "../utils/constants";
 
 export const ProjectDetail = () => {
@@ -178,7 +178,11 @@ export const ProjectDetail = () => {
           )}
 
           {showSetupGenerator && (
-            <SetupGenerator project={state.project} onClose={() => setShowSetupGenerator(false)} />
+            <GenerateProjectModal
+              project={state.project}
+              isOpen={showSetupGenerator}
+              onClose={() => setShowSetupGenerator(false)}
+            />
           )}
         </div>
       </div>
