@@ -115,8 +115,8 @@ export const LayoutSelector = ({ selectedType, onTypeChange, disabled = false })
         </div>
 
         {isSelected && (
-          <div className="selection-indicator">
-            <MaterialIcon icon="check_circle" size={20} color="var(--color-primary)" />
+          <div className="layout-select-indicator">
+            <MaterialIcon icon="check_circle" size={20} color="var(--bg-primary)" />
           </div>
         )}
       </div>
