@@ -9,7 +9,7 @@ import FilePreview from "./FilePreview.jsx";
 import ProjectDownloader from "./ProjectDownloader.jsx";
 import "./GenerateProjectModal.css";
 
-const GenerateProjectModal = ({ project, isOpen, onClose }) => {
+export const GenerateProjectModal = ({ project, isOpen, onClose }) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generationResult, setGenerationResult] = useState(null);
   const [error, setError] = useState(null);
@@ -51,7 +51,7 @@ const GenerateProjectModal = ({ project, isOpen, onClose }) => {
 
   const handleDownloadComplete = (projectName) => {
     console.log(`Downloaded project: ${projectName}`);
-    // Could show a success message here
+    // TODO: plug in success message after testing
   };
 
   const handleClose = () => {
@@ -194,5 +194,3 @@ const GenerateProjectModal = ({ project, isOpen, onClose }) => {
     </div>
   );
 };
-
-export default GenerateProjectModal;

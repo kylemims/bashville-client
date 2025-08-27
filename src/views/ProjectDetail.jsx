@@ -126,7 +126,7 @@ export const ProjectDetail = () => {
   const handleDeleteProject = async (projectId) => {
     if (window.confirm("Are you sure you want to delete this project?")) {
       try {
-        await deleteProject(state.project.id);
+        await deleteProject(state.project.id || projectId);
         navigate(ROUTES.DASHBOARD);
       } catch (error) {
         console.error("Failed to delete project:", error);
@@ -153,7 +153,7 @@ export const ProjectDetail = () => {
         <ProjectTabs
           activeTab={state.activeTab}
           onTabChange={(tab) => updateState({ activeTab: tab })}
-          onAddNew={handleAddNew} // ← Add this prop
+          onAddNew={handleAddNew}
         />
 
         <div className="tab-content">
@@ -162,16 +162,16 @@ export const ProjectDetail = () => {
               {...tabProps}
               availableCommands={state.availableCommands}
               onCommandsUpdate={(commands) => updateState({ availableCommands: commands })}
-              showNewCommandForm={showNewCommandForm} // ← Pass this down
-              onNewCommandFormChange={setShowNewCommandForm} // ← Pass this down
+              showNewCommandForm={showNewCommandForm}
+              onNewCommandFormChange={setShowNewCommandForm}
             />
           ) : state.activeTab === "colors" ? (
             <ColorsTab
               {...tabProps}
               availablePalettes={state.availablePalettes}
               onPalettesUpdate={(palettes) => updateState({ availablePalettes: palettes })}
-              showNewPaletteForm={showNewPaletteForm} // ← Pass this down
-              onNewPaletteFormChange={setShowNewPaletteForm} // ← Pass this down
+              showNewPaletteForm={showNewPaletteForm}
+              onNewPaletteFormChange={setShowNewPaletteForm}
             />
           ) : (
             <BackendTab project={state.project} />

@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./FileTree.css";
 
 const FileTree = ({ files, onFileSelect, selectedFile }) => {
   const [expandedFolders, setExpandedFolders] = useState(new Set(["src"]));
 
-  // Build file tree structure from flat file list
   const buildFileTree = (files) => {
     const tree = {};
 
@@ -17,14 +16,12 @@ const FileTree = ({ files, onFileSelect, selectedFile }) => {
         const part = parts[i];
 
         if (i === parts.length - 1) {
-          // This is a file
           current[part] = {
             type: "file",
             path: file.path,
             content: file.content,
           };
         } else {
-          // This is a folder
           if (!current[part]) {
             current[part] = {
               type: "folder",
@@ -121,7 +118,6 @@ const FileTree = ({ files, onFileSelect, selectedFile }) => {
             <div className="folder-contents">
               {childEntries
                 .sort(([, a], [, b]) => {
-                  // Folders first, then files
                   if (a.type !== b.type) {
                     return a.type === "folder" ? -1 : 1;
                   }
@@ -149,7 +145,6 @@ const FileTree = ({ files, onFileSelect, selectedFile }) => {
         {rootEntries.length > 0 ? (
           rootEntries
             .sort(([, a], [, b]) => {
-              // Folders first, then files
               if (a.type !== b.type) {
                 return a.type === "folder" ? -1 : 1;
               }
