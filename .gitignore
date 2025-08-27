@@ -22,3 +22,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .env
+
+# Documentation files (keep out of repo)
+/API_REFERENCE.md
+/CLIENT_SIDE_IMPLEMENTATION_GUIDE.md
+/SERVER_SIDE_IMPLEMENTATION_GUIDE.md
+/CLIENT_SIDE_INTEGRATION_GUIDE.md
+/CLIENT_SIDE_LLM_PROMPT.md
+/TESTING_GUIDE.md
+/USER_WORKFLOW_GUIDE.md
+/.github/copilot-instructions.md
