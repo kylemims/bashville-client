@@ -40,7 +40,6 @@
   padding: 8px 0;
 }
 
-/* File and Folder Items */
 .file-item,
 .folder-item {
   display: flex;
@@ -91,7 +90,6 @@
   margin-left: auto;
 }
 
-/* Folder Structure */
 .folder-container {
   margin-bottom: 2px;
 }
@@ -102,7 +100,6 @@
   padding-left: 8px;
 }
 
-/* Empty State */
 .empty-tree {
   display: flex;
   flex-direction: column;
@@ -118,7 +115,6 @@
   font-size: 0.875rem;
 }
 
-/* Scrollbar Styling */
 .file-tree-content::-webkit-scrollbar {
   width: 6px;
 }
@@ -136,7 +132,6 @@
   background: var(--muted);
 }
 
-/* Focus States */
 .file-item:focus,
 .folder-item:focus {
   outline: none;
@@ -144,7 +139,6 @@
   box-shadow: inset 0 0 0 2px rgba(254, 227, 148, 0.3);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .file-tree-header {
     padding: 10px 12px;

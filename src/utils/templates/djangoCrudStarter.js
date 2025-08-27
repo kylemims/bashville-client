@@ -1,6 +1,3 @@
-// src/utils/templates/djangoCrudStarter.js
-
-// Keeping this short & safe for demo. setup.sh already writes .gitignore.
 export const DJANGO_STARTER_COMMANDS = [
   {
     label: "Init Git",

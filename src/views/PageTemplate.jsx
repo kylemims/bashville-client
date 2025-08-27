@@ -1,4 +1,3 @@
-// src/pages/Templates.jsx
 import { ActionButton } from "../components/common/ActionButton.jsx";
 import "./PageTemplate.css";
 

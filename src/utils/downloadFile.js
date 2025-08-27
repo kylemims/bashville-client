@@ -1,5 +1,3 @@
-// src/utils/downloadFile.js
-
 export const downloadFile = (content, filename) => {
   const blob = new Blob([content], { type: "text/plain" });
   const url = URL.createObjectURL(blob);

@@ -1,5 +1,3 @@
-/* ProjectDownloader Component Styles */
-
 .project-downloader {
   display: flex;
   flex-direction: column;
@@ -24,7 +22,6 @@
   font-size: 0.875rem;
 }
 
-/* Project Info */
 .project-info {
   background: var(--bg-secondary);
   border-radius: var(--radius);
@@ -56,7 +53,6 @@
   font-size: 0.875rem;
 }
 
-/* File List */
 .file-list {
   margin: 20px 0;
 }
@@ -100,7 +96,6 @@
   white-space: nowrap;
 }
 
-/* Setup Preview */
 .setup-preview {
   margin: 20px 0;
 }
@@ -154,7 +149,6 @@
   border: none;
 }
 
-/* Download Actions */
 .download-actions {
   display: flex;
   flex-direction: column;
@@ -180,7 +174,6 @@
   }
 }
 
-/* Color Info */
 .color-info {
   display: flex;
   align-items: center;
@@ -210,7 +203,6 @@
   transform: scale(1.1);
 }
 
-/* Scrollbar Styling */
 .project-downloader::-webkit-scrollbar,
 .file-grid::-webkit-scrollbar {
   width: 6px;
@@ -232,7 +224,6 @@
   background: var(--muted);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .project-downloader {
     padding: 16px;
@@ -272,7 +263,6 @@
   }
 }
 
-/* High Contrast Mode */
 @media (prefers-contrast: high) {
   .setup-steps {
     border-width: 2px;
@@ -283,7 +273,6 @@
   }
 }
 
-/* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .spinner {
     animation: none;

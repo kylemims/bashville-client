@@ -1,8 +1,6 @@
-// src/utils/addToStash.js
 import { getCommands, createCommand } from "../services/commandService";
 
 export async function addCommandsToStash(commands) {
-  // de‑dupe by label so repeated clicks don’t create duplicates
   const existing = await getCommands();
   const have = new Set(existing.map((c) => c.label.trim().toLowerCase()));
 

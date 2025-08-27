@@ -1,4 +1,3 @@
-/* filepath: src/components/tabs/ColorPaletteForm.jsx */
 import { useState } from "react";
 import { FormField } from "../common/FormField.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";

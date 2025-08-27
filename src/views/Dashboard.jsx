@@ -64,13 +64,11 @@ export const Dashboard = () => {
     setShowSetupGenerator(true);
   };
 
-  // Filter projects based on selected type
   const filteredProjects = projects.filter((project) => {
     if (filterType === "all") return true;
     return project.project_type === filterType;
   });
 
-  // Get unique project types for filter options
   const projectTypes = [
     { value: "all", label: "All Projects" },
     { value: "static-tailwind", label: "Static + Tailwind" },

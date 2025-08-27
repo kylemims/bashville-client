@@ -14,7 +14,6 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
     setIsEditing(true);
     setError("");
   };
-  // if project title updates elsewhere, reflect that in the field
   useEffect(() => {
     if (!isEditing) setEditTitle(title);
   }, [title, isEditing]);
@@ -32,7 +31,6 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
     }
 
     if (editTitle.trim() === title.trim()) {
-      // No change, just exit edit mode
       setIsEditing(false);
       return;
     }
@@ -59,16 +57,13 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
 
   return (
     <div className="project-header">
-      {/* Back button - positioned above title */}
       <div className="back-button-section">
         <ActionButton onClick={onBack} variant="bgsecondary" size="sm" aria-label="Back to Dashboard">
           <MaterialIcon icon="arrow_back" size={16} />
         </ActionButton>
       </div>
 
-      {/* Main header row with title and actions */}
       <div className="header-main-row">
-        {/* Left side - Title */}
         <div className="project-title-section">
           {isEditing ? (
             <div className="project-title-edit">
@@ -113,7 +108,6 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
           )}
         </div>
 
-        {/* Right side - Action buttons */}
         <div className="project-actions">
           <ActionButton
             onClick={onGenerateSetup}

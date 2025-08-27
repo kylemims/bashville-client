@@ -34,7 +34,6 @@
   line-height: 1.4;
 }
 
-/* Feature cards */
 .fs-grid {
   display: grid;
   gap: 0.85rem;
@@ -90,7 +89,6 @@
   opacity: 0.9;
 }
 
-/* Palette strip */
 .fs-palette {
   display: flex;
   gap: 0.5rem;
@@ -125,7 +123,6 @@
   box-shadow: none;
 }
 
-/* Weekly Templates */
 .fs-templates-head {
   display: flex;
   flex-direction: column;
@@ -222,7 +219,7 @@
 .fs-btn--primary {
   background: var(--color-primary);
   border-color: var(--color-primary);
-  color: #0b0f1a; /* contrasts your dark bg nicely */
+  color: #0b0f1a;
 }
 
 .fs-btn--primary:hover {

@@ -24,7 +24,6 @@
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  /* transition: transform 0.15s ease; */
   transition: all 0.2s ease;
   cursor: pointer;
   position: relative;
@@ -41,7 +40,6 @@
   transform: scale(1.05);
 }
 
-/* Copied state animation */
 .color-swatch.copied {
   animation: copyPulse 0.4s ease-out;
   transform: scale(1.01);
@@ -63,7 +61,6 @@
   }
 }
 
-/* Size variants for swatches */
 .color-preview--xs .color-swatch {
   width: 8px;
   height: 8px;
@@ -84,14 +81,12 @@
   height: 20px;
 }
 
-/* Special handling for light backgrounds */
 .color-swatch[style*="#FFFFFF"],
 .color-swatch[style*="#ffffff"],
 .color-swatch[style*="rgb(255, 255, 255)"] {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Special handling for very light colors */
 .color-swatch[style*="#F"],
 .color-swatch[style*="#f"] {
   border-color: rgba(0, 0, 0, 0.15);
@@ -117,7 +112,7 @@
 
 @media (max-width: 640px) {
   .color-swatch:hover {
-    transform: scale(1.1); /* Less dramatic on mobile */
+    transform: scale(1.1);
   }
 
   .color-swatch.copied {

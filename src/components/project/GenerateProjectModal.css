@@ -53,7 +53,6 @@
   flex-direction: column;
 }
 
-/* Generation Start Screen */
 .generation-start {
   display: flex;
   flex-direction: column;
@@ -120,7 +119,6 @@
   line-height: 1.4;
 }
 
-/* Generation Result Screen */
 .generation-result {
   display: flex;
   flex-direction: column;
@@ -195,7 +193,6 @@
   overflow: hidden;
 }
 
-/* File Explorer Layout */
 .file-explorer {
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -234,7 +231,6 @@
   text-align: center;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .modal-container.large {
     width: 95vw;

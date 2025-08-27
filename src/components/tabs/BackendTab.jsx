@@ -1,4 +1,3 @@
-// src/components/tabs/BackendTab.jsx
 import { useEffect, useState } from "react";
 import { setBackendConfig, getBackendConfig, clearBackendConfig } from "../../utils/backendConfig";
 import { saveBackendConfig } from "../../services/projectService";
@@ -116,20 +115,16 @@ export const BackendTab = ({ project }) => {
     saveAs(blob, `${appLabel}.zip`);
   };
 
-  // NEW: main handler for “Generate & Write”
   const handleGenerateAndWrite = async () => {
     if (!projectId) return;
     setBusy(true);
     setStatusMsg("Saving configuration…");
     try {
-      // 1) persist config to API (Project.backend_config)
       await saveBackendConfig(projectId, config);
 
-      // 2) call codegen
       setStatusMsg("Generating code…");
       const { app_label, files } = await generateCodeForProject(projectId);
 
-      // 3) offer download as ZIP
       setStatusMsg("Packaging files…");
       await zipAndDownload(files, app_label);
 
@@ -169,12 +164,7 @@ export const BackendTab = ({ project }) => {
             <div className="section-header-with-action">
               <h3 className="section-title-with-line">Models</h3>
               <div className="section-gradient-line"></div>
-              <ActionButton
-                variant="add-field"
-                size="xs"
-                onClick={addModel}
-                // className="section-action-button"
-                title="Add Model">
+              <ActionButton variant="add-field" size="xs" onClick={addModel} title="Add Model">
                 <MaterialIcon icon="add" size={26} color="var(--muted)" />
               </ActionButton>
             </div>
@@ -263,12 +253,7 @@ export const BackendTab = ({ project }) => {
                 </span>
               </div>
               <div className="section-gradient-line"></div>
-              <ActionButton
-                variant="add-field"
-                size="xs"
-                onClick={addRelationship}
-                // className="section-action-button"
-                title="Add Relationship">
+              <ActionButton variant="add-field" size="xs" onClick={addRelationship} title="Add Relationship">
                 <MaterialIcon icon="add" size={26} color="var(--muted)" />
               </ActionButton>
             </div>

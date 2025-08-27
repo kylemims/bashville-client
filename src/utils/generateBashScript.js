@@ -1,4 +1,3 @@
-// src/utils/generateBashScript.js
 import { getBackendConfig } from "./backendConfig";
 
 export const generateBashScript = (project) => {
@@ -80,7 +79,6 @@ CSSVARS
 `;
   }
 
-  // Optional backend schema preview
   if (backend && (backend.models?.length || backend.relationships?.length)) {
     script += `# Backend Schema (preview)
 # This mirrors your Backend tab selections for reference.
@@ -91,7 +89,6 @@ JSON
 `;
   }
 
-  // Project commands (from your stash)
   if (commands.length > 0) {
     script += `# Project Commands
 echo "🚀 Setting up ${project.title}..."

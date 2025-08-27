@@ -156,13 +156,7 @@ export const ColorsTab = ({
         <div className="command-header-row">
           <h3 className="section-title-available">Available Palettes</h3>
           <div className="command-gradient-line"></div>
-          {/* <ActionButton
-            variant="add-field"
-            size="xs"
-            onClick={() => onNewPaletteFormChange(true)}
-            title="Add Model">
-            <MaterialIcon icon="add" size={26} color="var(--muted)" />
-          </ActionButton> */}
+
           <HoverTooltip
             tooltipContent="Add New Palette"
             onClick={() => onNewPaletteFormChange(true)}

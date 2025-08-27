@@ -8,8 +8,6 @@
   justify-content: center;
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(4px);
-  /* padding-top: 30px; */
-
   z-index: 1000;
   animation: fadeIn 0.2s ease-out;
 }
@@ -232,7 +230,6 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Copy success animation */
 @keyframes copySuccess {
   0% {
     transform: scale(1);
@@ -249,7 +246,6 @@
   animation: copySuccess 0.3s ease-out;
 }
 
-/* Status indicators */
 .file-status {
   display: flex;
   align-items: center;
@@ -265,7 +261,6 @@
   font-size: 1rem;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .setup-generator-modal {
     width: 95vw;
@@ -331,7 +326,6 @@
   }
 }
 
-/* Dark mode enhancements */
 @media (prefers-color-scheme: dark) {
   .setup-generator-overlay {
     background: rgba(0, 0, 0, 0.9);

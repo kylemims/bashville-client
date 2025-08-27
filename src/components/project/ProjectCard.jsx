@@ -2,14 +2,12 @@ import { Link } from "react-router-dom";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import { ColorPreview } from "../common/ColorPreview.jsx";
-// import { SetupGenerator } from "../components/project/SetupGenerator.jsx";
 import "./ProjectCard.css";
 
 export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerateSetup }) => {
   const hasCommands = project.commands_preview && project.commands_preview.length > 0;
   const hasColors = project.color_palette_preview;
 
-  // Project type configuration
   const getProjectTypeConfig = (type) => {
     const configs = {
       "static-tailwind": {

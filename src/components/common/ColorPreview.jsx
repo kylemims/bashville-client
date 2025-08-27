@@ -21,16 +21,13 @@ export const ColorPreview = ({ palette, size = "sm", showTooltip = false }) => {
       setCopiedColor(colorName);
       setTimeout(() => setCopiedColor(null), 1500);
 
-      // Optional: Show a subtle toast instead of alert
       console.log(`✅ ${colorName} color ${text} copied to clipboard!`);
     } catch (err) {
       console.error("Failed to copy:", err);
-      // Fallback for browsers that don't support clipboard API
       fallbackCopyToClipboard(text);
     }
   };
 
-  // Fallback for older browsers
   const fallbackCopyToClipboard = (text) => {
     const textArea = document.createElement("textarea");
     textArea.value = text;
@@ -61,7 +58,7 @@ export const ColorPreview = ({ palette, size = "sm", showTooltip = false }) => {
           title={showTooltip ? `${color.name}: ${color.hex} • Click to copy` : `Click to copy ${color.hex}`}
           aria-label={`${color.name} color: ${color.hex}. Click to copy.`}
           onClick={(e) => {
-            e.stopPropagation(); // Prevent triggering parent onClick
+            e.stopPropagation();
             copyToClipboard(color.hex, color.name);
           }}
         />

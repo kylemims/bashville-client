@@ -13,7 +13,7 @@ export const NewProject = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    project_type: "static-tailwind", // Default to simplest option
+    project_type: "static-tailwind",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

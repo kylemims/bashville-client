@@ -81,7 +81,6 @@ export const ProjectDetail = () => {
       const updatedProject = await updateProject(projectId, updatedData);
       console.log("Project updated successfully:", updatedProject);
 
-      // Update the local state with the new project data
       updateState({ project: updatedProject });
 
       return updatedProject;

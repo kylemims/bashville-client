@@ -1,5 +1,4 @@
-// src/pages/Launch.jsx
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getProjects } from "../services/projectService";
 import { generateBashScript } from "../utils/generateBashScript";
 import { downloadFile } from "../utils/downloadFile";
@@ -15,10 +14,6 @@ export const Launch = () => {
       try {
         const data = await getProjects();
         setProjects(data);
-
-        // Helper: auto-select newest project (currently disabled)
-        // To enable later, just uncomment this line 👇
-        // if (data.length > 0) setSelectedProjectId(data[data.length - 1].id);
       } catch (err) {
         console.error("Failed to load projects:", err);
       } finally {

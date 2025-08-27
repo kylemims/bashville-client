@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./FileTree.css";
 
-const FileTree = ({ files, onFileSelect, selectedFile }) => {
+export const FileTree = ({ files, onFileSelect, selectedFile }) => {
   const [expandedFolders, setExpandedFolders] = useState(new Set(["src"]));
 
   const buildFileTree = (files) => {
@@ -161,5 +161,3 @@ const FileTree = ({ files, onFileSelect, selectedFile }) => {
     </div>
   );
 };
-
-export default FileTree;

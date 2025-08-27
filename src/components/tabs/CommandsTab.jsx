@@ -1,4 +1,3 @@
-/* filepath: src/components/tabs/CommandsTab.jsx */
 import { useState } from "react";
 import { createCommand, updateCommand, deleteCommand } from "../../services/commandService.js";
 import { ErrorMessage } from "../common/ErrorMessage.jsx";
@@ -93,7 +92,6 @@ export const CommandsTab = ({
     } catch (err) {
       console.error("❌ Failed to remove command from project:", err);
       setError(`Failed to remove command from project: ${err.message}`);
-      // Revert the state change on error
       setSelectedCommands(selectedCommands);
     } finally {
       setLoading(false);
@@ -115,7 +113,6 @@ export const CommandsTab = ({
       const updatedCommands = availableCommands.filter((cmd) => cmd.id !== commandId);
       onCommandsUpdate(updatedCommands);
 
-      // Remove from selected if it was selected
       if (selectedCommands.includes(commandId)) {
         const newSelected = selectedCommands.filter((id) => id !== commandId);
         setSelectedCommands(newSelected);
@@ -193,7 +190,6 @@ export const CommandsTab = ({
                     disabled={loading}
                   />
                 ) : (
-                  // ✅ Show normal command card
                   <div
                     className={`command-card ${selectedCommands.includes(command.id) ? "selected" : ""}`}
                     onClick={() => handleToggleCommand(command.id)}

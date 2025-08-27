@@ -117,7 +117,6 @@
   line-height: 1.4;
 }
 
-/* Expanded Features */
 .layout-features {
   margin-top: 1rem;
   padding-top: 1rem;
@@ -174,39 +173,17 @@
   letter-spacing: 0.5px;
 }
 
-/* Selection Indicator */
 .layout-select-indicator {
-  /* position: absolute;
-  top: 0.5rem;
-  right: 1.5rem; */
   display: flex;
   gap: 0.25rem;
   background: var(--color-primary);
   border-radius: 20px;
-  /* font-size: 0.7rem; */
   padding: 0.2rem 1.2rem;
   align-items: center;
   justify-content: center;
-  /* font-weight: 600; */
-  /* text-transform: uppercase; */
-  /* letter-spacing: 0.05em; */
   z-index: 2;
 }
-/* top: 0.75rem;
-  left: 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  background: var(--color-primary);
-  color: var(--bg-primary);
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  z-index: 2; */
-/* Selection Summary */
+
 .selection-summary {
   background: var(--bg-secondary);
   border: 1px solid var(--color-accent);
@@ -227,7 +204,6 @@
   color: var(--color-primary);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .layout-grid {
     grid-template-columns: 1fr;
@@ -261,7 +237,6 @@
   }
 }
 
-/* Focus states for accessibility */
 .layout-card:focus {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;

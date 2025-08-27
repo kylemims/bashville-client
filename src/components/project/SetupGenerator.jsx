@@ -1,5 +1,3 @@
-// src/components/project/SetupGenerator.jsx
-
 import { useState } from "react";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";

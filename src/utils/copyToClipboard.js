@@ -1,9 +1,6 @@
-// src/utils/copyToClipboard.js
-
 export const copyToClipboard = async (text) => {
   try {
     await navigator.clipboard.writeText(text);
-    // Removed alert for better UX - handle feedback in component
     return true;
   } catch (err) {
     console.error("Failed to copy:", err);
@@ -29,7 +26,6 @@ export const copyToClipboard = async (text) => {
       return true;
     } catch (fallbackErr) {
       console.error("Fallback copy failed:", fallbackErr);
-      // Show user-friendly error
       alert("❌ Failed to copy. Please select and copy manually.");
       throw fallbackErr;
     }

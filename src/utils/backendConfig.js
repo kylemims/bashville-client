@@ -1,4 +1,3 @@
-// src/utils/backendConfig.js
 const KEY = (projectId) => `bashville_backend_${projectId}`;
 
 export const getBackendConfig = (projectId) => {

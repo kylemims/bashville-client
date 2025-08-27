@@ -31,7 +31,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  min-width: 0; /* Allow text truncation */
+  min-width: 0;
 }
 
 .file-name {
@@ -132,7 +132,6 @@
   font-family: "Monaco", "Menlo", "Consolas", monospace !important;
 }
 
-/* Empty Content State */
 .empty-content {
   display: flex;
   flex-direction: column;
@@ -149,7 +148,6 @@
   font-size: 0.875rem;
 }
 
-/* Scrollbar Styling for Code */
 .file-content::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -226,7 +224,6 @@
   color: #d46a6a !important;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .file-preview-header {
     flex-direction: column;
@@ -255,7 +252,6 @@
   }
 }
 
-/* High DPI Displays */
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .file-content code {
     -webkit-font-smoothing: antialiased;

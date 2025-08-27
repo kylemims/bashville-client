@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { generateCodeForProject } from "../../services/codeGenService.js";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";

@@ -22,7 +22,6 @@
   pointer-events: none;
   z-index: 9999;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-  /* border: 1px solid var(--color-primary); */
   border-width: 2px;
   border-style: solid;
   border-image: linear-gradient(to right, var(--color-primary), var(--color-secondary)) 1;

@@ -1,5 +1,3 @@
-// Fixed projectService.js - Remove the hardcoded token logic
-
 import { API_BASE_URL } from "../utils/constants.js";
 
 const getToken = () => {

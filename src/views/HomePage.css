@@ -14,7 +14,7 @@
   padding-right: 2rem;
   margin-bottom: 4rem;
 
-  background: linear-gradient(to right, #121212, #2a0a2a); /* Subtle gradient for badass feel */
+  background: linear-gradient(to right, #121212, #2a0a2a);
   min-height: 60vh;
   gap: 2rem;
   position: relative;
@@ -75,7 +75,6 @@
   max-width: 100%;
   width: 400px;
   height: auto;
-  /* border-radius: var(--radius); */
   filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.4)) drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
@@ -93,23 +92,6 @@
     var(--bg-primary);
   position: relative;
 }
-
-/* .features-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(254, 227, 148, 0.3) 20%,
-    rgba(70, 203, 167, 0.3) 50%,
-    rgba(212, 106, 106, 0.3) 80%,
-    transparent 100%
-  );
-} */
 
 .features-section h2 {
   text-align: center;
@@ -164,7 +146,6 @@
   left: 100%;
 }
 
-/* Media query for mobile – stack hero */
 @media (max-width: 768px) {
   .hero-section {
     flex-direction: column;

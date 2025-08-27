@@ -1,5 +1,3 @@
-// src/services/codeGenService.js
-
 import { API_BASE_URL } from "../utils/constants.js";
 
 const getToken = () => process.env.REACT_APP_USER_TOKEN || localStorage.getItem("bashville_auth_token") || "";

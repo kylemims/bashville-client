@@ -35,7 +35,6 @@ export const ColorPaletteCard = ({
 
   return (
     <div className={`color-palette-card ${isSelected ? "selected" : ""}`} onClick={onClick}>
-      {/* Header with name and actions */}
       <div className="palette-header">
         <h3 className="palette-name">{palette.name}</h3>
         {isSelected && (
@@ -70,7 +69,6 @@ export const ColorPaletteCard = ({
         </div>
       </div>
 
-      {/* Color preview banner */}
       <div className="color-banner">
         {colorFields.map((color) => (
           <div
@@ -82,7 +80,6 @@ export const ColorPaletteCard = ({
         ))}
       </div>
 
-      {/* Color details grid */}
       <div className="color-details">
         {colorFields.map((color) => (
           <div key={color.key} className="color-detail-item">
@@ -111,8 +108,6 @@ export const ColorPaletteCard = ({
           </div>
         ))}
       </div>
-
-      {/* Selection indicator */}
     </div>
   );
 };

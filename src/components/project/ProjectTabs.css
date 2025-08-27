@@ -44,7 +44,6 @@
   min-height: 400px;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .project-tabs-container {
     flex-direction: row-reverse;
