@@ -5,8 +5,8 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  bottom: 5;
+  background: rgba(22, 21, 21);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,10 +16,10 @@
 .modal-container {
   background: var(--color-surface);
   border-radius: 12px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  max-width: 90vw;
-  max-height: 90vh;
-  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(84, 72, 72, 0.2);
+  /* max-width: 90dvw; */
+  /* max-height: 100dvh; */
+  /* overflow: hidden; */
   display: flex;
   flex-direction: column;
 }
@@ -51,6 +51,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  background-color: rgb(0, 0, 0, 0.8);
 }
 
 .generation-start {
@@ -66,8 +67,8 @@
 .project-summary h3 {
   margin: 0 0 8px 0;
   font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--color-text);
+  font-weight: 800;
+  color: var(--color-primary);
 }
 
 .project-summary p {

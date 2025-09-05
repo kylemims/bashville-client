@@ -39,7 +39,7 @@
 .color-field {
   display: flex;
   gap: 0.5rem;
-  align-items: end;
+  align-items: center;
 }
 
 .color-field .form-field {

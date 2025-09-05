@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { validateHex } from "../../utils/validateHex.js";
+import { FormField } from "../common/FormField.jsx";
 import "./ColorEditor.css";
 import "./ColorPaletteForm.css";
 import "./ColorPaletteCard.css";
@@ -18,9 +19,9 @@ export const ColorEditor = ({ colorName, colorValue, onSave, onCancel, disabled 
     onSave(hexValue.toUpperCase());
   };
 
-  const handleInputChange = (e) => {
-    let value = e.target.value;
-    if (!value.startsWith("#")) {
+  const handleHexChange = (value) => {
+    let formattedValue = value;
+    if (!formattedValue.startsWith("#")) {
       value = "#" + value;
     }
     setHexValue(value);
@@ -37,7 +38,7 @@ export const ColorEditor = ({ colorName, colorValue, onSave, onCancel, disabled 
         <span className="color-name">{colorName}</span>
       </div>
       <div className="color-editor-input">
-        <input
+        {/* <input
           type="text"
           value={hexValue}
           onChange={handleInputChange}
@@ -45,7 +46,25 @@ export const ColorEditor = ({ colorName, colorValue, onSave, onCancel, disabled 
           placeholder="#FFFFFF"
           maxLength={7}
           disabled={disabled}
-        />
+        /> */}
+        <div className="color-field">
+          <FormField
+            type="color"
+            value={hexValue}
+            onChange={(value) => handleHexChange(value)}
+            disabled={disabled}
+            aria-label={`${colorName} color picker`}
+          />
+          <FormField
+            type="text"
+            value={hexValue}
+            onChange={(value) => handleHexChange(value)}
+            placeholder="#FFFFFF"
+            disabled={disabled}
+            className={`hex-input ${error ? "error" : ""}`}
+            maxLength={7}
+          />
+        </div>
         {error && <span className="error-message">{error}</span>}
       </div>
       <div className="color-editor-actions">
