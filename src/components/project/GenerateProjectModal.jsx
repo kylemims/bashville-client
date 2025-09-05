@@ -4,9 +4,9 @@ import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { LoadingSpinner } from "../common/LoadingSpinner.jsx";
 import { ErrorMessage } from "../common/ErrorMessage.jsx";
-import FileTree from "./FileTree.jsx";
-import FilePreview from "./FilePreview.jsx";
-import ProjectDownloader from "./ProjectDownloader.jsx";
+import { FileTree } from "./FileTree.jsx";
+import { FilePreview } from "./FilePreview.jsx";
+import { ProjectDownloader } from "./ProjectDownloader.jsx";
 import "./GenerateProjectModal.css";
 
 export const GenerateProjectModal = ({ project, isOpen, onClose }) => {

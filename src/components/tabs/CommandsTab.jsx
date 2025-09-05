@@ -191,7 +191,9 @@ export const CommandsTab = ({
                   />
                 ) : (
                   <div
-                    className={`command-card ${selectedCommands.includes(command.id) ? "selected" : ""}`}
+                    className={`command-card-available ${
+                      selectedCommands.includes(command.id) ? "selected" : ""
+                    }`}
                     onClick={() => handleToggleCommand(command.id)}
                     role="button"
                     tabIndex={0}>

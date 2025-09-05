@@ -1,7 +1,8 @@
 /* Main tab container */
 .commands-tab {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 500px 1fr;
+  /* flex-direction: column; */
   gap: 2rem;
 }
 
@@ -89,33 +90,13 @@
 .available-commands-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: 1fr;
+  /* grid-template-columns: repeat(2, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-@media (min-width: 640px) {
-  .available-commands-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .commands-tab {
-    display: flex;
-    flex-direction: row;
-    gap: 2rem;
-  }
-  .available-commands-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .section {
-    align-items: center;
-    margin: 0 auto;
-  }
-}
-
-/* Command card (for available commands selection) */
-.command-card {
+/* Auto-span long commands across full width */
+.command-card-available {
+  /* Default: fits in one column */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -125,17 +106,79 @@
   padding: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  /* position: relative; */
 }
 
-.command-card:hover {
+/* Long commands get full width */
+.command-card-available.long-command {
+  min-width: 100%;
+  grid-column: 1 / -1;
+  /* background: rgba(254, 227, 148, 0.03); */
+  /* border-left: 1px solid var(--color-primary); */
+  /* order: -1; */
+}
+
+.command-card-available {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.command-card-available:hover {
+  transform: translateY(-1px) scale(1.005);
+}
+
+@media (max-width: 1024px) {
+  .command-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .commands-tab {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .available-commands-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .command-card {
+    max-width: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .command-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .available-commands-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  /* In single column, all commands span full width anyway */
+  .command-card-available.long-command {
+    border-left: none;
+    /* background: rgba(254, 227, 148, 0.02); */
+  }
+}
+
+.section {
+  align-items: center;
+  margin: 0 auto;
+}
+
+/* Command card (for available commands selection) */
+.command-card-available:hover {
   border-color: var(--color-accent);
   background: rgba(255, 255, 255, 0.02);
 }
 
 .command-card.selected {
-  border-color: var(--color-primary);
-  background: rgba(254, 227, 148, 0.05);
+  border-color: var(--color-accent);
+  background: rgba(254, 227, 148, 0.8);
 }
 
 .command-card-content {
@@ -167,10 +210,10 @@
   opacity: 0;
   transition: opacity 0.2s ease;
   padding: 0px;
-  margin: 0px;
+  margin-left: 10px;
 }
 
-.command-card:hover .command-card-actions {
+.command-card-actions:hover {
   opacity: 1;
 }
 

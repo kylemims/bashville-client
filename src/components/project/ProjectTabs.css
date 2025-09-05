@@ -46,7 +46,7 @@
 
 @media (max-width: 768px) {
   .project-tabs-container {
-    flex-direction: row-reverse;
+    /* flex-direction: row-reverse; */
     gap: 1rem;
     align-items: stretch;
   }

@@ -6,7 +6,7 @@ import { ActionButton } from "../common/ActionButton.jsx";
 import { copyToClipboard } from "../../utils/copyToClipboard.js";
 import "./FilePreview.css";
 
-const FilePreview = ({ filename, content, onCopy }) => {
+export const FilePreview = ({ filename, content, onCopy }) => {
   const [copyFeedback, setCopyFeedback] = useState("");
 
   const getLanguage = (filename) => {
@@ -181,5 +181,3 @@ const FilePreview = ({ filename, content, onCopy }) => {
     </div>
   );
 };
-
-export default FilePreview;

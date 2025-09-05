@@ -121,9 +121,9 @@ export const FutureSneakPeek = () => {
           </ActionButton>
         </div>
 
-        <div className="palette-grid">
+        <div className="p-future-grid">
           {palettes.map((p) => (
-            <article key={p.id} className="palette-card">
+            <article key={p.id} className="p-future-card">
               <div className="palette-swatches" aria-label={`${p.name} swatches`}>
                 {p.swatches.map((hex, i) => (
                   <div key={hex + i} className="swatch" style={{ background: hex }} title={hex} />

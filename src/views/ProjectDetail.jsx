@@ -12,7 +12,7 @@ import { ActionButton } from "../components/common/ActionButton";
 import { ProjectHeader } from "../components/project/ProjectHeader";
 import { ProjectTabs } from "../components/project/ProjectTabs";
 import { BackendTab } from "../components/tabs/BackendTab.jsx";
-import GenerateProjectModal from "../components/project/GenerateProjectModal.jsx";
+import { GenerateProjectModal } from "../components/project/GenerateProjectModal.jsx";
 import { ROUTES } from "../utils/constants";
 
 export const ProjectDetail = () => {
