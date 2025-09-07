@@ -18,6 +18,10 @@ export const BackendTab = ({ project }) => {
     setBackendConfig(projectId, config);
   }, [projectId, config]);
 
+  const getModelNames = () => {
+    return config.models?.filter((model) => model.name.trim()).map((model) => model.name.trim()) || [];
+  };
+
   const addModel = () => {
     setConfig((c) => ({
       ...c,
@@ -137,6 +141,8 @@ export const BackendTab = ({ project }) => {
       setBusy(false);
     }
   };
+
+  const availableModels = getModelNames();
 
   return (
     <div className="backend-tab">
@@ -261,12 +267,24 @@ export const BackendTab = ({ project }) => {
             {config.relationships?.length ? (
               config.relationships.map((r, rIdx) => (
                 <div key={rIdx} className="rel-row">
-                  <input
+                  {/* <input
                     className="text-input"
                     placeholder="From model (e.g., Post)"
                     value={r.from}
                     onChange={(e) => updateRelationship(rIdx, { from: e.target.value })}
-                  />
+                  /> */}
+                  <select
+                    className="select-input model-select"
+                    value={r.from}
+                    onChange={(e) => updateRelationship(rIdx, { from: e.target.value })}
+                    title="From model">
+                    <option value="">From model...</option>
+                    {availableModels.map((modelName) => (
+                      <option key={modelName} value={modelName}>
+                        {modelName}
+                      </option>
+                    ))}
+                  </select>
                   <select
                     className="select-input"
                     value={r.type}
@@ -275,12 +293,24 @@ export const BackendTab = ({ project }) => {
                     <option value="M2M">M2M</option>
                     <option value="O2O">O2O</option>
                   </select>
-                  <input
+                  {/* <input
                     className="text-input"
                     placeholder="To model (e.g., User)"
                     value={r.to}
                     onChange={(e) => updateRelationship(rIdx, { to: e.target.value })}
-                  />
+                  /> */}
+                  <select
+                    className="select-input model-select"
+                    value={r.to}
+                    onChange={(e) => updateRelationship(rIdx, { to: e.target.value })}
+                    title="To model">
+                    <option value="">To model...</option>
+                    {availableModels.map((modelName) => (
+                      <option key={modelName} value={modelName}>
+                        {modelName}
+                      </option>
+                    ))}
+                  </select>
                   <ActionButton variant="delete" size="xs" onClick={() => removeRelationship(rIdx)}>
                     <MaterialIcon icon="remove" size={14} color="var(--color-secondary)" />
                   </ActionButton>
@@ -288,6 +318,14 @@ export const BackendTab = ({ project }) => {
               ))
             ) : (
               <p className="empty-note">No relationships yet.</p>
+            )}
+
+            {/* ✨ HELPFUL HINT */}
+            {availableModels.length === 0 && (
+              <div className="relationships-hint">
+                <MaterialIcon icon="info" size={16} color="var(--muted)" />
+                <span>Create some models first to add relationships between them.</span>
+              </div>
             )}
           </section>
 
