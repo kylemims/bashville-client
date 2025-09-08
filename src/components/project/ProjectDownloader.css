@@ -119,10 +119,15 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 8px;
+  position: relative;
 }
 
 .setup-step:last-child {
   margin-bottom: 0;
+}
+
+.setup-step:hover .copy-step-btn {
+  opacity: 1;
 }
 
 .step-number {
@@ -147,6 +152,22 @@
   font-weight: 500;
   padding: 0;
   border: none;
+  flex: 1;
+}
+
+.copy-step-btn {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  padding: 4px !important;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  min-width: auto !important;
+}
+
+.copy-step-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-accent);
 }
 
 .download-actions {
@@ -248,15 +269,21 @@
   }
 
   .setup-step {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
     gap: 8px;
   }
 
   .step-command {
     font-size: 0.8rem;
-    width: 100%;
+    flex: 1;
     word-break: break-all;
+  }
+
+  /* Show copy buttons on mobile for better accessibility */
+  .copy-step-btn {
+    opacity: 1;
+    position: static;
   }
 
   .color-info {
