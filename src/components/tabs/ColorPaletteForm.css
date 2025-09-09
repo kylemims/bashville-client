@@ -20,7 +20,7 @@
 
 .color-fields-grid {
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
   grid-template-columns: repeat(2, 1fr);
 }
 
@@ -38,8 +38,9 @@
 
 .color-field {
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  align-items: center;
+  align-items: start;
 }
 
 .color-field .form-field {
@@ -54,11 +55,15 @@
 .hex-input {
   font-family: "Fira Code", monospace;
   font-size: 0.9rem;
+  margin-bottom: 0.25rem;
 }
 
 .palette-preview-live {
   margin: 1rem 0;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
   background: var(--bg-primary);
   border-radius: 6px;
   border: 1px solid var(--border);
@@ -106,4 +111,22 @@
   .form-actions .action-button {
     width: 100%;
   }
+}
+
+.contrast-warning {
+  color: #ff9800;
+  font-size: 1.1em;
+  margin-left: 0.25em;
+  vertical-align: middle;
+  cursor: help;
+}
+
+.contrast-warning .tooltip-content {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
+}
+/* Override tooltip delay for contrast warnings */
+.contrast-warning-tooltip ::content {
+  opacity: 1;
+  margin-left: 2rem;
 }

@@ -1,4 +1,6 @@
 import { useEffect, useMemo } from "react";
+import { isContrastAccessible } from "../../utils/colorUtils.js";
+import { HoverTooltip } from "../common/HoverTooltip.jsx";
 import "./LiveColorPreview.css";
 
 // Simple Live Preview component that you can add to your existing ColorPaletteForm
@@ -18,6 +20,12 @@ export const LiveColorPreview = ({ formData }) => {
       formData?.background_hex,
       formData?.ui_hex,
     ]
+  );
+
+  // Check contrast for preview elements
+  const cardTitleContrastOk = isContrastAccessible(
+    formData?.primary_hex || "#3b82f6",
+    formData?.ui_hex || "#ffffff"
   );
   useEffect(() => {
     // Update CSS custom properties for live preview
@@ -55,7 +63,16 @@ export const LiveColorPreview = ({ formData }) => {
 
           <div className="color-preview-cards">
             <div className="color-preview-card">
-              <h4>Card Title</h4>
+              <h4>
+                Card Title
+                {!cardTitleContrastOk && (
+                  <HoverTooltip
+                    tooltipContent="Low contrast between card title and background! This may be hard to read."
+                    className="contrast-warning-tooltip">
+                    <span className="contrast-warning">⚠️</span>
+                  </HoverTooltip>
+                )}
+              </h4>
               <p>This card uses UI background color</p>
             </div>
             <div className="color-preview-card">
