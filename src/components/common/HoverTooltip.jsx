@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./HoverTooltip.css";
 
-export const HoverTooltip = ({ children, tooltipContent, onClick, className = "" }) => {
+export const HoverTooltip = ({ children, tooltipContent, onClick, className }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const handleMouseEnter = () => {

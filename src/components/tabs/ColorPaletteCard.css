@@ -227,3 +227,7 @@
   font-size: 1rem;
   cursor: pointer;
 }
+
+.add-palette-tooltip .icon-tooltip-container {
+  position: relative;
+}

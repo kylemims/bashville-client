@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { FormField } from "../common/FormField.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
-import { HoverTooltip } from "../common/HoverTooltip.jsx";
 import "./ColorPaletteForm.css";
 import "./ColorPaletteCard.css";
 import "./ColorEditor.css";
 import { LiveColorPreview } from "./LiveColorPreview.jsx";
-import { isContrastAccessible } from "../../utils/colorUtils.js";
 import "./LiveColorPreview.css";
 const DEFAULT_COLORS = {
   name: "",
@@ -36,27 +34,37 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
       name: "primary_hex",
       label: "Primary",
       placeholder: "#fee394",
-      description: "Main brand color for buttons and highlights",
+      description: "Main brand color - used for primary buttons and hero sections",
+      example: "Primary button, hero background",
     },
     {
       name: "secondary_hex",
       label: "Secondary",
       placeholder: "#d46a6a",
-      description: "Secondary accent and gradients",
+      description: "Secondary brand color - used for secondary buttons and gradients",
+      example: "Secondary button, gradient accent",
     },
     {
       name: "accent_hex",
       label: "Accent",
       placeholder: "#46cba7",
-      description: "Call-to-action and emphasis",
+      description: "Accent color - used for call-to-action buttons and highlights",
+      example: "CTA button, links, emphasis",
     },
     {
       name: "background_hex",
       label: "Background",
       placeholder: "#0c0806",
-      description: "Page background color",
+      description: "Page background - the main canvas color behind all content",
+      example: "Page background, content area",
     },
-    { name: "ui_hex", label: "UI Elements", placeholder: "#efefef", description: "Cards, navigation, forms" },
+    {
+      name: "ui_hex",
+      label: "UI Elements",
+      placeholder: "#efefef",
+      description: "UI components - used for cards, navigation, footer (text auto-adjusts)",
+      example: "Cards, navbar, footer, forms",
+    },
   ];
 
   return (
@@ -77,58 +85,29 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
           />
 
           <div className="color-fields-grid">
-            {colorFields.map((field) => {
-              // Check contrast for key color combinations
-              let contrastOk = true;
-              let contrastAgainst = null;
-
-              if (field.name === "accent_hex") {
-                contrastOk = isContrastAccessible(formData.accent_hex, formData.background_hex);
-                contrastAgainst = "Background";
-              } else if (field.name === "primary_hex") {
-                contrastOk = isContrastAccessible(formData.primary_hex, formData.ui_hex);
-                contrastAgainst = "UI Elements";
-              } else if (field.name === "secondary_hex") {
-                contrastOk = isContrastAccessible(formData.secondary_hex, formData.background_hex);
-                contrastAgainst = "Background";
-              } else if (field.name === "background_hex") {
-                contrastOk = isContrastAccessible(formData.background_hex, formData.ui_hex);
-                contrastAgainst = "UI Elements";
-              } else if (field.name === "ui_hex") {
-                contrastOk = isContrastAccessible(formData.ui_hex, formData.background_hex);
-                contrastAgainst = "Background";
-              }
-
-              return (
-                <div key={field.name} className="color-field">
-                  <div className="color-field-header">
-                    <FormField
-                      label={field.label}
-                      type="color"
-                      value={formData[field.name]}
-                      onChange={(value) => handleChange(field.name, value)}
-                      disabled={disabled}
-                    />
-                    <FormField
-                      type="text"
-                      value={formData[field.name]}
-                      onChange={(value) => handleChange(field.name, value)}
-                      placeholder={field.placeholder}
-                      disabled={disabled}
-                      className="hex-input"
-                    />
-                    {!contrastOk && (
-                      <HoverTooltip
-                        tooltipContent={`Low contrast with ${contrastAgainst}! Consider adjusting colors for better accessibility.`}
-                        className="contrast-warning-tooltip">
-                        <span className="contrast-warning">⚠️</span>
-                      </HoverTooltip>
-                    )}
-                  </div>
-                  <p className="color-field-description">{field.description}</p>
+            {colorFields.map((field) => (
+              <div key={field.name} className="color-field">
+                <div className="color-field-header">
+                  <FormField
+                    label={field.label}
+                    type="color"
+                    value={formData[field.name]}
+                    onChange={(value) => handleChange(field.name, value)}
+                    disabled={disabled}
+                  />
+                  <FormField
+                    type="text"
+                    value={formData[field.name]}
+                    onChange={(value) => handleChange(field.name, value)}
+                    placeholder={field.placeholder}
+                    disabled={disabled}
+                    className="hex-input"
+                  />
                 </div>
-              );
-            })}
+                <p className="color-field-description">{field.description}</p>
+                <p className="color-field-example">Used for: {field.example}</p>
+              </div>
+            ))}
           </div>
 
           <div className="palette-preview-live">

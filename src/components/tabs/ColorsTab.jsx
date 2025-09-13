@@ -160,7 +160,7 @@ export const ColorsTab = ({
           <HoverTooltip
             tooltipContent="Add New Palette"
             onClick={() => onNewPaletteFormChange(true)}
-            className="add-palette-button">
+            className="add-palette-tooltip">
             <ActionButton variant="add-field" size="xs" onClick={() => onNewPaletteFormChange(true)}>
               <MaterialIcon icon="add" size={26} color="var(--muted)" />
             </ActionButton>
