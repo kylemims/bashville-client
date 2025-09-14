@@ -80,8 +80,13 @@ export const AdvancedStyleControls = ({ formData, onStyleChange, className = "" 
       <div className="controls-header">
         <button
           className="controls-toggle"
-          onClick={() => setIsExpanded(!isExpanded)}
-          aria-expanded={isExpanded}>
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setIsExpanded(!isExpanded);
+          }}
+          aria-expanded={isExpanded}
+          type="button">
           <span className="toggle-icon">{isExpanded ? "▼" : "▶"}</span>
           <span className="toggle-label">Advanced Styling</span>
           {hasGradientContrastIssues() && (
@@ -99,7 +104,12 @@ export const AdvancedStyleControls = ({ formData, onStyleChange, className = "" 
               <button
                 key={tab.id}
                 className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
-                onClick={() => setActiveTab(tab.id)}>
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  setActiveTab(tab.id);
+                }}
+                type="button">
                 <span className="tab-icon">{tab.icon}</span>
                 <span className="tab-label">{tab.label}</span>
               </button>
@@ -300,8 +310,13 @@ const HeroControls = ({
                   {overrideColor && (
                     <button
                       className="reset-override"
-                      onClick={() => onComponentOverride("hero_buttons", button.key, null)}
-                      title="Reset to default">
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onComponentOverride("hero_buttons", button.key, null);
+                      }}
+                      title="Reset to default"
+                      type="button">
                       ↺
                     </button>
                   )}
@@ -372,8 +387,13 @@ const ComponentControls = ({ formData, onComponentOverride, getComponentOverride
                     {overrideColor && (
                       <button
                         className="reset-override"
-                        onClick={() => onComponentOverride(component.name, property.key, null)}
-                        title="Reset to default">
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          onComponentOverride(component.name, property.key, null);
+                        }}
+                        title="Reset to default"
+                        type="button">
                         ↺
                       </button>
                     )}
