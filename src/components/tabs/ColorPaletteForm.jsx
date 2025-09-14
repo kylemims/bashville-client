@@ -6,6 +6,11 @@ import "./ColorPaletteCard.css";
 import "./ColorEditor.css";
 import { LiveColorPreview } from "./LiveColorPreview.jsx";
 import "./LiveColorPreview.css";
+import { PaletteValidationSummary } from "./PaletteValidationSummary.jsx";
+import "./PaletteValidationSummary.css";
+import { AdvancedStyleControls } from "./AdvancedStyleControls.jsx";
+import "./AdvancedStyleControls.css";
+
 const DEFAULT_COLORS = {
   name: "",
   primary_hex: "#fee394",
@@ -13,6 +18,7 @@ const DEFAULT_COLORS = {
   accent_hex: "#46cba7",
   background_hex: "#0c0806",
   ui_hex: "#efefef",
+  style_preferences: {},
 };
 
 export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEditing = false }) => {
@@ -20,6 +26,13 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleStyleChange = (newStylePreferences) => {
+    setFormData((prev) => ({
+      ...prev,
+      style_preferences: newStylePreferences,
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -125,6 +138,15 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
               ))}
             </div>
           </div>
+
+          <PaletteValidationSummary colors={formData} />
+
+          {/* Advanced Style Controls */}
+          <AdvancedStyleControls
+            formData={formData}
+            onStyleChange={handleStyleChange}
+            className="advanced-controls"
+          />
 
           <div className="form-actions">
             <ActionButton type="submit" variant="primary" disabled={disabled || !formData.name.trim()}>
