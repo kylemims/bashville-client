@@ -1,198 +1,265 @@
-import { useEffect, useMemo } from "react";
-import { isContrastAccessible } from "../../utils/colorUtils.js";
-// import { HoverTooltip } from "../common/HoverTooltip.jsx";
-import { getBestTextColor } from "../../utils/colorUtils.js";
+import { useEffect, useState } from "react";
 import "./LiveColorPreview.css";
 
-// Simple Live Preview component that you can add to your existing ColorPaletteForm
-export const LiveColorPreview = ({ formData }) => {
-  const colors = useMemo(
-    () => ({
-      primary_hex: formData?.primary_hex || "#3b82f6",
-      secondary_hex: formData?.secondary_hex || "#1e40af",
-      accent_hex: formData?.accent_hex || "#06b6d4",
-      background_hex: formData?.background_hex || "#f8fafc",
-      ui_hex: formData?.ui_hex || "#ffffff",
-    }),
-    [
-      formData?.primary_hex,
-      formData?.secondary_hex,
-      formData?.accent_hex,
-      formData?.background_hex,
-      formData?.ui_hex,
-    ]
-  );
+export const LiveColorPreview = ({ formData, isVisible = true }) => {
+  const [mounted, setMounted] = useState(false);
 
-  // Calculate optimal text colors with semantic consistency
-  const textColors = useMemo(() => {
-    // For UI elements (nav, cards), use consistent text color
-    const uiTextColor = getBestTextColor(colors.ui_hex);
-
-    return {
-      primaryText: getBestTextColor(colors.primary_hex),
-      secondaryText: getBestTextColor(colors.secondary_hex),
-      accentText: getBestTextColor(colors.accent_hex),
-      backgroundText: getBestTextColor(colors.background_hex),
-      uiText: uiTextColor, // Cards, navigation text
-
-      // Semantic assignments for consistent UI
-      navText: uiTextColor, // Same as UI text for consistency
-      navBrandText: getBestTextColor(colors.ui_hex), // Brand/logo in nav
-      cardText: uiTextColor, // All card text (titles + paragraphs)
-      cardTitleText: uiTextColor, // Card titles use same as card text
-
-      // Hero section gets special treatment - uses primary background
-      heroText: getBestTextColor(colors.primary_hex),
-
-      // Footer matches navbar for consistency
-      footerText: getBestTextColor(colors.ui_hex), // Footer uses UI background
-    };
-  }, [colors]);
-
-  // Enhanced contrast checks with semantic groupings
-  const contrastChecks = useMemo(
-    () => ({
-      // Navigation consistency
-      navContrastOk: isContrastAccessible(textColors.navText, colors.ui_hex),
-      navBrandContrastOk: isContrastAccessible(textColors.navBrandText, colors.ui_hex),
-
-      // Button contrast (each button with its own background)
-      buttonPrimaryContrastOk: isContrastAccessible(textColors.primaryText, colors.primary_hex),
-      buttonSecondaryContrastOk: isContrastAccessible(textColors.secondaryText, colors.secondary_hex),
-      buttonAccentContrastOk: isContrastAccessible(textColors.accentText, colors.accent_hex),
-
-      // Card consistency (all card text on UI background)
-      cardTextContrastOk: isContrastAccessible(textColors.cardText, colors.ui_hex),
-      cardTitleContrastOk: isContrastAccessible(textColors.cardTitleText, colors.ui_hex),
-
-      // Hero section
-      heroTextContrastOk: isContrastAccessible(textColors.heroText, colors.primary_hex),
-
-      // Footer consistency (matches nav)
-      footerContrastOk: isContrastAccessible(textColors.footerText, colors.ui_hex),
-    }),
-    [colors, textColors]
-  );
   useEffect(() => {
-    // Update CSS custom properties for live preview
+    setMounted(true);
+  }, []);
+
+  // Helper function to get component-specific colors with overrides
+  const getComponentColor = (componentType, colorType, defaultColor) => {
+    const overrides = formData.style_preferences?.component_overrides || {};
+    const componentOverride = overrides[componentType];
+
+    if (componentOverride && componentOverride[colorType]) {
+      return componentOverride[colorType];
+    }
+
+    return defaultColor;
+  };
+
+  // Update CSS custom properties whenever formData changes
+  useEffect(() => {
+    if (!mounted || !formData) return;
+
     const root = document.documentElement;
-    root.style.setProperty("--preview-primary", colors.primary_hex);
-    root.style.setProperty("--preview-secondary", colors.secondary_hex);
-    root.style.setProperty("--preview-accent", colors.accent_hex);
-    root.style.setProperty("--preview-background", colors.background_hex);
-    root.style.setProperty("--preview-ui", colors.ui_hex);
+    const stylePrefs = formData.style_preferences || {};
 
-    // Set semantic text colors for consistent UI
-    root.style.setProperty("--preview-primary-text", textColors.primaryText);
-    root.style.setProperty("--preview-secondary-text", textColors.secondaryText);
-    root.style.setProperty("--preview-accent-text", textColors.accentText);
-    root.style.setProperty("--preview-background-text", textColors.backgroundText);
-    root.style.setProperty("--preview-ui-text", textColors.uiText);
+    // Base colors - use the correct property names from formData
+    root.style.setProperty("--primary-color", formData.primary_hex || "#fee394");
+    root.style.setProperty("--secondary-color", formData.secondary_hex || "#d46a6a");
+    root.style.setProperty("--accent-color", formData.accent_hex || "#46cba7");
+    root.style.setProperty("--background-color", formData.background_hex || "#0c0806");
+    root.style.setProperty("--ui-color", formData.ui_hex || "#efefef");
+    root.style.setProperty("--text-color", formData.ui_hex || "#1f2937");
+    root.style.setProperty("--border-color", "#e5e7eb");
 
-    // Semantic UI element colors for consistency
-    root.style.setProperty("--preview-nav-text", textColors.navText);
-    root.style.setProperty("--preview-nav-brand-text", textColors.navBrandText);
-    root.style.setProperty("--preview-card-text", textColors.cardText);
-    root.style.setProperty("--preview-card-title-text", textColors.cardTitleText);
-    root.style.setProperty("--preview-hero-text", textColors.heroText);
-    root.style.setProperty("--preview-footer-text", textColors.footerText);
-  }, [colors, textColors]);
+    // Hero section styling
+    if (stylePrefs.hero_style === "gradient" && formData.primary_hex && formData.secondary_hex) {
+      root.style.setProperty(
+        "--hero-background",
+        `linear-gradient(135deg, ${formData.primary_hex}, ${formData.secondary_hex})`
+      );
+    } else {
+      root.style.setProperty("--hero-background", formData.primary_hex || "#fee394");
+    }
+
+    // Border radius
+    const borderRadius = stylePrefs.border_radius || "medium";
+    const radiusMap = {
+      none: "0px",
+      small: "4px",
+      medium: "8px",
+      large: "16px",
+      xl: "24px",
+    };
+    root.style.setProperty("--border-radius", radiusMap[borderRadius]);
+
+    // Component overrides
+    const overrides = stylePrefs.component_overrides || {};
+    Object.entries(overrides).forEach(([component, styles]) => {
+      Object.entries(styles).forEach(([property, value]) => {
+        if (value) {
+          root.style.setProperty(`--${component}-${property.replace("_", "-")}`, value);
+        }
+      });
+    });
+  }, [formData, mounted]);
+
+  if (!isVisible || !formData) {
+    return null;
+  }
+
+  const stylePrefs = formData.style_preferences || {};
+
+  // Visual indicators for applied styles
+  const getStyleIndicators = () => {
+    const indicators = [];
+
+    if (stylePrefs.hero_style === "gradient") {
+      indicators.push("Gradient Hero");
+    }
+
+    if (stylePrefs.animations_enabled) {
+      indicators.push("Animations");
+    }
+
+    if (stylePrefs.shadows_enabled) {
+      indicators.push("Shadows");
+    }
+
+    const borderRadius = stylePrefs.border_radius;
+    if (borderRadius && borderRadius !== "medium") {
+      indicators.push(`${borderRadius.charAt(0).toUpperCase() + borderRadius.slice(1)} Radius`);
+    }
+
+    const overrides = stylePrefs.component_overrides || {};
+    const overrideCount = Object.keys(overrides).filter((key) =>
+      Object.values(overrides[key] || {}).some((value) => value)
+    ).length;
+
+    if (overrideCount > 0) {
+      indicators.push(`${overrideCount} Override${overrideCount === 1 ? "" : "s"}`);
+    }
+
+    return indicators;
+  };
+
+  const styleIndicators = getStyleIndicators();
 
   return (
     <div className="live-preview-container">
-      <h4>Live Preview</h4>
-      <div className="color-preview-container">
-        <div className="color-preview-navbar">
-          <div className="color-preview-logo">
-            Your Site
-            {!contrastChecks.navBrandContrastOk && (
-              <span className="contrast-warning" title="Brand text may have low contrast on navbar">
-                ⚠️
-              </span>
-            )}
-          </div>
-          <div className="color-preview-nav-links">
-            <span className="color-preview-nav-link">
-              Home
-              {!contrastChecks.navContrastOk && (
-                <span className="contrast-warning" title="Nav text may have low contrast">
-                  ⚠️
-                </span>
-              )}
+      {styleIndicators.length > 0 && (
+        <div className="style-indicators">
+          <span className="indicators-label">Applied Styles:</span>
+          {styleIndicators.map((indicator, index) => (
+            <span key={index} className="style-indicator">
+              {indicator}
             </span>
-            <span className="color-preview-nav-link">About</span>
-            <span className="color-preview-nav-link">Contact</span>
+          ))}
+        </div>
+      )}
+
+      <div className="preview-content">
+        {/* Hero Section */}
+        <div
+          className={`preview-hero ${stylePrefs.hero_style === "gradient" ? "gradient-bg" : "solid-bg"}`}
+          style={{
+            backgroundColor: stylePrefs.hero_style === "gradient" ? "transparent" : formData.primary_hex,
+            backgroundImage:
+              stylePrefs.hero_style === "gradient"
+                ? `linear-gradient(135deg, ${formData.primary_hex}, ${formData.secondary_hex})`
+                : "none",
+            borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+            boxShadow: stylePrefs.shadows_enabled ? "0 10px 25px rgba(0,0,0,0.1)" : "none",
+          }}>
+          <h1
+            style={{
+              color: getComponentColor("hero", "text_color", formData.background_hex || "#ffffff"),
+              animation: stylePrefs.animations_enabled ? "fadeInUp 0.6s ease-out" : "none",
+            }}>
+            Welcome to Your Site
+          </h1>
+          <p
+            style={{
+              color: getComponentColor("hero", "text_color", formData.background_hex || "#ffffff"),
+              opacity: 0.9,
+              animation: stylePrefs.animations_enabled ? "fadeInUp 0.8s ease-out" : "none",
+            }}>
+            Beautiful design meets powerful functionality
+          </p>
+          <button
+            className="preview-button"
+            style={{
+              backgroundColor: getComponentColor("button", "background_color", formData.accent_hex),
+              color: getComponentColor("button", "text_color", formData.background_hex),
+              borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+              boxShadow: stylePrefs.shadows_enabled ? "0 4px 12px rgba(0,0,0,0.15)" : "none",
+              animation: stylePrefs.animations_enabled ? "fadeInUp 1s ease-out" : "none",
+            }}>
+            Get Started
+          </button>
+        </div>
+
+        {/* Navigation */}
+        <nav
+          className="preview-nav"
+          style={{
+            backgroundColor: getComponentColor("navigation", "background_color", formData.ui_hex),
+            borderColor: getComponentColor("navigation", "border_color", "#e5e7eb"),
+            boxShadow: stylePrefs.shadows_enabled ? "0 2px 8px rgba(0,0,0,0.1)" : "none",
+          }}>
+          <div
+            className="nav-brand"
+            style={{ color: getComponentColor("navigation", "text_color", formData.primary_hex) }}>
+            Brand
+          </div>
+          <div className="nav-links">
+            {["Home", "About", "Services", "Contact"].map((link, index) => (
+              <button
+                key={link}
+                type="button"
+                className="nav-link-button"
+                style={{
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  margin: 0,
+                  color: getComponentColor("navigation", "text_color", "#1f2937"),
+                  cursor: "pointer",
+                  font: "inherit",
+                  textDecoration: "underline",
+                  animation: stylePrefs.animations_enabled
+                    ? `fadeInDown ${0.3 + index * 0.1}s ease-out`
+                    : "none",
+                }}
+                aria-label={link}
+                tabIndex={0}>
+                {link}
+              </button>
+            ))}
+          </div>
+        </nav>
+
+        {/* Content Section */}
+        <div
+          className="preview-content-section"
+          style={{
+            backgroundColor: getComponentColor("content", "background_color", formData.ui_hex),
+            color: getComponentColor("content", "text_color", "#1f2937"),
+          }}>
+          <div className="content-grid">
+            {[1, 2, 3].map((item, index) => (
+              <div
+                key={item}
+                className="content-card"
+                style={{
+                  backgroundColor: getComponentColor("card", "background_color", formData.ui_hex),
+                  borderColor: getComponentColor("card", "border_color", "#e5e7eb"),
+                  borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+                  boxShadow: stylePrefs.shadows_enabled
+                    ? "0 4px 12px rgba(0,0,0,0.08)"
+                    : `1px 1px 3px #e5e7eb`,
+                  animation: stylePrefs.animations_enabled
+                    ? `fadeInUp ${0.4 + index * 0.2}s ease-out`
+                    : "none",
+                }}>
+                <div
+                  className="card-icon"
+                  style={{
+                    backgroundColor: formData.secondary_hex,
+                    borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+                  }}></div>
+                <h3 style={{ color: getComponentColor("card", "text_color", "#1f2937") }}>Feature {item}</h3>
+                <p style={{ color: getComponentColor("card", "text_color", "#1f2937"), opacity: 0.7 }}>
+                  Showcase your amazing features with this beautiful card design.
+                </p>
+                <button
+                  style={{
+                    backgroundColor: getComponentColor("button", "background_color", formData.primary_hex),
+                    color: getComponentColor("button", "text_color", formData.background_hex),
+                    borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+                    boxShadow: stylePrefs.shadows_enabled ? "0 2px 8px rgba(0,0,0,0.1)" : "none",
+                  }}>
+                  Learn More
+                </button>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="color-preview-content">
-          <div className="color-preview-hero">
-            <h2>Welcome to Your Site</h2>
-            <p>See your colors come to life</p>
-            <div className="color-preview-buttons">
-              <button className="color-preview-btn btn-primary">
-                Primary
-                {!contrastChecks.buttonPrimaryContrastOk && (
-                  <span className="contrast-warning" title="Primary button may have low contrast">
-                    ⚠️
-                  </span>
-                )}
-              </button>
-              <button className="color-preview-btn btn-secondary">
-                Secondary
-                {!contrastChecks.buttonSecondaryContrastOk && (
-                  <span className="contrast-warning" title="Secondary button may have low contrast">
-                    ⚠️
-                  </span>
-                )}
-              </button>
-              <button className="color-preview-btn btn-accent">
-                Accent
-                {!contrastChecks.buttonAccentContrastOk && (
-                  <span className="contrast-warning" title="Accent button may have low contrast">
-                    ⚠️
-                  </span>
-                )}
-              </button>
-            </div>
-          </div>
-
-          <div className="color-preview-cards">
-            <div className="color-preview-card">
-              <h4>
-                Card Title
-                {!contrastChecks.cardTitleContrastOk && (
-                  <span
-                    className="contrast-warning"
-                    title="Card title may have low contrast on UI background">
-                    ⚠️
-                  </span>
-                )}
-              </h4>
-              <p>
-                This card uses UI background color
-                {!contrastChecks.cardTextContrastOk && (
-                  <span className="contrast-warning" title="Card text may have low contrast">
-                    ⚠️
-                  </span>
-                )}
-              </p>
-            </div>
-            <div className="color-preview-card">
-              <h4>Another Card</h4>
-              <p>All card text is consistent</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="color-preview-footer">
-          Footer with UI background (matches navbar)
-          {!contrastChecks.footerContrastOk && (
-            <span className="contrast-warning" title="Footer text may have low contrast">
-              ⚠️
-            </span>
-          )}
-        </div>
+        {/* Footer */}
+        <footer
+          className="preview-footer"
+          style={{
+            backgroundColor: getComponentColor("footer", "background_color", "#1f2937"),
+            color: getComponentColor("footer", "text_color", formData.ui_hex),
+            borderTopColor: getComponentColor("footer", "border_color", "#e5e7eb"),
+          }}>
+          <p>&copy; 2024 Your Website. Built with Bashville.</p>
+        </footer>
       </div>
     </div>
   );

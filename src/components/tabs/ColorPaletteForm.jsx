@@ -4,12 +4,12 @@ import { ActionButton } from "../common/ActionButton.jsx";
 import "./ColorPaletteForm.css";
 import "./ColorPaletteCard.css";
 import "./ColorEditor.css";
-import { LiveColorPreview } from "./LiveColorPreview.jsx";
 import "./LiveColorPreview.css";
 import { PaletteValidationSummary } from "./PaletteValidationSummary.jsx";
 import "./PaletteValidationSummary.css";
 import { AdvancedStyleControls } from "./AdvancedStyleControls.jsx";
 import "./AdvancedStyleControls.css";
+import { LiveColorPreview } from "./LiveColorPreview.jsx";
 
 const DEFAULT_COLORS = {
   name: "",
@@ -139,7 +139,7 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
             </div>
           </div>
 
-          <PaletteValidationSummary colors={formData} />
+          <PaletteValidationSummary formData={formData} />
 
           {/* Advanced Style Controls */}
           <AdvancedStyleControls
@@ -158,8 +158,12 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
           </div>
         </form>
 
-        {/* Live Preview */}
-        <LiveColorPreview formData={formData} />
+        {/* Sticky Live Preview */}
+        <div className="palette-preview-section">
+          <div className="sticky-preview">
+            <LiveColorPreview formData={formData} isVisible={true} />
+          </div>
+        </div>
       </div>
     </div>
   );
