@@ -20,6 +20,19 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
     return defaultColor;
   };
 
+  // Helper function specifically for hero button colors
+  const getHeroButtonColor = (buttonType, colorType, defaultColor) => {
+    const overrides = formData.style_preferences?.component_overrides || {};
+    const heroButtonOverrides = overrides["hero_buttons"];
+
+    if (heroButtonOverrides && heroButtonOverrides[buttonType]) {
+      return heroButtonOverrides[buttonType];
+    }
+
+    // Fallback to regular button overrides
+    return getComponentColor("button", colorType, defaultColor);
+  };
+
   // Update CSS custom properties whenever formData changes
   useEffect(() => {
     if (!mounted || !formData) return;
@@ -38,10 +51,8 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
 
     // Hero section styling
     if (stylePrefs.hero_style === "gradient" && formData.primary_hex && formData.secondary_hex) {
-      root.style.setProperty(
-        "--hero-background",
-        `linear-gradient(135deg, ${formData.primary_hex}, ${formData.secondary_hex})`
-      );
+      const gradientValue = `linear-gradient(135deg, ${formData.primary_hex}, ${formData.secondary_hex})`;
+      root.style.setProperty("--hero-background", gradientValue);
     } else {
       root.style.setProperty("--hero-background", formData.primary_hex || "#fee394");
     }
@@ -52,8 +63,9 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
       none: "0px",
       small: "4px",
       medium: "8px",
-      large: "16px",
+      large: "12px",
       xl: "24px",
+      full: "9999px",
     };
     root.style.setProperty("--border-radius", radiusMap[borderRadius]);
 
@@ -62,7 +74,8 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
     Object.entries(overrides).forEach(([component, styles]) => {
       Object.entries(styles).forEach(([property, value]) => {
         if (value) {
-          root.style.setProperty(`--${component}-${property.replace("_", "-")}`, value);
+          const cssVar = `--${component}-${property.replace("_", "-")}`;
+          root.style.setProperty(cssVar, value);
         }
       });
     });
@@ -73,6 +86,16 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
   }
 
   const stylePrefs = formData.style_preferences || {};
+
+  // Border radius mapping
+  const radiusMap = {
+    none: "0px",
+    small: "4px",
+    medium: "8px",
+    large: "12px",
+    xl: "24px",
+    full: "9999px",
+  };
 
   // Visual indicators for applied styles
   const getStyleIndicators = () => {
@@ -104,6 +127,11 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
       indicators.push(`${overrideCount} Override${overrideCount === 1 ? "" : "s"}`);
     }
 
+    // Add debug info for component overrides
+    if (overrideCount > 0) {
+      console.log("🔍 Component overrides active:", overrides);
+    }
+
     return indicators;
   };
 
@@ -122,6 +150,46 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
         </div>
       )}
 
+      {/* Navigation */}
+      <nav
+        className="preview-nav"
+        style={{
+          backgroundColor: getComponentColor("navigation", "background_color", formData.ui_hex),
+          borderColor: getComponentColor("navigation", "border_color", "#e5e7eb"),
+          boxShadow: stylePrefs.shadows_enabled ? "0 2px 8px rgba(0,0,0,0.1)" : "none",
+        }}>
+        <div
+          className="nav-brand"
+          style={{ color: getComponentColor("navigation", "text_color", formData.primary_hex) }}>
+          Brand
+        </div>
+        <div className="nav-links">
+          {["Home", "About", "Services", "Contact"].map((link, index) => (
+            <button
+              key={link}
+              type="button"
+              className="nav-link-button"
+              style={{
+                background: "none",
+                border: "none",
+                padding: 0,
+                margin: 0,
+                color: getComponentColor("navigation", "text_color", "#1f2937"),
+                cursor: "pointer",
+                font: "inherit",
+                textDecoration: "underline",
+                animation: stylePrefs.animations_enabled
+                  ? `fadeInDown ${0.3 + index * 0.1}s ease-out`
+                  : "none",
+              }}
+              aria-label={link}
+              tabIndex={0}>
+              {link}
+            </button>
+          ))}
+        </div>
+      </nav>
+
       <div className="preview-content">
         {/* Hero Section */}
         <div
@@ -132,7 +200,10 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
               stylePrefs.hero_style === "gradient"
                 ? `linear-gradient(135deg, ${formData.primary_hex}, ${formData.secondary_hex})`
                 : "none",
-            borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+            borderRadius:
+              stylePrefs.border_radius === "none"
+                ? "0"
+                : radiusMap[stylePrefs.border_radius] || radiusMap.medium,
             boxShadow: stylePrefs.shadows_enabled ? "0 10px 25px rgba(0,0,0,0.1)" : "none",
           }}>
           <h1
@@ -153,55 +224,15 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
           <button
             className="preview-button"
             style={{
-              backgroundColor: getComponentColor("button", "background_color", formData.accent_hex),
-              color: getComponentColor("button", "text_color", formData.background_hex),
-              borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+              backgroundColor: getHeroButtonColor("primary", "background_color", formData.accent_hex),
+              color: getHeroButtonColor("primary", "text_color", formData.background_hex),
+              borderRadius: radiusMap[stylePrefs.border_radius] || radiusMap.medium,
               boxShadow: stylePrefs.shadows_enabled ? "0 4px 12px rgba(0,0,0,0.15)" : "none",
               animation: stylePrefs.animations_enabled ? "fadeInUp 1s ease-out" : "none",
             }}>
             Get Started
           </button>
         </div>
-
-        {/* Navigation */}
-        <nav
-          className="preview-nav"
-          style={{
-            backgroundColor: getComponentColor("navigation", "background_color", formData.ui_hex),
-            borderColor: getComponentColor("navigation", "border_color", "#e5e7eb"),
-            boxShadow: stylePrefs.shadows_enabled ? "0 2px 8px rgba(0,0,0,0.1)" : "none",
-          }}>
-          <div
-            className="nav-brand"
-            style={{ color: getComponentColor("navigation", "text_color", formData.primary_hex) }}>
-            Brand
-          </div>
-          <div className="nav-links">
-            {["Home", "About", "Services", "Contact"].map((link, index) => (
-              <button
-                key={link}
-                type="button"
-                className="nav-link-button"
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: 0,
-                  margin: 0,
-                  color: getComponentColor("navigation", "text_color", "#1f2937"),
-                  cursor: "pointer",
-                  font: "inherit",
-                  textDecoration: "underline",
-                  animation: stylePrefs.animations_enabled
-                    ? `fadeInDown ${0.3 + index * 0.1}s ease-out`
-                    : "none",
-                }}
-                aria-label={link}
-                tabIndex={0}>
-                {link}
-              </button>
-            ))}
-          </div>
-        </nav>
 
         {/* Content Section */}
         <div
@@ -218,7 +249,7 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
                 style={{
                   backgroundColor: getComponentColor("card", "background_color", formData.ui_hex),
                   borderColor: getComponentColor("card", "border_color", "#e5e7eb"),
-                  borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+                  borderRadius: radiusMap[stylePrefs.border_radius] || radiusMap.medium,
                   boxShadow: stylePrefs.shadows_enabled
                     ? "0 4px 12px rgba(0,0,0,0.08)"
                     : `1px 1px 3px #e5e7eb`,
@@ -230,7 +261,7 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
                   className="card-icon"
                   style={{
                     backgroundColor: formData.secondary_hex,
-                    borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+                    borderRadius: radiusMap[stylePrefs.border_radius] || radiusMap.medium,
                   }}></div>
                 <h3 style={{ color: getComponentColor("card", "text_color", "#1f2937") }}>Feature {item}</h3>
                 <p style={{ color: getComponentColor("card", "text_color", "#1f2937"), opacity: 0.7 }}>
@@ -240,7 +271,7 @@ export const LiveColorPreview = ({ formData, isVisible = true }) => {
                   style={{
                     backgroundColor: getComponentColor("button", "background_color", formData.primary_hex),
                     color: getComponentColor("button", "text_color", formData.background_hex),
-                    borderRadius: stylePrefs.border_radius === "none" ? "0" : undefined,
+                    borderRadius: radiusMap[stylePrefs.border_radius] || radiusMap.medium,
                     boxShadow: stylePrefs.shadows_enabled ? "0 2px 8px rgba(0,0,0,0.1)" : "none",
                   }}>
                   Learn More

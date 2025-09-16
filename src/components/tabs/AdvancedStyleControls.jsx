@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./AdvancedStyleControls.css";
-import { isContrastAccessible, getBestTextColor } from "../../utils/colorUtils";
+import { getBestTextColor, isContrastAccessible } from "../../utils/colorUtils.js";
 
 // Advanced style controls for developer-friendly customization
 export const AdvancedStyleControls = ({ formData, onStyleChange, className = "" }) => {
@@ -9,7 +9,9 @@ export const AdvancedStyleControls = ({ formData, onStyleChange, className = "" 
 
   // Get current style preferences with defaults
   const stylePrefs = formData?.style_preferences || {};
-  const getStyleValue = (key, defaultValue) => stylePrefs[key] || defaultValue;
+  const getStyleValue = (key, defaultValue) => {
+    return stylePrefs.hasOwnProperty(key) ? stylePrefs[key] : defaultValue;
+  };
 
   // Shared helper function for getting component overrides
   const getComponentOverride = (component, property) => {
@@ -152,7 +154,9 @@ export const AdvancedStyleControls = ({ formData, onStyleChange, className = "" 
 
 // Layout controls for overall styling
 const LayoutControls = ({ stylePrefs, onStyleChange }) => {
-  const getStyleValue = (key, defaultValue) => stylePrefs[key] || defaultValue;
+  const getStyleValue = (key, defaultValue) => {
+    return stylePrefs.hasOwnProperty(key) ? stylePrefs[key] : defaultValue;
+  };
 
   return (
     <div className="control-section">
@@ -201,8 +205,8 @@ const LayoutControls = ({ stylePrefs, onStyleChange }) => {
           <label className="toggle-option">
             <input
               type="checkbox"
-              checked={getStyleValue("shadows", true)}
-              onChange={(e) => onStyleChange("shadows", e.target.checked)}
+              checked={getStyleValue("shadows_enabled", true)}
+              onChange={(e) => onStyleChange("shadows_enabled", e.target.checked)}
             />
             <span>Drop Shadows</span>
           </label>
@@ -210,8 +214,8 @@ const LayoutControls = ({ stylePrefs, onStyleChange }) => {
           <label className="toggle-option">
             <input
               type="checkbox"
-              checked={getStyleValue("animations", true)}
-              onChange={(e) => onStyleChange("animations", e.target.checked)}
+              checked={getStyleValue("animations_enabled", true)}
+              onChange={(e) => onStyleChange("animations_enabled", e.target.checked)}
             />
             <span>Hover Animations</span>
           </label>
@@ -230,7 +234,9 @@ const HeroControls = ({
   hasContrastIssues,
   getComponentOverride,
 }) => {
-  const getStyleValue = (key, defaultValue) => stylePrefs[key] || defaultValue;
+  const getStyleValue = (key, defaultValue) => {
+    return stylePrefs.hasOwnProperty(key) ? stylePrefs[key] : defaultValue;
+  };
 
   return (
     <div className="control-section">
@@ -334,27 +340,46 @@ const HeroControls = ({
 const ComponentControls = ({ formData, onComponentOverride, getComponentOverride }) => {
   const components = [
     {
-      name: "navbar",
+      name: "navigation",
       label: "Navigation Bar",
       properties: [
-        { key: "background", label: "Background", current: formData?.ui_hex },
-        { key: "text", label: "Text Color", current: getBestTextColor(formData?.ui_hex || "#ffffff") },
+        { key: "background_color", label: "Background", current: formData?.ui_hex },
+        { key: "text_color", label: "Text Color", current: getBestTextColor(formData?.ui_hex || "#ffffff") },
+        { key: "border_color", label: "Border Color", current: "#e5e7eb" },
       ],
     },
     {
-      name: "cards",
+      name: "card",
       label: "Cards & Content",
       properties: [
-        { key: "background", label: "Background", current: formData?.ui_hex },
-        { key: "border", label: "Border Color", current: "#e5e5e5" },
+        { key: "background_color", label: "Background", current: formData?.ui_hex },
+        { key: "border_color", label: "Border Color", current: "#e5e7eb" },
+        { key: "text_color", label: "Text Color", current: "#1f2937" },
       ],
     },
     {
       name: "footer",
       label: "Footer",
       properties: [
-        { key: "background", label: "Background", current: formData?.ui_hex },
-        { key: "text", label: "Text Color", current: getBestTextColor(formData?.ui_hex || "#ffffff") },
+        { key: "background_color", label: "Background", current: "#1f2937" },
+        { key: "text_color", label: "Text Color", current: formData?.ui_hex },
+        { key: "border_color", label: "Border Color", current: "#e5e7eb" },
+      ],
+    },
+    {
+      name: "content",
+      label: "Content Section",
+      properties: [
+        { key: "background_color", label: "Background", current: formData?.ui_hex },
+        { key: "text_color", label: "Text Color", current: "#1f2937" },
+      ],
+    },
+    {
+      name: "button",
+      label: "Regular Buttons",
+      properties: [
+        { key: "background_color", label: "Background", current: formData?.primary_hex },
+        { key: "text_color", label: "Text Color", current: formData?.background_hex },
       ],
     },
   ];
@@ -410,7 +435,9 @@ const ComponentControls = ({ formData, onComponentOverride, getComponentOverride
 
 // Developer-specific controls
 const DeveloperControls = ({ stylePrefs, onStyleChange }) => {
-  const getStyleValue = (key, defaultValue) => stylePrefs[key] || defaultValue;
+  const getStyleValue = (key, defaultValue) => {
+    return stylePrefs.hasOwnProperty(key) ? stylePrefs[key] : defaultValue;
+  };
 
   return (
     <div className="control-section">
