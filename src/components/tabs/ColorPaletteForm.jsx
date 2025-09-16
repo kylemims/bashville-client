@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormField } from "../common/FormField.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
+import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./ColorPaletteForm.css";
 import "./ColorPaletteCard.css";
 import "./ColorEditor.css";
@@ -23,6 +24,7 @@ const DEFAULT_COLORS = {
 
 export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEditing = false }) => {
   const [formData, setFormData] = useState(palette || DEFAULT_COLORS);
+  const [isMobilePreview, setIsMobilePreview] = useState(false);
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -33,6 +35,10 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
       ...prev,
       style_preferences: newStylePreferences,
     }));
+  };
+
+  const handleTogglePreview = (isMobile) => {
+    setIsMobilePreview(isMobile);
   };
 
   const handleSubmit = (e) => {
@@ -118,28 +124,10 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
                   />
                 </div>
                 <p className="color-field-description">{field.description}</p>
-                <p className="color-field-example">Used for: {field.example}</p>
+                {/* <p className="color-field-example">Used for: {field.example}</p> */}
               </div>
             ))}
           </div>
-
-          <div className="palette-preview-live">
-            <h4>Color Swatches</h4>
-            <div className="color-swatch-row">
-              {colorFields.map((field) => (
-                <div key={field.name} className="color-swatch-item">
-                  <div
-                    className={`color-swatch ${field.name.replace("_hex", "")}`}
-                    style={{ backgroundColor: formData[field.name] }}
-                    title={`${field.label}: ${formData[field.name]}`}
-                  />
-                  <span className="color-swatch-label">{field.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <PaletteValidationSummary formData={formData} />
 
           {/* Advanced Style Controls */}
           <AdvancedStyleControls
@@ -161,8 +149,57 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
         {/* Sticky Live Preview */}
         <div className="palette-preview-section">
           <div className="sticky-preview">
-            <LiveColorPreview formData={formData} isVisible={true} />
+            {/* Mobile/Desktop Toggle */}
+            <div className="preview-toggle-container">
+              <div className="preview-toggle-header">
+                <h4>Live Preview</h4>
+                <div className="preview-toggle-buttons">
+                  <button
+                    type="button"
+                    className={`preview-toggle-btn ${!isMobilePreview ? "active" : ""}`}
+                    onClick={() => handleTogglePreview(false)}
+                    aria-label="Desktop preview"
+                    title="Desktop preview">
+                    <MaterialIcon icon="desktop_windows" size="18px" />
+                    Desktop
+                  </button>
+                  <button
+                    type="button"
+                    className={`preview-toggle-btn ${isMobilePreview ? "active" : ""}`}
+                    onClick={() => handleTogglePreview(true)}
+                    aria-label="Mobile preview"
+                    title="Mobile preview">
+                    <MaterialIcon icon="smartphone" size="18px" />
+                    Mobile
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <LiveColorPreview
+              formData={formData}
+              isVisible={true}
+              isMobilePreview={isMobilePreview}
+              onTogglePreview={handleTogglePreview}
+            />
           </div>
+        </div>
+      </div>
+      <PaletteValidationSummary formData={formData} />
+
+      <div className="palette-preview-live">
+        <h4>Color Swatches</h4>
+        <div className="color-swatch-row">
+          {colorFields.map((field) => (
+            <div key={field.name} className="color-swatch-item">
+              <div
+                className={`color-swatch ${field.name.replace("_hex", "")}`}
+                style={{ backgroundColor: formData[field.name] }}
+                title={`${field.label}: ${formData[field.name]}`}
+              />
+              <span className="color-swatch-label">{field.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </div>

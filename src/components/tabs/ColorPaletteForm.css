@@ -122,6 +122,14 @@
   opacity: 0.8;
 }
 
+.color-field-description {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin: 0.125rem 0 0 0;
+  font-style: italic;
+  opacity: 0.8;
+}
+
 /* Advanced controls integration */
 .advanced-controls {
   margin-top: 1.5rem;
@@ -131,24 +139,16 @@
 /* Enhanced layout for form with preview and advanced controls */
 .palette-form-with-preview {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 500px;
   gap: 2rem;
   align-items: start;
 }
 
-@media (max-width: 768px) {
+/* Larger screens - give even more space for preview */
+@media (min-width: 1400px) {
   .palette-form-with-preview {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 1fr 600px;
   }
-}
-
-/* Enhanced layout for better preview visibility */
-.palette-form-with-preview {
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 2rem;
-  align-items: start;
 }
 
 /* .palette-form-section {
@@ -170,9 +170,15 @@
 }
 
 /* Responsive adjustments */
+@media (max-width: 1300px) {
+  .palette-form-with-preview {
+    grid-template-columns: 1fr 450px;
+  }
+}
+
 @media (max-width: 1200px) {
   .palette-form-with-preview {
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 1fr 400px;
   }
 }
 
@@ -186,4 +192,67 @@
     position: relative;
     top: auto;
   }
+}
+
+/* Preview Toggle Styles */
+.preview-toggle-container {
+  margin-bottom: 1rem;
+}
+
+.preview-toggle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.preview-toggle-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.preview-toggle-buttons {
+  display: flex;
+  background: var(--bg-primary);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.preview-toggle-btn {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-right: 1px solid var(--border);
+}
+
+.preview-toggle-btn:last-child {
+  border-right: none;
+}
+
+.preview-toggle-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--text);
+}
+
+.preview-toggle-btn.active {
+  background: var(--color-primary);
+  color: var(--bg-primary);
+  font-weight: 600;
+}
+
+.preview-toggle-btn.active:hover {
+  background: var(--color-primary);
+  color: var(--bg-primary);
 }
