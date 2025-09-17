@@ -26,13 +26,40 @@ export const LiveColorPreview = ({
     return defaultColor;
   };
 
-  // Helper function specifically for hero button colors
+  // Helper function to calculate contrast and return white or black text
+  const getContrastingTextColor = (backgroundColor) => {
+    if (!backgroundColor) return "#ffffff";
+
+    // Remove # if present
+    const hex = backgroundColor.replace("#", "");
+
+    // Convert to RGB
+    const r = parseInt(hex.substr(0, 2), 16);
+    const g = parseInt(hex.substr(2, 2), 16);
+    const b = parseInt(hex.substr(4, 2), 16);
+
+    // Calculate relative luminance
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+    // Return black for light backgrounds, white for dark backgrounds
+    return luminance > 0.5 ? "#000000" : "#ffffff";
+  };
+
+  // Helper function specifically for hero button colors with auto-contrast
   const getHeroButtonColor = (buttonType, colorType, defaultColor) => {
     const overrides = formData.style_preferences?.component_overrides || {};
     const heroButtonOverrides = overrides["hero_buttons"];
 
     if (heroButtonOverrides && heroButtonOverrides[buttonType]) {
-      return heroButtonOverrides[buttonType];
+      const overrideColor = heroButtonOverrides[buttonType];
+
+      // If asking for text color and we have a background override, auto-calculate contrast
+      if (colorType === "text_color") {
+        return getContrastingTextColor(overrideColor);
+      }
+
+      // For background color, return the override
+      return overrideColor;
     }
 
     // Fallback to regular button overrides
@@ -91,11 +118,11 @@ export const LiveColorPreview = ({
     switch (backgroundType) {
       case "gradient":
         const direction = stylePrefs.hero_gradient_direction || "135deg";
-        const primary = formData.primary_hex || "#3b82f6";
-        const secondary = formData.secondary_hex || "#1e40af";
+        const startColor = stylePrefs.hero_gradient_start || formData.primary_hex || "#3b82f6";
+        const endColor = stylePrefs.hero_gradient_end || formData.secondary_hex || "#1e40af";
         return {
           backgroundColor: "transparent",
-          backgroundImage: `linear-gradient(${direction}, ${primary}, ${secondary})`,
+          backgroundImage: `linear-gradient(${direction}, ${startColor}, ${endColor})`,
         };
 
       case "solid":
@@ -322,17 +349,39 @@ export const LiveColorPreview = ({
               }}>
               Beautiful design meets powerful functionality
             </p>
-            <button
-              className="preview-button"
-              style={{
-                backgroundColor: getHeroButtonColor("primary", "background_color", formData.accent_hex),
-                color: getHeroButtonColor("primary", "text_color", formData.background_hex),
-                borderRadius: getElementRadius("button"),
-                boxShadow: getThemeShadow("button"),
-                animation: stylePrefs.animations_enabled ? "fadeInUp 1s ease-out" : "none",
-              }}>
-              Get Started
-            </button>
+            <div className="hero-buttons" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+              <button
+                className="preview-button primary"
+                style={{
+                  backgroundColor: getHeroButtonColor("primary", "background_color", formData.accent_hex),
+                  color: getHeroButtonColor("primary", "text_color", formData.background_hex),
+                  borderRadius: getElementRadius("button"),
+                  boxShadow: getThemeShadow("button"),
+                  animation: stylePrefs.animations_enabled ? "fadeInUp 1s ease-out" : "none",
+                }}>
+                Get Started
+              </button>
+              <button
+                className="preview-button secondary"
+                style={{
+                  backgroundColor: getHeroButtonColor(
+                    "secondary",
+                    "background_color",
+                    formData.secondary_hex
+                  ),
+                  color: getHeroButtonColor("secondary", "text_color", formData.background_hex),
+                  borderRadius: getElementRadius("button"),
+                  boxShadow: getThemeShadow("button"),
+                  animation: stylePrefs.animations_enabled ? "fadeInUp 1.2s ease-out" : "none",
+                  border: `2px solid ${getHeroButtonColor(
+                    "secondary",
+                    "background_color",
+                    formData.secondary_hex
+                  )}`,
+                }}>
+                Learn More
+              </button>
+            </div>
           </div>
 
           {/* Content Section */}

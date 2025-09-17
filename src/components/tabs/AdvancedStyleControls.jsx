@@ -372,19 +372,55 @@ const HeroControls = ({
 
       {/* Gradient-specific controls */}
       {currentBackgroundType === "gradient" && (
-        <div className="control-group">
-          <label>Gradient Direction</label>
-          <select
-            value={getStyleValue("hero_gradient_direction", "135deg")}
-            onChange={(e) => onStyleChange("hero_gradient_direction", e.target.value)}>
-            <option value="90deg">Left to Right →</option>
-            <option value="180deg">Top to Bottom ↓</option>
-            <option value="135deg">Diagonal ↘ (Default)</option>
-            <option value="45deg">Diagonal ↗</option>
-            <option value="0deg">Bottom to Top ↑</option>
-            <option value="270deg">Right to Left ←</option>
-          </select>
-        </div>
+        <>
+          <div className="control-group">
+            <label>Gradient Direction</label>
+            <select
+              value={getStyleValue("hero_gradient_direction", "135deg")}
+              onChange={(e) => onStyleChange("hero_gradient_direction", e.target.value)}>
+              <option value="90deg">Left to Right →</option>
+              <option value="180deg">Top to Bottom ↓</option>
+              <option value="135deg">Diagonal ↘ (Default)</option>
+              <option value="45deg">Diagonal ↗</option>
+              <option value="0deg">Bottom to Top ↑</option>
+              <option value="270deg">Right to Left ←</option>
+            </select>
+          </div>
+
+          <div className="control-group">
+            <label>Gradient Colors</label>
+            <div
+              className="gradient-color-controls"
+              style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+              <div className="color-picker-group">
+                <label style={{ fontSize: "0.9rem", marginBottom: "0.25rem" }}>Start Color</label>
+                <input
+                  type="color"
+                  value={sanitizeColorValue(
+                    getStyleValue("hero_gradient_start", formData?.primary_hex || "#3b82f6")
+                  )}
+                  onChange={(e) => onStyleChange("hero_gradient_start", e.target.value)}
+                />
+                <span className="color-value">
+                  {getStyleValue("hero_gradient_start", formData?.primary_hex || "#3b82f6")}
+                </span>
+              </div>
+              <div className="color-picker-group">
+                <label style={{ fontSize: "0.9rem", marginBottom: "0.25rem" }}>End Color</label>
+                <input
+                  type="color"
+                  value={sanitizeColorValue(
+                    getStyleValue("hero_gradient_end", formData?.secondary_hex || "#1e40af")
+                  )}
+                  onChange={(e) => onStyleChange("hero_gradient_end", e.target.value)}
+                />
+                <span className="color-value">
+                  {getStyleValue("hero_gradient_end", formData?.secondary_hex || "#1e40af")}
+                </span>
+              </div>
+            </div>
+          </div>
+        </>
       )}
 
       {/* Solid color-specific controls */}
@@ -453,7 +489,6 @@ const HeroControls = ({
           {[
             { key: "primary", label: "Primary Button", current: formData?.primary_hex },
             { key: "secondary", label: "Secondary Button", current: formData?.secondary_hex },
-            { key: "accent", label: "Accent Button", current: formData?.accent_hex },
           ].map((button) => {
             const overrideColor = getComponentOverride("hero_buttons", button.key);
             return (
