@@ -250,9 +250,9 @@ rPreview.css */ .live-preview-container {
 
 /* Desktop view - horizontal layout */
 .desktop-preview .content-grid {
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  max-width: none;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  max-width: 800px;
 }
 
 /* Ensure cards are compact in desktop view */

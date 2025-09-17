@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
-import { BORDER_RADIUS, LAYOUT_STYLES } from "../../utils/styleConstants.js";
+import { BORDER_RADIUS, LAYOUT_STYLES, FEATURE_CARD_STYLES } from "../../utils/styleConstants.js";
+import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./LiveColorPreview.css";
 
 export const LiveColorPreview = ({
@@ -76,6 +77,46 @@ export const LiveColorPreview = ({
     }
 
     return defaultColor;
+  };
+
+  // Helper function to get feature card styles
+  const getFeatureCardStyle = (featureId) => {
+    const stylePrefs = formData.style_preferences || {};
+    const styleKey = `feature_${featureId}_style`;
+    const styleName = stylePrefs[styleKey] || "default";
+    const cardStyle = FEATURE_CARD_STYLES[styleName] || FEATURE_CARD_STYLES.default;
+
+    const style = {
+      border: cardStyle.css.border,
+      boxShadow: cardStyle.css.shadow,
+    };
+
+    // Handle special properties for glass effect
+    if (cardStyle.css.backdropFilter) {
+      style.backdropFilter = cardStyle.css.backdropFilter;
+      style.WebkitBackdropFilter = cardStyle.css.backdropFilter; // Safari support
+    }
+
+    // Override background for glass effect
+    if (styleName === "glass") {
+      style.backgroundColor = cardStyle.css.background;
+    }
+
+    return style;
+  };
+
+  // Default feature icons configuration
+  const DEFAULT_FEATURE_ICONS = {
+    1: "rocket_launch", // Performance/Speed
+    2: "security", // Security/Protection
+    3: "analytics", // Analytics/Data (for if we ever go back to 3 cards)
+  };
+
+  // Helper function to get feature icon
+  const getFeatureIcon = (featureId) => {
+    const stylePrefs = formData.style_preferences || {};
+    const iconKey = `feature_${featureId}_icon`;
+    return stylePrefs[iconKey] || DEFAULT_FEATURE_ICONS[featureId] || "star";
   };
 
   // Helper function to get theme-specific shadows with shadows_enabled override
@@ -400,40 +441,57 @@ export const LiveColorPreview = ({
               color: getComponentColor("content", "text_color", "#1f2937"),
             }}>
             <div className="content-grid">
-              {[1, 2, 3].map((item, index) => (
-                <div
-                  key={item}
-                  className="content-card"
-                  style={{
-                    backgroundColor: getFeatureColor(item, "bg", formData.ui_hex || "#ffffff"),
-                    borderColor: getComponentColor("card", "border_color", "#e5e7eb"),
-                    borderRadius: getElementRadius("card"),
-                    boxShadow: getThemeShadow("card"),
-                    animation: stylePrefs.animations_enabled
-                      ? `fadeInUp ${0.4 + index * 0.2}s ease-out`
-                      : "none",
-                  }}>
+              {[1, 2].map((item, index) => {
+                const cardStyle = getFeatureCardStyle(item);
+                const stylePrefs = formData.style_preferences || {};
+                const styleName = stylePrefs[`feature_${item}_style`] || "default";
+
+                // For glass effect, use glassmorphism background; otherwise use user's custom background
+                const backgroundColor =
+                  styleName === "glass"
+                    ? cardStyle.backgroundColor
+                    : getFeatureColor(item, "bg", formData.ui_hex || "#ffffff");
+
+                return (
                   <div
-                    className="card-icon"
+                    key={item}
+                    className="content-card"
                     style={{
-                      backgroundColor: getFeatureColor(item, "accent", formData.secondary_hex || "#3b82f6"),
+                      backgroundColor,
+                      color: getFeatureColor(item, "text", "#1f2937"),
                       borderRadius: getElementRadius("card"),
-                    }}></div>
-                  <h3 style={{ color: getFeatureColor(item, "text", "#1f2937") }}>Feature {item}</h3>
-                  <p style={{ color: getFeatureColor(item, "text", "#1f2937"), opacity: 0.7 }}>
-                    Showcase your amazing features with this beautiful card design.
-                  </p>
-                  <button
-                    style={{
-                      backgroundColor: getFeatureColor(item, "accent", formData.primary_hex || "#3b82f6"),
-                      color: "#ffffff",
-                      borderRadius: getElementRadius("button"),
-                      boxShadow: getThemeShadow("button"),
+                      ...cardStyle,
+                      animation: stylePrefs.animations_enabled
+                        ? `fadeInUp ${0.4 + index * 0.2}s ease-out`
+                        : "none",
                     }}>
-                    Learn More
-                  </button>
-                </div>
-              ))}
+                    <div
+                      className="card-icon"
+                      style={{
+                        backgroundColor: getFeatureColor(item, "accent", formData.secondary_hex || "#3b82f6"),
+                        borderRadius: getElementRadius("card"),
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}>
+                      <MaterialIcon icon={getFeatureIcon(item)} size={28} color="#ffffff" filled={true} />
+                    </div>
+                    <h3 style={{ color: getFeatureColor(item, "text", "#1f2937") }}>Feature {item}</h3>
+                    <p style={{ color: getFeatureColor(item, "text", "#1f2937"), opacity: 0.7 }}>
+                      Showcase your amazing features with this beautiful card design.
+                    </p>
+                    <button
+                      style={{
+                        backgroundColor: getFeatureColor(item, "accent", formData.primary_hex || "#3b82f6"),
+                        color: "#ffffff",
+                        borderRadius: getElementRadius("button"),
+                        boxShadow: getThemeShadow("button"),
+                      }}>
+                      Learn More
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           </div>
 

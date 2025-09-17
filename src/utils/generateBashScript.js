@@ -1,5 +1,5 @@
 import { getBackendConfig } from "./backendConfig";
-import { generateStyleCSS } from "./styleConstants.js";
+import { generateStyleCSS, generateIconComponent } from "./styleConstants.js";
 
 export const generateBashScript = (project) => {
   const commands = project.commands_preview || [];
@@ -313,6 +313,76 @@ GUIDE
 
 `;
   }
+
+  // Add Material Icons and Smart Icon Library
+  script += `
+# === Material Icons & Smart Icon Library ===
+echo "==> Setting up Material Icons and Smart Icon Library..."
+
+# Create components directory if it doesn't exist
+mkdir -p components
+
+# Add Material Icons to HTML (if index.html exists)
+if [ -f "index.html" ]; then
+  if ! grep -q "material-symbols-outlined" index.html; then
+    # Add Material Icons to the head section
+    sed -i.bak '/<\\/head>/i\\
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+' index.html
+    echo "✓ Added Material Icons to index.html"
+  else
+    echo "• Material Icons already present in index.html"
+  fi
+else
+  echo "• index.html not found, Material Icons can be added manually"
+fi
+
+# Generate MaterialIcon component
+cat > components/MaterialIcon.jsx <<'MATERIALICON'
+export const MaterialIcon = ({
+  icon,
+  className = "",
+  size = 24,
+  color = "inherit",
+  filled = false,
+  weight = 400,
+  ...props
+}) => {
+  const style = {
+    fontSize: \`\${size}px\`,
+    color: color,
+    fontVariationSettings: \`
+      'FILL' \${filled ? 1 : 0},
+      'wght' \${weight},
+      'GRAD' 0,
+      'opsz' \${size}
+    \`,
+  };
+
+  return (
+    <span className={\`material-symbols-outlined \${className}\`} style={style} {...props}>
+      {icon}
+    </span>
+  );
+};
+MATERIALICON
+
+# Generate Smart Icon Library
+cat > components/AppIcons.jsx <<'APPICONS'
+${generateIconComponent()}
+APPICONS
+
+echo "✓ Created MaterialIcon component at components/MaterialIcon.jsx"
+echo "✓ Created Smart Icon Library at components/AppIcons.jsx"
+echo ""
+echo "📖 Usage Examples:"
+echo "   import { AppIcons } from './components/AppIcons';"
+echo "   <button><AppIcons.edit /> Edit Profile</button>"
+echo "   <nav><AppIcons.menu size={24} /></nav>"
+echo "   <AppIcons.cart color=\\"primary\\" />"
+echo ""
+
+`;
 
   if (backend && (backend.models?.length || backend.relationships?.length)) {
     script += `# Backend Schema (preview)

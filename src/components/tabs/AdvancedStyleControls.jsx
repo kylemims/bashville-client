@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./AdvancedStyleControls.css";
 import { getBestTextColor, isContrastAccessible } from "../../utils/colorUtils.js";
+import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import {
   LAYOUT_STYLES,
   BORDER_RADIUS,
@@ -95,11 +96,11 @@ export const AdvancedStyleControls = ({ formData, onStyleChange, className = "" 
   };
 
   const tabs = [
-    { id: "layout", label: "Layout", icon: "🎨" },
-    { id: "hero", label: "Hero", icon: "🌟" },
-    { id: "features", label: "Features", icon: "⭐" },
-    { id: "components", label: "Components", icon: "🧩" },
-    { id: "developer", label: "Developer", icon: "⚡" },
+    { id: "layout", label: "Layout", icon: "palette" },
+    { id: "hero", label: "Hero", icon: "web_asset" },
+    { id: "features", label: "Features", icon: "star" },
+    { id: "components", label: "Components", icon: "extension" },
+    { id: "developer", label: "Developer", icon: "code" },
   ];
 
   return (
@@ -137,7 +138,9 @@ export const AdvancedStyleControls = ({ formData, onStyleChange, className = "" 
                   setActiveTab(tab.id);
                 }}
                 type="button">
-                <span className="tab-icon">{tab.icon}</span>
+                <span className="tab-icon">
+                  <MaterialIcon icon={tab.icon} size={20} />
+                </span>
                 <span className="tab-label">{tab.label}</span>
               </button>
             ))}
@@ -539,7 +542,7 @@ const FeatureControls = ({ formData, stylePrefs, onStyleChange }) => {
     {
       id: 1,
       title: "Feature Card 1",
-      icon: "🚀",
+      icon: "rocket_launch",
       defaultBg: formData?.ui_hex || "#ffffff",
       defaultText: "#1f2937",
       defaultAccent: formData?.accent_hex || "#3b82f6",
@@ -547,18 +550,10 @@ const FeatureControls = ({ formData, stylePrefs, onStyleChange }) => {
     {
       id: 2,
       title: "Feature Card 2",
-      icon: "⚡",
+      icon: "security",
       defaultBg: formData?.ui_hex || "#ffffff",
       defaultText: "#1f2937",
       defaultAccent: formData?.primary_hex || "#3b82f6",
-    },
-    {
-      id: 3,
-      title: "Feature Card 3",
-      icon: "✨",
-      defaultBg: formData?.ui_hex || "#ffffff",
-      defaultText: "#1f2937",
-      defaultAccent: formData?.secondary_hex || "#3b82f6",
     },
   ];
 
@@ -570,7 +565,9 @@ const FeatureControls = ({ formData, stylePrefs, onStyleChange }) => {
       {featureCards.map((card) => (
         <div key={card.id} className="feature-card-control-group">
           <div className="feature-card-header">
-            <span className="feature-icon">{card.icon}</span>
+            <span className="feature-icon">
+              <MaterialIcon icon={card.icon} size={24} filled={true} />
+            </span>
             <h5>{card.title}</h5>
           </div>
 
@@ -641,30 +638,6 @@ const FeatureControls = ({ formData, stylePrefs, onStyleChange }) => {
                     title="Reset to default">
                     ↺
                   </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Live Preview */}
-            <div className="feature-preview">
-              <div
-                className={`preview-feature-card style-${getStyleValue(
-                  `feature_${card.id}_style`,
-                  "default"
-                )}`}
-                style={{
-                  backgroundColor: getStyleValue(`feature_${card.id}_bg`, card.defaultBg),
-                  color: getStyleValue(`feature_${card.id}_text`, card.defaultText),
-                  borderColor: getStyleValue(`feature_${card.id}_accent`, card.defaultAccent),
-                }}>
-                <div
-                  className="preview-accent"
-                  style={{ backgroundColor: getStyleValue(`feature_${card.id}_accent`, card.defaultAccent) }}>
-                  {card.icon}
-                </div>
-                <div className="preview-content">
-                  <h6>Feature Title</h6>
-                  <p>Feature description text goes here.</p>
                 </div>
               </div>
             </div>
