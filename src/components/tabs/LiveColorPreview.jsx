@@ -349,7 +349,15 @@ export const LiveColorPreview = ({
               }}>
               Beautiful design meets powerful functionality
             </p>
-            <div className="hero-buttons" style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <div
+              className="hero-buttons"
+              style={{
+                display: "flex",
+                gap: "1rem",
+                flexWrap: "wrap",
+                justifyContent: "center",
+                marginTop: "1.5rem",
+              }}>
               <button
                 className="preview-button primary"
                 style={{
