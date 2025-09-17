@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { BORDER_RADIUS } from "../../utils/styleConstants.js";
+import { BORDER_RADIUS, LAYOUT_STYLES } from "../../utils/styleConstants.js";
 import "./LiveColorPreview.css";
 
 export const LiveColorPreview = ({
@@ -49,6 +49,36 @@ export const LiveColorPreview = ({
     }
 
     return defaultColor;
+  };
+
+  // Helper function to get theme-specific shadows with shadows_enabled override
+  const getThemeShadow = (elementType) => {
+    const stylePrefs = formData.style_preferences || {};
+
+    // If shadows are disabled globally, return none regardless of theme
+    if (stylePrefs.shadows_enabled === false) {
+      return "none";
+    }
+
+    const theme = LAYOUT_STYLES[stylePrefs.style_theme] || LAYOUT_STYLES.modern;
+
+    // Map element types to shadow properties
+    const shadowMap = {
+      card: theme.css.cardShadow,
+      button: theme.css.buttonShadow,
+      nav: theme.css.cardShadow, // Navigation uses card shadow
+      hero: theme.css.cardShadow, // Hero uses card shadow
+    };
+
+    return shadowMap[elementType] || "none";
+  };
+
+  // Helper function to get element-specific border radius
+  const getElementRadius = (elementType) => {
+    const stylePrefs = formData.style_preferences || {};
+    const radiusKey = `${elementType}_radius`;
+    const radiusValue = stylePrefs[radiusKey] || "medium";
+    return BORDER_RADIUS[radiusValue]?.css || BORDER_RADIUS.medium.css;
   };
 
   // Helper function to get hero background styles
@@ -186,9 +216,9 @@ export const LiveColorPreview = ({
       indicators.push("Animations");
     }
 
-    if (stylePrefs.shadows_enabled) {
-      indicators.push("Shadows");
-    }
+    // Show theme information instead of generic shadows toggle
+    const theme = LAYOUT_STYLES[stylePrefs.style_theme] || LAYOUT_STYLES.modern;
+    indicators.push(`${theme.name} Theme`);
 
     const borderRadius = stylePrefs.border_radius;
     if (borderRadius && borderRadius !== "medium") {
@@ -234,7 +264,7 @@ export const LiveColorPreview = ({
           style={{
             backgroundColor: getComponentColor("navigation", "background_color", formData.ui_hex),
             borderColor: getComponentColor("navigation", "border_color", "#e5e7eb"),
-            boxShadow: stylePrefs.shadows_enabled ? "0 2px 8px rgba(0,0,0,0.1)" : "none",
+            boxShadow: getThemeShadow("nav"),
           }}>
           <div
             className="nav-brand"
@@ -274,9 +304,8 @@ export const LiveColorPreview = ({
             className="preview-hero"
             style={{
               ...getHeroBackgroundStyle(),
-              borderRadius:
-                stylePrefs.border_radius === "none" ? "0" : getRadiusValue(stylePrefs.border_radius),
-              boxShadow: stylePrefs.shadows_enabled ? "0 10px 25px rgba(0,0,0,0.1)" : "none",
+              borderRadius: getElementRadius("hero"),
+              boxShadow: getThemeShadow("hero"),
             }}>
             <h1
               style={{
@@ -298,8 +327,8 @@ export const LiveColorPreview = ({
               style={{
                 backgroundColor: getHeroButtonColor("primary", "background_color", formData.accent_hex),
                 color: getHeroButtonColor("primary", "text_color", formData.background_hex),
-                borderRadius: getRadiusValue(stylePrefs.border_radius),
-                boxShadow: stylePrefs.shadows_enabled ? "0 4px 12px rgba(0,0,0,0.15)" : "none",
+                borderRadius: getElementRadius("button"),
+                boxShadow: getThemeShadow("button"),
                 animation: stylePrefs.animations_enabled ? "fadeInUp 1s ease-out" : "none",
               }}>
               Get Started
@@ -321,10 +350,8 @@ export const LiveColorPreview = ({
                   style={{
                     backgroundColor: getFeatureColor(item, "bg", formData.ui_hex || "#ffffff"),
                     borderColor: getComponentColor("card", "border_color", "#e5e7eb"),
-                    borderRadius: getRadiusValue(stylePrefs.border_radius),
-                    boxShadow: stylePrefs.shadows_enabled
-                      ? "0 4px 12px rgba(0,0,0,0.08)"
-                      : `1px 1px 3px #e5e7eb`,
+                    borderRadius: getElementRadius("card"),
+                    boxShadow: getThemeShadow("card"),
                     animation: stylePrefs.animations_enabled
                       ? `fadeInUp ${0.4 + index * 0.2}s ease-out`
                       : "none",
@@ -333,7 +360,7 @@ export const LiveColorPreview = ({
                     className="card-icon"
                     style={{
                       backgroundColor: getFeatureColor(item, "accent", formData.secondary_hex || "#3b82f6"),
-                      borderRadius: getRadiusValue(stylePrefs.border_radius),
+                      borderRadius: getElementRadius("card"),
                     }}></div>
                   <h3 style={{ color: getFeatureColor(item, "text", "#1f2937") }}>Feature {item}</h3>
                   <p style={{ color: getFeatureColor(item, "text", "#1f2937"), opacity: 0.7 }}>
@@ -343,8 +370,8 @@ export const LiveColorPreview = ({
                     style={{
                       backgroundColor: getFeatureColor(item, "accent", formData.primary_hex || "#3b82f6"),
                       color: "#ffffff",
-                      borderRadius: getRadiusValue(stylePrefs.border_radius),
-                      boxShadow: stylePrefs.shadows_enabled ? "0 2px 8px rgba(0,0,0,0.1)" : "none",
+                      borderRadius: getElementRadius("button"),
+                      boxShadow: getThemeShadow("button"),
                     }}>
                     Learn More
                   </button>
