@@ -20,6 +20,7 @@
 
 .palette-form .form-field {
   margin-bottom: 1rem;
+  padding-top: 1rem;
 }
 
 .color-fields-grid {
@@ -54,6 +55,7 @@
 .color-field .form-field:first-child {
   flex-shrink: 0;
   width: 60px;
+  margin-bottom: 0.5rem;
 }
 
 .hex-input {
@@ -171,17 +173,17 @@
 /* Responsive adjustments */
 @media (max-width: 1300px) {
   .palette-form-with-preview {
-    grid-template-columns: 1fr 450px;
+    grid-template-columns: 1fr 500px;
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1170px) {
   .palette-form-with-preview {
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: min-content 1fr;
   }
 }
 
-@media (max-width: 968px) {
+@media (max-width: 1000px) {
   .palette-form-with-preview {
     grid-template-columns: 1fr;
     gap: 1.5rem;

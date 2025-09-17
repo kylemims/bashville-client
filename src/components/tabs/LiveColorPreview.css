@@ -2,13 +2,30 @@
 
 .live-preview-container {
   width: 100%;
-  background: #374151;
+  background: var(--preview-background, #ffffff);
   border: 2px solid var(--border, #e5e7eb);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   padding-bottom: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+/* Dark mode preview styling */
+.live-preview-container.dark-mode-preview {
+  border-color: #374151;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.live-preview-container.dark-mode-preview .style-indicators {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.live-preview-container.dark-mode-preview .style-indicator {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
 
 /* Preview wrapper */

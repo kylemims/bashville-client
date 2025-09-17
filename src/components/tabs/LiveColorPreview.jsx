@@ -312,8 +312,16 @@ export const LiveColorPreview = ({
 
   const styleIndicators = getStyleIndicators();
 
+  // Check if dark mode preview is enabled
+  const previewStylePrefs = formData.style_preferences || {};
+  const isDarkModePreview = previewStylePrefs.preview_dark_mode || false;
+
   return (
-    <div className="live-preview-container">
+    <div
+      className={`live-preview-container ${isDarkModePreview ? "dark-mode-preview" : ""}`}
+      style={{
+        backgroundColor: isDarkModePreview ? formData.background_hex || "#1f2937" : "#ffffff",
+      }}>
       <div className="indicator-row">
         {styleIndicators.length > 0 && (
           <div className="style-indicators">
