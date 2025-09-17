@@ -18,21 +18,25 @@
   gap: 1rem;
 }
 
+.palette-form .form-field {
+  margin-bottom: 1rem;
+}
+
 .color-fields-grid {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .color-fields-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 2fr;
   }
-}
+} */
 
 @media (min-width: 1271px) {
   .color-fields-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
@@ -103,16 +107,6 @@
   margin-top: 1rem;
 }
 
-@media (max-width: 768px) {
-  .form-actions {
-    flex-direction: column-reverse;
-  }
-
-  .form-actions .action-button {
-    width: 100%;
-  }
-}
-
 /* Color field styling enhancements */
 .color-field-example {
   font-size: 0.7rem;
@@ -157,16 +151,21 @@
 
 .palette-preview-section {
   position: relative;
+  /* Ensure sticky context works properly */
+  height: fit-content;
 }
 
 .sticky-preview {
   position: sticky;
-  top: 2rem;
+  top: 1rem; /* Reduced from 2rem for better alignment */
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Ensure it stays above other content */
+  /* Ensure smooth scrolling behavior */
+  transition: all 0.2s ease;
 }
 
 /* Responsive adjustments */
@@ -191,6 +190,22 @@
   .sticky-preview {
     position: relative;
     top: auto;
+  }
+}
+
+/* Intermediate breakpoint for tablets */
+@media (max-width: 768px) {
+  .color-fields-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions .action-button {
+    width: 100%;
   }
 }
 
@@ -255,4 +270,87 @@
 .preview-toggle-btn.active:hover {
   background: var(--color-primary);
   color: var(--bg-primary);
+}
+
+@media (max-width: 580px) {
+  /* Main container adjustments */
+  .palette-form-container {
+    padding: 1rem;
+    border: 1px solid var(--border);
+    margin-bottom: 1rem;
+  }
+
+  /* Switch to single column layout */
+  .palette-form-with-preview {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Form adjustments */
+  .palette-form {
+    width: 100%;
+    margin: 0;
+  }
+
+  /* Keep color fields in 2 column grid as requested */
+  .color-fields-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* Form field adjustments */
+  .palette-form .form-field,
+  .hex-input {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Advanced controls */
+  .advanced-controls {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Form actions - stack buttons */
+  .form-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .form-actions .action-button {
+    width: 100%;
+  }
+
+  /* Preview section adjustments */
+  .palette-preview-section {
+    order: -1; /* Move preview to top on mobile */
+  }
+
+  .sticky-preview {
+    position: relative;
+    top: auto;
+    margin-bottom: 1rem;
+  }
+
+  /* Preview toggle buttons - make smaller */
+  .preview-toggle-buttons {
+    flex-direction: row;
+  }
+
+  .preview-toggle-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.75rem;
+  }
+
+  /* Color swatches row */
+  .palette-preview-live .color-swatch-row {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .palette-preview-live .color-swatch {
+    width: 35px;
+    height: 35px;
+  }
 }

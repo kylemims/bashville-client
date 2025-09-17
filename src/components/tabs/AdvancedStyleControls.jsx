@@ -696,15 +696,6 @@ const ComponentControls = ({ formData, onComponentOverride, getComponentOverride
       ],
     },
     {
-      name: "card",
-      label: "Cards & Content",
-      properties: [
-        { key: "background_color", label: "Background", current: formData?.ui_hex },
-        { key: "border_color", label: "Border Color", current: "#e5e7eb" },
-        { key: "text_color", label: "Text Color", current: "#1f2937" },
-      ],
-    },
-    {
       name: "footer",
       label: "Footer",
       properties: [
@@ -719,14 +710,6 @@ const ComponentControls = ({ formData, onComponentOverride, getComponentOverride
       properties: [
         { key: "background_color", label: "Background", current: formData?.ui_hex },
         { key: "text_color", label: "Text Color", current: "#1f2937" },
-      ],
-    },
-    {
-      name: "button",
-      label: "Regular Buttons",
-      properties: [
-        { key: "background_color", label: "Background", current: formData?.primary_hex },
-        { key: "text_color", label: "Text Color", current: formData?.background_hex },
       ],
     },
   ];

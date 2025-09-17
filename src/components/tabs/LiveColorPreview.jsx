@@ -314,7 +314,7 @@ export const LiveColorPreview = ({
 
   return (
     <div className="live-preview-container">
-      <div className={`preview-wrapper ${isMobilePreview ? "mobile-preview" : "desktop-preview"}`}>
+      <div className="indicator-row">
         {styleIndicators.length > 0 && (
           <div className="style-indicators">
             <span className="indicators-label">Applied Styles:</span>
@@ -325,7 +325,8 @@ export const LiveColorPreview = ({
             ))}
           </div>
         )}
-
+      </div>
+      <div className={`preview-wrapper ${isMobilePreview ? "mobile-preview" : "desktop-preview"}`}>
         {/* Navigation */}
         <nav
           className="preview-nav"
@@ -334,36 +335,56 @@ export const LiveColorPreview = ({
             borderColor: getComponentColor("navigation", "border_color", "#e5e7eb"),
             boxShadow: getThemeShadow("nav"),
           }}>
-          <div
-            className="nav-brand"
-            style={{ color: getComponentColor("navigation", "text_color", formData.primary_hex) }}>
-            Brand
-          </div>
-          <div className="nav-links">
-            {["Home", "About", "Services", "Contact"].map((link, index) => (
-              <button
-                key={link}
-                type="button"
-                className="nav-link-button"
-                style={{
-                  background: "none",
-                  border: "none",
-                  padding: 0,
-                  margin: 0,
-                  color: getComponentColor("navigation", "text_color", "#1f2937"),
-                  cursor: "pointer",
-                  font: "inherit",
-                  textDecoration: "underline",
-                  animation: stylePrefs.animations_enabled
-                    ? `fadeInDown ${0.3 + index * 0.1}s ease-out`
-                    : "none",
-                }}
-                aria-label={link}
-                tabIndex={0}>
-                {link}
-              </button>
-            ))}
-          </div>
+          {isMobilePreview ? (
+            // Mobile Navigation with Hamburger Menu Preview
+            <div className="mobile-nav-preview">
+              <div
+                className="nav-brand"
+                style={{ color: getComponentColor("navigation", "text_color", formData.primary_hex) }}>
+                Brand
+              </div>
+              <div
+                className="hamburger-menu-preview"
+                style={{ color: getComponentColor("navigation", "text_color", "#1f2937") }}>
+                <MaterialIcon icon="menu" size={24} />
+                <span className="menu-text">Menu</span>
+              </div>
+            </div>
+          ) : (
+            // Desktop Navigation
+            <>
+              <div
+                className="nav-brand"
+                style={{ color: getComponentColor("navigation", "text_color", formData.primary_hex) }}>
+                Brand
+              </div>
+              <div className="nav-links">
+                {["Home", "About", "Services", "Contact"].map((link, index) => (
+                  <button
+                    key={link}
+                    type="button"
+                    className="nav-link-button"
+                    style={{
+                      background: "none",
+                      border: "none",
+                      padding: 0,
+                      margin: 0,
+                      color: getComponentColor("navigation", "text_color", "#1f2937"),
+                      cursor: "pointer",
+                      font: "inherit",
+                      textDecoration: "underline",
+                      animation: stylePrefs.animations_enabled
+                        ? `fadeInDown ${0.3 + index * 0.1}s ease-out`
+                        : "none",
+                    }}
+                    aria-label={link}
+                    tabIndex={0}>
+                    {link}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
         </nav>
 
         <div className="preview-content">

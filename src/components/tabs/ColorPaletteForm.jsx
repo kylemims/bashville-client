@@ -79,7 +79,7 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
     },
     {
       name: "ui_hex",
-      label: "UI Elements",
+      label: "Components",
       placeholder: "#efefef",
       description: "UI components - used for cards, navigation, footer (text auto-adjusts)",
       example: "Cards, navbar, footer, forms",
@@ -123,7 +123,7 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
                     className="hex-input"
                   />
                 </div>
-                <p className="color-field-description">{field.description}</p>
+                {/* <p className="color-field-description">{field.description}</p> */}
                 {/* <p className="color-field-example">Used for: {field.example}</p> */}
               </div>
             ))}
