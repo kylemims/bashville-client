@@ -6,6 +6,7 @@ import { getCommands } from "../services/commandService";
 import { getColorPalettes } from "../services/colorPaletteService";
 import { CommandsTab } from "../components/tabs/CommandsTab";
 import { ColorsTab } from "../components/tabs/ColorsTab";
+import { NotesTab } from "../components/tabs/NotesTab";
 import { LoadingSpinner } from "../components/common/LoadingSpinner";
 import { ErrorMessage } from "../components/common/ErrorMessage";
 import { ActionButton } from "../components/common/ActionButton";
@@ -172,6 +173,8 @@ export const ProjectDetail = () => {
               showNewPaletteForm={showNewPaletteForm}
               onNewPaletteFormChange={setShowNewPaletteForm}
             />
+          ) : state.activeTab === "notes" ? (
+            <NotesTab project={state.project} />
           ) : (
             <BackendTab project={state.project} />
           )}

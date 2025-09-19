@@ -14,6 +14,7 @@ export const ROUTES = {
   PROJECTS: "/projects",
   NEW_PROJECT: "/projects/new",
   PROJECT_DETAIL: "/projects/:projectId",
+  NOTES: "/notes",
   COMMANDS: "/commands",
   PALETTES: "/palettes",
 };

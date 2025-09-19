@@ -5,6 +5,7 @@ export const ProjectTabs = ({ activeTab, onTabChange, onAddNew }) => {
   const tabs = [
     { key: "commands", label: "Commands" },
     { key: "colors", label: "Colors" },
+    { key: "notes", label: "Notes" },
     { key: "backend", label: "Backend" },
   ];
 

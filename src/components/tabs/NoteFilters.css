@@ -1,0 +1,349 @@
+/* ===== NOTE FILTERS STYLES ===== */
+.note-filters {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+/* ===== FILTERS HEADER ===== */
+.filters-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.filters-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.filters-result-count {
+  color: var(--muted);
+  font-size: 13px;
+  background: var(--bg-primary);
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-weight: 500;
+}
+
+/* ===== FILTERS ROW ===== */
+.filters-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filter-group.filter-toggle {
+  justify-content: center;
+}
+
+.filter-label {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.filter-select {
+  padding: 8px 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(70, 203, 167, 0.2);
+}
+
+.filter-select:hover {
+  border-color: var(--muted);
+}
+
+/* ===== TOGGLE FILTER ===== */
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 13px;
+  padding: 8px 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.toggle-label:hover {
+  border-color: var(--muted);
+  background: var(--bg-secondary);
+}
+
+.filter-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.checkbox-icon {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+/* ===== ACTIVE FILTERS ===== */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  border-left: 4px solid var(--accent);
+}
+
+.active-filters-label {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.filter-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  color: var(--bg-primary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 12px;
+  animation: filterTagSlideIn 0.2s ease-out;
+}
+
+.filter-remove {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  margin-left: 2px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.filter-remove:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== QUICK FILTERS ===== */
+.quick-filters {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.quick-filters-title {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+}
+
+.quick-filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-filter-buttons button {
+  font-size: 12px;
+  padding: 6px 12px;
+  transition: all 0.2s ease;
+}
+
+.quick-filter-buttons button[data-variant="primary"] {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 768px) {
+  .note-filters {
+    padding: 12px;
+  }
+
+  .filters-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .filters-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .active-filters {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .active-filters-label {
+    align-self: flex-start;
+  }
+
+  .quick-filter-buttons {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .note-filters {
+    margin: 12px 0;
+    padding: 8px;
+  }
+
+  .filters-header {
+    text-align: center;
+  }
+
+  .filters-title {
+    justify-content: center;
+  }
+
+  .filter-group {
+    gap: 8px;
+  }
+
+  .filter-select,
+  .toggle-label {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .quick-filter-buttons {
+    gap: 6px;
+  }
+
+  .quick-filter-buttons button {
+    flex: 1;
+    min-width: 0;
+    font-size: 11px;
+    padding: 8px 6px;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+.filter-select:focus,
+.toggle-label:focus-within,
+.filter-remove:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes filterTagSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+.note-filters {
+  animation: filtersExpandIn 0.3s ease-out;
+}
+
+@keyframes filtersExpandIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 400px;
+  }
+}
+
+/* ===== FOCUS STATES ===== */
+.filter-select:focus {
+  transform: scale(1.02);
+}
+
+.toggle-label:focus-within {
+  transform: scale(1.02);
+}
+
+.quick-filter-buttons button:focus {
+  transform: scale(1.05);
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== HIGH CONTRAST SUPPORT ===== */
+@media (prefers-contrast: high) {
+  .note-filters,
+  .filter-select,
+  .toggle-label,
+  .active-filters {
+    border-width: 2px;
+  }
+
+  .filter-tag {
+    border: 2px solid var(--bg-primary);
+  }
+
+  .filters-result-count {
+    border-width: 2px;
+  }
+}
+
+/* ===== REDUCED MOTION SUPPORT ===== */
+@media (prefers-reduced-motion: reduce) {
+  .note-filters,
+  .filter-tag,
+  .filter-select,
+  .toggle-label,
+  .quick-filter-buttons button {
+    animation: none;
+    transition: none;
+  }
+}

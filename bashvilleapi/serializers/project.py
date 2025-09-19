@@ -26,6 +26,16 @@ class ProjectSerializer(serializers.ModelSerializer):
         read_only=True,
     )
 
+    # Note-related fields
+    note_count = serializers.IntegerField(source="note_count", read_only=True)
+    recent_notes_count = serializers.IntegerField(
+        source="recent_notes_count", read_only=True
+    )
+    pending_todos_count = serializers.IntegerField(
+        source="pending_todos_count", read_only=True
+    )
+    notes_preview = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Project
         fields = (
@@ -38,6 +48,10 @@ class ProjectSerializer(serializers.ModelSerializer):
             "backend_config",
             "command_ids",
             "commands_preview",
+            "note_count",
+            "recent_notes_count",
+            "pending_todos_count",
+            "notes_preview",
             "created_at",
         )
         read_only_fields = ("id", "created_at")
@@ -100,6 +114,22 @@ class ProjectSerializer(serializers.ModelSerializer):
                 "order_index": command.order_index,
             }
             for command in obj.commands.all().order_by("order_index", "label")
+        ]
+
+    def get_notes_preview(self, obj):
+        """Get a preview of recent notes for this project."""
+        recent_notes = obj.get_recent_notes(limit=3)
+
+        return [
+            {
+                "id": note.id,
+                "title": note.title or note.auto_generate_title(),
+                "category": note.category,
+                "is_pinned": note.is_pinned,
+                "is_completed": note.is_completed,
+                "created_at": note.created_at,
+            }
+            for note in recent_notes
         ]
 
     def validate_command_ids(self, value):

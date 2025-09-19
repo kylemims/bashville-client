@@ -4,6 +4,7 @@ import { Register } from "./views/Register.jsx";
 import { NewProject } from "./views/NewProject";
 import { ProjectDetail } from "./views/ProjectDetail";
 import { Dashboard } from "./views/Dashboard";
+import { Notes } from "./views/Notes.jsx";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PageTemplate } from "./views/PageTemplate";
 import { HomePage } from "./views/HomePage";
@@ -47,6 +48,16 @@ export const ApplicationViews = () => {
           </ProtectedRoute>
         }
       />
+
+      <Route
+        path="/notes"
+        element={
+          <ProtectedRoute>
+            <Notes />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="/launch"
         element={
