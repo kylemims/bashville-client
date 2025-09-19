@@ -72,17 +72,17 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
     },
     {
       name: "background_hex",
-      label: "Page Background",
+      label: "Background",
       placeholder: "#ffffff",
       description: "Main page background color - the canvas behind all content",
       example: "Page background, content areas",
     },
     {
       name: "ui_hex",
-      label: "Navigation & Cards",
+      label: "Nav + Cards",
       placeholder: "#1f2937",
       description: "Navigation bar and card backgrounds (text color auto-calculated for contrast)",
-      example: "Navigation bar, cards, sidebar, modal backgrounds",
+      example: "Navbar, cards, sidebar, modals",
     },
   ];
 
@@ -187,7 +187,10 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
       <PaletteValidationSummary formData={formData} />
 
       <div className="palette-preview-live">
-        <h4>Color Swatches</h4>
+        <div className="swatch-row-header">
+          <h4>Color Swatches</h4>
+          <p className="swatch-click-tip">Click a swatch to copy the HEX code</p>
+        </div>
         <div className="color-swatch-row">
           {colorFields.map((field) => (
             <div key={field.name} className="color-swatch-item">
@@ -196,7 +199,7 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
                 style={{ backgroundColor: formData[field.name] }}
                 title={`${field.label}: ${formData[field.name]}`}
               />
-              <span className="color-swatch-label">{field.label}</span>
+              {/* <span className="color-swatch-label">{field.label}</span> */}
             </div>
           ))}
         </div>

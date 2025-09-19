@@ -953,3 +953,14 @@
     max-height: 500px;
   }
 }
+
+@media (max-width: 580px) {
+  .advanced-style-controls {
+    margin: 0px;
+    max-width: 100dvw;
+  }
+
+  .layout-style-grid {
+    grid-template-columns: 1fr;
+  }
+}
