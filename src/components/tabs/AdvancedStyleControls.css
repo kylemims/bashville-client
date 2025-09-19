@@ -12,10 +12,12 @@
   background: var(--surface, #f8f9fa);
   border-bottom: 1px solid var(--border, #e5e5e5);
   padding: 0;
+  display: flex;
+  align-items: center;
 }
 
 .controls-toggle {
-  width: 100%;
+  flex: 1;
   background-color: #374151;
   padding: 1rem;
   background: none;
@@ -32,6 +34,29 @@
 
 .controls-toggle:hover {
   background: var(--surface-hover, #f1f3f4);
+}
+
+.reset-button {
+  background: none;
+  border: none;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--color-secondary, #6b7280);
+  transition: all 0.2s ease;
+  border-left: 1px solid var(--border, #e5e5e5);
+}
+
+.reset-button:hover {
+  background: var(--surface-hover, #f1f3f4);
+  color: var(--color-accent, #10b981);
+}
+
+.reset-button:active {
+  transform: scale(0.95);
 }
 
 .toggle-icon {

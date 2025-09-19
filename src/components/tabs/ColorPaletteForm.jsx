@@ -72,17 +72,17 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
     },
     {
       name: "background_hex",
-      label: "Background",
-      placeholder: "#0c0806",
-      description: "Page background - the main canvas color behind all content",
-      example: "Page background, content area",
+      label: "Page Background",
+      placeholder: "#ffffff",
+      description: "Main page background color - the canvas behind all content",
+      example: "Page background, content areas",
     },
     {
       name: "ui_hex",
-      label: "Components",
-      placeholder: "#efefef",
-      description: "UI components - used for cards, navigation, footer (text auto-adjusts)",
-      example: "Cards, navbar, footer, forms",
+      label: "Navigation & Cards",
+      placeholder: "#1f2937",
+      description: "Navigation bar and card backgrounds (text color auto-calculated for contrast)",
+      example: "Navigation bar, cards, sidebar, modal backgrounds",
     },
   ];
 
@@ -123,8 +123,7 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
                     className="hex-input"
                   />
                 </div>
-                {/* <p className="color-field-description">{field.description}</p> */}
-                {/* <p className="color-field-example">Used for: {field.example}</p> */}
+                <p className="color-field-example">Used for: {field.example}</p>
               </div>
             ))}
           </div>

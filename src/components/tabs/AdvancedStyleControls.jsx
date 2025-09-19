@@ -49,6 +49,12 @@ export const AdvancedStyleControls = ({ formData, onStyleChange, className = "" 
     onStyleChange(newPrefs);
   };
 
+  // Reset all advanced styling to defaults
+  const handleResetToDefaults = () => {
+    const defaultPrefs = getSmartDefaults("modern");
+    onStyleChange(defaultPrefs);
+  };
+
   // Handle component override changes
   const handleComponentOverride = (component, property, value) => {
     const currentOverrides = stylePrefs?.component_overrides || {};
@@ -122,6 +128,18 @@ export const AdvancedStyleControls = ({ formData, onStyleChange, className = "" 
               ⚠️
             </span>
           )}
+        </button>
+        <button
+          className="reset-button"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleResetToDefaults();
+          }}
+          title="Reset all advanced styling to defaults"
+          type="button">
+          <MaterialIcon icon="refresh" size="16px" />
+          Reset
         </button>
       </div>
 

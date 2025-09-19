@@ -37,7 +37,7 @@
 
 @media (min-width: 1271px) {
   .color-fields-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -54,7 +54,7 @@
 
 .color-field .form-field:first-child {
   flex-shrink: 0;
-  width: 60px;
+  width: 70px;
   margin-bottom: 0.5rem;
 }
 

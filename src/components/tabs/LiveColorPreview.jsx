@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
-import { BORDER_RADIUS, LAYOUT_STYLES, FEATURE_CARD_STYLES } from "../../utils/styleConstants.js";
+import { LAYOUT_STYLES, FEATURE_CARD_STYLES } from "../../utils/styleConstants.js";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
+import { useColorSystem } from "../../hooks/useColorSystem.js";
 import "./LiveColorPreview.css";
 
 export const LiveColorPreview = ({
@@ -11,75 +12,15 @@ export const LiveColorPreview = ({
 }) => {
   const [mounted, setMounted] = useState(false);
 
+  // Use our new color system hook
+  const { semanticColors, getColor, getHeroButton, getFeatureColor, getThemeShadow, getElementRadius } =
+    useColorSystem(formData, formData?.style_preferences);
+
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Helper function to get component-specific colors with overrides
-  const getComponentColor = (componentType, colorType, defaultColor) => {
-    const overrides = formData.style_preferences?.component_overrides || {};
-    const componentOverride = overrides[componentType];
-
-    if (componentOverride && componentOverride[colorType]) {
-      return componentOverride[colorType];
-    }
-
-    return defaultColor;
-  };
-
-  // Helper function to calculate contrast and return white or black text
-  const getContrastingTextColor = (backgroundColor) => {
-    if (!backgroundColor) return "#ffffff";
-
-    // Remove # if present
-    const hex = backgroundColor.replace("#", "");
-
-    // Convert to RGB
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
-
-    // Calculate relative luminance
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
-    // Return black for light backgrounds, white for dark backgrounds
-    return luminance > 0.5 ? "#000000" : "#ffffff";
-  };
-
-  // Helper function specifically for hero button colors with auto-contrast
-  const getHeroButtonColor = (buttonType, colorType, defaultColor) => {
-    const overrides = formData.style_preferences?.component_overrides || {};
-    const heroButtonOverrides = overrides["hero_buttons"];
-
-    if (heroButtonOverrides && heroButtonOverrides[buttonType]) {
-      const overrideColor = heroButtonOverrides[buttonType];
-
-      // If asking for text color and we have a background override, auto-calculate contrast
-      if (colorType === "text_color") {
-        return getContrastingTextColor(overrideColor);
-      }
-
-      // For background color, return the override
-      return overrideColor;
-    }
-
-    // Fallback to regular button overrides
-    return getComponentColor("button", colorType, defaultColor);
-  };
-
-  // Helper function to get feature-specific colors
-  const getFeatureColor = (featureId, colorType, defaultColor) => {
-    const stylePrefs = formData.style_preferences || {};
-    const featureKey = `feature_${featureId}_${colorType}`;
-
-    if (stylePrefs[featureKey]) {
-      return stylePrefs[featureKey];
-    }
-
-    return defaultColor;
-  };
-
-  // Helper function to get feature card styles
+  // Helper function to get feature card styles (keep this as it's specific to this component)
   const getFeatureCardStyle = (featureId) => {
     const stylePrefs = formData.style_preferences || {};
     const styleKey = `feature_${featureId}_style`;
@@ -119,36 +60,6 @@ export const LiveColorPreview = ({
     return stylePrefs[iconKey] || DEFAULT_FEATURE_ICONS[featureId] || "star";
   };
 
-  // Helper function to get theme-specific shadows with shadows_enabled override
-  const getThemeShadow = (elementType) => {
-    const stylePrefs = formData.style_preferences || {};
-
-    // If shadows are disabled globally, return none regardless of theme
-    if (stylePrefs.shadows_enabled === false) {
-      return "none";
-    }
-
-    const theme = LAYOUT_STYLES[stylePrefs.style_theme] || LAYOUT_STYLES.modern;
-
-    // Map element types to shadow properties
-    const shadowMap = {
-      card: theme.css.cardShadow,
-      button: theme.css.buttonShadow,
-      nav: theme.css.cardShadow, // Navigation uses card shadow
-      hero: theme.css.cardShadow, // Hero uses card shadow
-    };
-
-    return shadowMap[elementType] || "none";
-  };
-
-  // Helper function to get element-specific border radius
-  const getElementRadius = (elementType) => {
-    const stylePrefs = formData.style_preferences || {};
-    const radiusKey = `${elementType}_radius`;
-    const radiusValue = stylePrefs[radiusKey] || "medium";
-    return BORDER_RADIUS[radiusValue]?.css || BORDER_RADIUS.medium.css;
-  };
-
   // Helper function to get hero background styles
   const getHeroBackgroundStyle = useCallback(() => {
     const stylePrefs = formData.style_preferences || {};
@@ -159,7 +70,7 @@ export const LiveColorPreview = ({
     switch (backgroundType) {
       case "gradient":
         const direction = stylePrefs.hero_gradient_direction || "135deg";
-        const startColor = stylePrefs.hero_gradient_start || formData.primary_hex || "#3b82f6";
+        const startColor = stylePrefs.hero_gradient_start || semanticColors.hero_background || "#3b82f6";
         const endColor = stylePrefs.hero_gradient_end || formData.secondary_hex || "#1e40af";
         return {
           backgroundColor: "transparent",
@@ -167,7 +78,7 @@ export const LiveColorPreview = ({
         };
 
       case "solid":
-        const solidColor = stylePrefs.hero_background_color || formData.primary_hex || "#3b82f6";
+        const solidColor = stylePrefs.hero_background_color || semanticColors.hero_background || "#3b82f6";
         return {
           backgroundColor: solidColor,
           backgroundImage: "none",
@@ -181,7 +92,7 @@ export const LiveColorPreview = ({
 
       case "image":
         const imageUrl = stylePrefs.hero_background_image || "";
-        const overlayColor = stylePrefs.hero_overlay_color || formData.primary_hex || "#3b82f6";
+        const overlayColor = stylePrefs.hero_overlay_color || semanticColors.hero_background || "#3b82f6";
         const overlayOpacity = (stylePrefs.hero_overlay_opacity || 70) / 100;
 
         if (imageUrl) {
@@ -196,39 +107,36 @@ export const LiveColorPreview = ({
             backgroundImage: `linear-gradient(rgba(${r}, ${g}, ${b}, ${overlayOpacity}), rgba(${r}, ${g}, ${b}, ${overlayOpacity})), url(${imageUrl})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-          };
-        } else {
-          // Fallback to solid color if no image
-          return {
-            backgroundColor: overlayColor,
-            backgroundImage: "none",
           };
         }
+        // Fallback to solid color if no image
+        return {
+          backgroundColor: overlayColor,
+          backgroundImage: "none",
+        };
 
       default:
         return {
-          backgroundColor: formData.primary_hex || "#3b82f6",
+          backgroundColor: semanticColors.hero_background || "#3b82f6",
           backgroundImage: "none",
         };
     }
-  }, [formData]);
+  }, [formData, semanticColors]);
 
   // Update CSS custom properties whenever formData changes
   useEffect(() => {
     if (!mounted || !formData) return;
 
     const root = document.documentElement;
-    const stylePrefs = formData.style_preferences || {};
 
-    // Base colors - use the correct property names from formData
-    root.style.setProperty("--primary-color", formData.primary_hex || "#fee394");
-    root.style.setProperty("--secondary-color", formData.secondary_hex || "#d46a6a");
-    root.style.setProperty("--accent-color", formData.accent_hex || "#46cba7");
-    root.style.setProperty("--background-color", formData.background_hex || "#0c0806");
-    root.style.setProperty("--ui-color", formData.ui_hex || "#efefef");
-    root.style.setProperty("--text-color", formData.ui_hex || "#1f2937");
-    root.style.setProperty("--border-color", "#e5e7eb");
+    // Use semantic colors instead of direct form data mapping
+    root.style.setProperty("--primary-color", semanticColors.primary_button || "#fee394");
+    root.style.setProperty("--secondary-color", semanticColors.secondary_button || "#d46a6a");
+    root.style.setProperty("--accent-color", semanticColors.accent_button || "#46cba7");
+    root.style.setProperty("--background-color", semanticColors.page_background || "#ffffff");
+    root.style.setProperty("--ui-color", semanticColors.navigation_background || "#1f2937");
+    root.style.setProperty("--text-color", semanticColors.content_text || "#1f2937");
+    root.style.setProperty("--border-color", semanticColors.border_color || "#e5e7eb");
 
     // Hero section styling - updated to use new background system
     const heroStyles = getHeroBackgroundStyle();
@@ -237,16 +145,16 @@ export const LiveColorPreview = ({
     } else {
       root.style.setProperty(
         "--hero-background",
-        heroStyles.backgroundColor || formData.primary_hex || "#fee394"
+        heroStyles.backgroundColor || semanticColors.hero_background || "#3b82f6"
       );
     }
 
-    // Border radius
-    const borderRadius = stylePrefs.border_radius || "medium";
-    const radiusValue = getRadiusValue(borderRadius);
-    root.style.setProperty("--border-radius", radiusValue);
+    // Border radius using our hook
+    const borderRadius = getElementRadius("default");
+    root.style.setProperty("--border-radius", borderRadius);
 
     // Component overrides
+    const stylePrefs = formData.style_preferences || {};
     const overrides = stylePrefs.component_overrides || {};
     Object.entries(overrides).forEach(([component, styles]) => {
       Object.entries(styles).forEach(([property, value]) => {
@@ -256,19 +164,13 @@ export const LiveColorPreview = ({
         }
       });
     });
-  }, [formData, mounted, getHeroBackgroundStyle]);
+  }, [formData, mounted, semanticColors, getHeroBackgroundStyle, getElementRadius]);
 
   if (!isVisible || !formData) {
     return null;
   }
 
   const stylePrefs = formData.style_preferences || {};
-
-  // Get radius values using centralized constants
-  const getRadiusValue = (radiusKey) => {
-    return BORDER_RADIUS[radiusKey] || BORDER_RADIUS.medium;
-  };
-
   // Visual indicators for applied styles
   const getStyleIndicators = () => {
     const indicators = [];
@@ -320,7 +222,9 @@ export const LiveColorPreview = ({
     <div
       className={`live-preview-container ${isDarkModePreview ? "dark-mode-preview" : ""}`}
       style={{
-        backgroundColor: isDarkModePreview ? formData.background_hex || "#1f2937" : "#ffffff",
+        backgroundColor: isDarkModePreview
+          ? semanticColors.page_background || "#1f2937"
+          : semanticColors.page_background || "#ffffff",
       }}>
       <div className="indicator-row">
         {styleIndicators.length > 0 && (
@@ -339,8 +243,8 @@ export const LiveColorPreview = ({
         <nav
           className="preview-nav"
           style={{
-            backgroundColor: getComponentColor("navigation", "background_color", formData.ui_hex),
-            borderColor: getComponentColor("navigation", "border_color", "#e5e7eb"),
+            backgroundColor: getColor("navigation", "background_color", semanticColors.navigation_background),
+            borderColor: getColor("navigation", "border_color", semanticColors.border_color),
             boxShadow: getThemeShadow("nav"),
           }}>
           {isMobilePreview ? (
@@ -348,12 +252,12 @@ export const LiveColorPreview = ({
             <div className="mobile-nav-preview">
               <div
                 className="nav-brand"
-                style={{ color: getComponentColor("navigation", "text_color", formData.primary_hex) }}>
+                style={{ color: getColor("navigation", "text_color", semanticColors.navigation_text) }}>
                 Brand
               </div>
               <div
                 className="hamburger-menu-preview"
-                style={{ color: getComponentColor("navigation", "text_color", "#1f2937") }}>
+                style={{ color: getColor("navigation", "text_color", semanticColors.navigation_text) }}>
                 <MaterialIcon icon="menu" size={24} />
                 <span className="menu-text">Menu</span>
               </div>
@@ -363,7 +267,7 @@ export const LiveColorPreview = ({
             <>
               <div
                 className="nav-brand"
-                style={{ color: getComponentColor("navigation", "text_color", formData.primary_hex) }}>
+                style={{ color: getColor("navigation", "text_color", semanticColors.navigation_text) }}>
                 Brand
               </div>
               <div className="nav-links">
@@ -377,7 +281,7 @@ export const LiveColorPreview = ({
                       border: "none",
                       padding: 0,
                       margin: 0,
-                      color: getComponentColor("navigation", "text_color", "#1f2937"),
+                      color: getColor("navigation", "text_color", semanticColors.navigation_text),
                       cursor: "pointer",
                       font: "inherit",
                       textDecoration: "underline",
@@ -406,14 +310,14 @@ export const LiveColorPreview = ({
             }}>
             <h1
               style={{
-                color: getComponentColor("hero", "text_color", formData.background_hex || "#ffffff"),
+                color: getColor("hero", "text_color", semanticColors.hero_text),
                 animation: stylePrefs.animations_enabled ? "fadeInUp 0.6s ease-out" : "none",
               }}>
               Welcome to Your Site
             </h1>
             <p
               style={{
-                color: getComponentColor("hero", "text_color", formData.background_hex || "#ffffff"),
+                color: getColor("hero", "text_color", semanticColors.hero_text),
                 opacity: 0.9,
                 animation: stylePrefs.animations_enabled ? "fadeInUp 0.8s ease-out" : "none",
               }}>
@@ -431,8 +335,8 @@ export const LiveColorPreview = ({
               <button
                 className="preview-button primary"
                 style={{
-                  backgroundColor: getHeroButtonColor("primary", "background_color", formData.accent_hex),
-                  color: getHeroButtonColor("primary", "text_color", formData.background_hex),
+                  backgroundColor: getHeroButton("primary", "background_color"),
+                  color: getHeroButton("primary", "text_color"),
                   borderRadius: getElementRadius("button"),
                   boxShadow: getThemeShadow("button"),
                   animation: stylePrefs.animations_enabled ? "fadeInUp 1s ease-out" : "none",
@@ -440,22 +344,14 @@ export const LiveColorPreview = ({
                 Get Started
               </button>
               <button
-                className="preview-button secondary"
+                className="preview-button accent"
                 style={{
-                  backgroundColor: getHeroButtonColor(
-                    "secondary",
-                    "background_color",
-                    formData.secondary_hex
-                  ),
-                  color: getHeroButtonColor("secondary", "text_color", formData.background_hex),
+                  backgroundColor: getHeroButton("accent", "background_color"),
+                  color: getHeroButton("accent", "text_color"),
                   borderRadius: getElementRadius("button"),
                   boxShadow: getThemeShadow("button"),
                   animation: stylePrefs.animations_enabled ? "fadeInUp 1.2s ease-out" : "none",
-                  border: `2px solid ${getHeroButtonColor(
-                    "secondary",
-                    "background_color",
-                    formData.secondary_hex
-                  )}`,
+                  border: `2px solid ${getHeroButton("accent", "background_color")}`,
                 }}>
                 Learn More
               </button>
@@ -466,8 +362,8 @@ export const LiveColorPreview = ({
           <div
             className="preview-content-section"
             style={{
-              backgroundColor: getComponentColor("content", "background_color", formData.ui_hex),
-              color: getComponentColor("content", "text_color", "#1f2937"),
+              backgroundColor: getColor("content", "background_color", semanticColors.content_background),
+              color: getColor("content", "text_color", semanticColors.content_text),
             }}>
             <div className="content-grid">
               {[1, 2].map((item, index) => {
@@ -475,11 +371,11 @@ export const LiveColorPreview = ({
                 const stylePrefs = formData.style_preferences || {};
                 const styleName = stylePrefs[`feature_${item}_style`] || "default";
 
-                // For glass effect, use glassmorphism background; otherwise use user's custom background
+                // For glass effect, use glassmorphism background; otherwise use semantic colors
                 const backgroundColor =
                   styleName === "glass"
                     ? cardStyle.backgroundColor
-                    : getFeatureColor(item, "bg", formData.ui_hex || "#ffffff");
+                    : getFeatureColor(item, "bg", semanticColors.card_background);
 
                 return (
                   <div
@@ -487,7 +383,7 @@ export const LiveColorPreview = ({
                     className="content-card"
                     style={{
                       backgroundColor,
-                      color: getFeatureColor(item, "text", "#1f2937"),
+                      color: getFeatureColor(item, "text", semanticColors.card_text),
                       borderRadius: getElementRadius("card"),
                       ...cardStyle,
                       animation: stylePrefs.animations_enabled
@@ -497,7 +393,7 @@ export const LiveColorPreview = ({
                     <div
                       className="card-icon"
                       style={{
-                        backgroundColor: getFeatureColor(item, "accent", formData.secondary_hex || "#3b82f6"),
+                        backgroundColor: getFeatureColor(item, "accent", semanticColors.accent_button),
                         borderRadius: getElementRadius("card"),
                         display: "flex",
                         alignItems: "center",
@@ -511,7 +407,11 @@ export const LiveColorPreview = ({
                     </p>
                     <button
                       style={{
-                        backgroundColor: getFeatureColor(item, "accent", formData.primary_hex || "#3b82f6"),
+                        backgroundColor: getFeatureColor(
+                          item,
+                          "accent",
+                          semanticColors.accent_button || formData.accent_hex || "#10b981"
+                        ),
                         color: "#ffffff",
                         borderRadius: getElementRadius("button"),
                         boxShadow: getThemeShadow("button"),
@@ -528,9 +428,9 @@ export const LiveColorPreview = ({
           <footer
             className="preview-footer"
             style={{
-              backgroundColor: getComponentColor("footer", "background_color", "#1f2937"),
-              color: getComponentColor("footer", "text_color", formData.ui_hex),
-              borderTopColor: getComponentColor("footer", "border_color", "#e5e7eb"),
+              backgroundColor: getColor("footer", "background_color", semanticColors.navigation_background),
+              color: getColor("footer", "text_color", semanticColors.navigation_text),
+              borderTopColor: getColor("footer", "border_color", semanticColors.border_color),
             }}>
             <p>&copy; 2024 Your Website. Built with Bashville.</p>
           </footer>
