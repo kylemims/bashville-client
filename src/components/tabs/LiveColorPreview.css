@@ -477,4 +477,10 @@ rPreview.css */ .live-preview-container {
   .preview-content-section {
     padding: 1rem 0.75rem;
   }
+
+  .live-preview-container {
+    max-width: 100vw;
+    padding: 0px;
+    margin: 0 auto;
+  }
 }

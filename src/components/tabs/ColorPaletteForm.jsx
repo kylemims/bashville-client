@@ -123,7 +123,7 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
                     className="hex-input"
                   />
                 </div>
-                <p className="color-field-example">Used for: {field.example}</p>
+                <p className="color-field-example">{field.example}</p>
               </div>
             ))}
           </div>

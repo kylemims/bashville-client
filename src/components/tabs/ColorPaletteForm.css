@@ -135,17 +135,18 @@
 /* Enhanced layout for form with preview and advanced controls */
 .palette-form-with-preview {
   display: grid;
-  grid-template-columns: 1fr 500px;
+  /* grid-template-columns: 1fr 500px; */
+  grid-template-columns: minmax(400px, 1fr) minmax(500px, 1fr);
   gap: 2rem;
   align-items: start;
 }
 
 /* Larger screens - give even more space for preview */
-@media (min-width: 1400px) {
+/* @media (min-width: 1400px) {
   .palette-form-with-preview {
-    grid-template-columns: 1fr 600px;
+    grid-template-columns: 1fr 700px;
   }
-}
+} */
 
 /* .palette-form-section {
   min-width: 0; 
@@ -171,19 +172,19 @@
 }
 
 /* Responsive adjustments */
-@media (max-width: 1300px) {
+/* @media (max-width: 1300px) {
   .palette-form-with-preview {
     grid-template-columns: 1fr 500px;
   }
-}
+} */
 
 @media (max-width: 1170px) {
   .palette-form-with-preview {
-    grid-template-columns: min-content 1fr;
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
   .palette-form-with-preview {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -193,13 +194,14 @@
     position: relative;
     top: auto;
   }
-}
+} */
 
 /* Intermediate breakpoint for tablets */
 @media (max-width: 768px) {
   .color-fields-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    gap: 1.5rem;
+    text-wrap: nowrap;
   }
 
   .form-actions {
@@ -290,21 +292,39 @@
 
   /* Form adjustments */
   .palette-form {
-    width: 100%;
+    max-width: fit-content;
     margin: 0;
   }
 
   /* Keep color fields in 2 column grid as requested */
   .color-fields-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
 
   /* Form field adjustments */
-  .palette-form .form-field,
-  .hex-input {
-    max-width: 100%;
+
+  .form-field .hex-input:nth-child(1) {
+    max-width: 90px;
     width: 100%;
+    margin-bottom: 0;
+    border-radius: 10px;
+    background-color: var(--bg-input);
+    color: var(--color-text);
+    border: 1px solid #545458;
+    min-height: 44px;
+    margin-left: 0.5rem;
+    text-align: center;
+    /* padding-bottom: 0.25rem; */
+  }
+
+  .palette-form .form-field {
+    border-radius: var(--radius);
+  }
+
+  .color-field .form-field:first-child {
+    margin-bottom: 0px;
+    /* margin-bottom: 0.25rem; */
   }
 
   /* Advanced controls */
@@ -330,9 +350,10 @@
   }
 
   .sticky-preview {
-    position: relative;
+    /* position: relative; */
     top: auto;
     margin-bottom: 1rem;
+    max-width: 100dvw;
   }
 
   /* Preview toggle buttons - make smaller */
@@ -354,5 +375,12 @@
   .palette-preview-live .color-swatch {
     width: 35px;
     height: 35px;
+  }
+
+  .color-field-header {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 0.25rem;
   }
 }
