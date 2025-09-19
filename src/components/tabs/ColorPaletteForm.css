@@ -63,9 +63,13 @@
   }
 } */
 
-@media (min-width: 1271px) {
+@media (min-width: 1171px) {
   .color-fields-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .color-form-actions .action-button {
+    width: 100%;
   }
 }
 
@@ -111,7 +115,7 @@
   letter-spacing: 0.5px;
 }
 
-.form-actions {
+.color-form-actions {
   display: flex;
   gap: 0.75rem;
   justify-content: flex-end;

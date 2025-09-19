@@ -127,15 +127,7 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
               </div>
             ))}
           </div>
-
-          {/* Advanced Style Controls */}
-          <AdvancedStyleControls
-            formData={formData}
-            onStyleChange={handleStyleChange}
-            className="advanced-controls"
-          />
-
-          <div className="form-actions">
+          <div className="color-form-actions">
             <ActionButton type="submit" variant="primary" disabled={disabled || !formData.name.trim()}>
               {isEditing ? "Update Palette" : "Create Palette"}
             </ActionButton>
@@ -143,6 +135,12 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
               Cancel
             </ActionButton>
           </div>
+          {/* Advanced Style Controls */}
+          <AdvancedStyleControls
+            formData={formData}
+            onStyleChange={handleStyleChange}
+            className="advanced-controls"
+          />
         </form>
 
         {/* Sticky Live Preview */}
