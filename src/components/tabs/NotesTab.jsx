@@ -204,7 +204,7 @@ export const NotesTab = ({ project }) => {
       <div className="notes-header">
         <div className="command-header-row">
           <h3 className="section-title-available">{project ? `${project.title} Notes` : "All Notes"}</h3>
-          <div className="command-gradient-line"></div>
+          <div className="notes-gradient-line"></div>
 
           {/* Action Buttons */}
           <div className="notes-actions">

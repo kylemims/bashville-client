@@ -12,6 +12,14 @@
   margin-bottom: 24px;
 }
 
+.notes-gradient-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+  border-radius: 2px;
+  margin-top: 0.1rem;
+}
+
 .notes-actions {
   display: flex;
   gap: 8px;
@@ -132,7 +140,7 @@
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .notes-tab {
-    padding: 16px;
+    padding: 0px;
   }
 
   .notes-grid {
@@ -140,35 +148,22 @@
     gap: 12px;
   }
 
-  .search-input-group {
+  /* .search-input-group {
     flex-direction: column;
-  }
+  } */
 
   .search-input {
     width: 100%;
+    border: 1px solid rgba(38, 40, 40, 0.7);
   }
 
   .notes-actions {
     width: 100%;
-    justify-content: center;
+    justify-content: end;
   }
 }
 
 @media (max-width: 480px) {
-  .notes-tab {
-    padding: 12px;
-  }
-
-  .command-header-row {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .command-gradient-line {
-    display: none;
-  }
-
   .notes-actions {
     align-self: stretch;
   }

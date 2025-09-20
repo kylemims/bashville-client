@@ -1,0 +1,8 @@
+.colors-tab {
+  padding: 20px;
+}
+@media (max-width: 768px) {
+  .colors-tab {
+    padding: 0px;
+  }
+}

@@ -117,7 +117,7 @@ export const NoteFilters = ({ filters, onFiltersChange, onClearFilters, resultCo
 
         {/* Archive Toggle */}
         <div className="filter-group filter-toggle">
-          <label className="toggle-label">
+          <label className="note-archived-toggle">
             <input
               type="checkbox"
               checked={filters.is_archived || false}

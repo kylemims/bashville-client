@@ -221,3 +221,12 @@
 .action-button--launch:hover:not(:disabled) {
   background: rgba(70, 203, 167, 0.2);
 }
+
+@media (max-width: 768px) {
+  .action-button--tab,
+  .action-button--tab-active {
+    /* padding: 0.75rem; */
+    font-size: 0.85rem;
+    justify-content: space-evenly;
+  }
+}

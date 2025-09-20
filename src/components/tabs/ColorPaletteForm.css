@@ -335,7 +335,7 @@
   }
 
   .color-swatch {
-    min-width: 30px;
+    /* min-width: 30px; */
     flex-wrap: wrap;
   }
 

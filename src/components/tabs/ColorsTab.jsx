@@ -10,6 +10,7 @@ import { ErrorMessage } from "../common/ErrorMessage";
 import { HoverTooltip } from "../common/HoverTooltip.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
+import "./ColorsTab.css";
 
 export const ColorsTab = ({
   project,

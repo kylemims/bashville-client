@@ -4,6 +4,7 @@
   grid-template-columns: 500px 1fr;
   /* flex-direction: column; */
   gap: 2rem;
+  padding: 20px;
 }
 
 /* Section containers */
@@ -241,11 +242,12 @@
 @media (max-width: 768px) {
   .commands-tab {
     gap: 1.5rem;
+    padding: 0px;
   }
 
-  .section {
+  /* .section {
     padding: 1rem;
-  }
+  } */
 
   .section-header {
     flex-direction: column;
@@ -255,5 +257,12 @@
 
   .available-commands-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-project,
+  .section-stash {
+    padding: 0.5rem;
   }
 }
