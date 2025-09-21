@@ -185,13 +185,13 @@ export const searchNotes = async (query) => {
   const token = getToken();
   if (!token) throw new Error("No authentication token");
 
-  const response = await fetch(`${API_BASE_URL}/notes/search`, {
-    method: "POST",
+  const queryParams = new URLSearchParams({ q: query });
+  const response = await fetch(`${API_BASE_URL}/notes/search?${queryParams}`, {
+    method: "GET",
     headers: {
       Authorization: `Token ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ query }),
   });
 
   return handleResponse(response);

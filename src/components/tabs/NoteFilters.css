@@ -13,8 +13,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 16px;
-  padding-bottom: 12px;
+
   border-bottom: 1px solid var(--border);
 }
 
@@ -38,12 +37,20 @@
   font-weight: 500;
 }
 
+.filters-expanded-section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 12px;
+}
+
 /* ===== FILTERS ROW ===== */
 .filters-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
   margin-bottom: 16px;
+  margin-top: 16px;
+  padding-top: 12px;
   align-items: end;
 }
 
