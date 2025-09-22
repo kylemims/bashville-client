@@ -233,13 +233,6 @@ export const NotesTab = ({ project }) => {
         />
       )}
       <div className="search-and-filter-container">
-        {/* Filters */}
-        <NoteFilters
-          filters={filters}
-          onFiltersChange={handleFiltersChange}
-          onClearFilters={clearFilters}
-          resultCount={getFilteredNoteCount()}
-        />
         {/* Search Bar */}
         <div className="notes-search">
           <div className="search-input-group">
@@ -252,10 +245,17 @@ export const NotesTab = ({ project }) => {
               className="search-input"
             />
             <ActionButton variant="primary" size="sm" onClick={handleSearch} disabled={loading}>
-              <MaterialIcon icon="search" size={18} />
+              <MaterialIcon icon="search" size={17} />
             </ActionButton>
           </div>
         </div>
+        {/* Filters */}
+        <NoteFilters
+          filters={filters}
+          onFiltersChange={handleFiltersChange}
+          onClearFilters={clearFilters}
+          resultCount={getFilteredNoteCount()}
+        />
 
         {/* Sort Options */}
         <div className="notes-sort">

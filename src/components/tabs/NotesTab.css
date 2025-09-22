@@ -41,23 +41,26 @@
 
 /* ===== SEARCH BAR ===== */
 .notes-search {
-  margin: 16px 0;
+  /* margin: 16px 0; */
   display: flex;
 }
 
 .search-input-group {
   display: flex;
-  gap: 8px;
+  /* gap: 8px; */
   align-items: center;
   width: 100%;
 }
 
 .search-input {
   flex: 1;
-  padding: 12px 16px;
+  padding: 12px;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 0px;
   color: var(--text);
   font-size: 14px;
   transition: all 0.2s ease;
@@ -71,6 +74,18 @@
 
 .search-input::placeholder {
   color: var(--muted);
+}
+
+.search-input-group button {
+  background: var(--mutedx);
+  border: 1px solid var(--mutedx);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  padding: 11px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 /* ===== SORT CONTROLS ===== */

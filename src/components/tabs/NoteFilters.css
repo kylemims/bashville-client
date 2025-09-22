@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--text);
+  color: var(--muted);
   font-size: 16px;
   font-weight: 600;
   margin: 0;
@@ -94,15 +94,19 @@
 
 .filters-expand-toggle {
   background: none;
-  border: none;
-  color: var(--color-accent);
+  color: var(--muted);
   font-size: 12px;
   cursor: pointer;
-  padding: 0;
+  padding: 0px 12px;
   display: flex;
   align-items: center;
   gap: 4px;
   transition: color 0.2s ease;
+  border-radius: 20px;
+}
+
+.filters-expand-toggle:hover {
+  color: var(--color-accent);
 }
 
 /* ===== TOGGLE FILTER ===== */
