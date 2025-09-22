@@ -114,54 +114,54 @@ export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..
 
         {/* Character Counter */}
         <div className="char-counter">{content.length} characters</div>
-      </div>
-
-      <div className="input-actions">
-        <div className="keyboard-hints">
-          <span className="hint">
-            <kbd>⌘</kbd> + <kbd>Enter</kbd> to save
-          </span>
-          <span className="hint">
-            <kbd>Esc</kbd> to cancel
-          </span>
-        </div>
-
-        <div className="action-buttons">
-          <ActionButton variant="secondary" size="sm" onClick={onCancel} disabled={isSubmitting}>
-            <MaterialIcon icon="close" size={16} />
-            Cancel
-          </ActionButton>
-
-          <ActionButton
-            variant="primary"
-            size="sm"
-            onClick={handleSubmit}
-            disabled={!content.trim() || isSubmitting}>
-            {isSubmitting ? (
-              <>
-                <MaterialIcon icon="hourglass_empty" size={16} />
-                Creating...
-              </>
-            ) : (
-              <>
-                <MaterialIcon icon="add" size={16} />
-                Create Note
-              </>
-            )}
-          </ActionButton>
+        <div className="input-actions">
+          <div className="keyboard-hints">
+            <span className="hint">
+              <kbd>⌘</kbd> + <kbd>Enter</kbd> to save
+            </span>
+            <span className="hint">
+              <kbd>Esc</kbd> to cancel
+            </span>
+          </div>
         </div>
       </div>
-
       {/* Quick Tips */}
       {!content && (
-        <div className="quick-tips">
-          <h5>💡 Quick Tips:</h5>
-          <ul>
-            <li>Start with "TODO:" for automatic todo categorization</li>
-            <li>Include "BUG:" or "ISSUE:" for bug reports</li>
-            <li>Add code snippets with backticks for code notes</li>
-            <li>Use question words (how, why, what) for questions</li>
-          </ul>
+        <div className="quicktips-buttons-container">
+          <div className="quick-tips">
+            <h5>💡 Quick Tips:</h5>
+            <ul>
+              <li>Start with "TODO:" for automatic todo categorization</li>
+              <li>Include "BUG:" or "ISSUE:" for bug reports</li>
+              <li>Add code snippets with backticks for code notes</li>
+              <li>Use question words (how, why, what) for questions</li>
+            </ul>
+          </div>
+
+          <div className="action-buttons">
+            <ActionButton variant="secondary" size="sm" onClick={onCancel} disabled={isSubmitting}>
+              <MaterialIcon icon="close" size={16} />
+              Cancel
+            </ActionButton>
+
+            <ActionButton
+              variant="primary"
+              size="sm"
+              onClick={handleSubmit}
+              disabled={!content.trim() || isSubmitting}>
+              {isSubmitting ? (
+                <>
+                  <MaterialIcon icon="hourglass_empty" size={16} />
+                  Creating...
+                </>
+              ) : (
+                <>
+                  <MaterialIcon icon="add" size={16} />
+                  Create Note
+                </>
+              )}
+            </ActionButton>
+          </div>
         </div>
       )}
     </div>

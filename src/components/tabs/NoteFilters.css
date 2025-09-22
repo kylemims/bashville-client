@@ -3,8 +3,8 @@
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 16px;
-  margin: 16px 0;
+  padding: 8px;
+  /* margin: 16px 0; */
 }
 
 /* ===== FILTERS HEADER ===== */
@@ -46,7 +46,7 @@
 /* ===== FILTERS ROW ===== */
 .filters-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: minmax(160px, 1fr) minmax(160px, 1fr) minmax(160px, 1fr) 1fr;
   gap: 12px;
   margin-bottom: 16px;
   margin-top: 16px;
@@ -92,6 +92,19 @@
   border-color: var(--muted);
 }
 
+.filters-expand-toggle {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s ease;
+}
+
 /* ===== TOGGLE FILTER ===== */
 .note-archived-toggle {
   display: flex;
@@ -105,6 +118,7 @@
   border: 1px solid rgba(38, 40, 40, 0.7);
   border-radius: 4px;
   transition: all 0.2s ease;
+  text-wrap-mode: nowrap;
 }
 
 .toggle-label:hover {
@@ -213,9 +227,11 @@
   }
 
   .filters-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 12px;
+    padding: 0px 12px;
   }
 
   .filters-row {

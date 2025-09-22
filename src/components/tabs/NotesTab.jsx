@@ -202,42 +202,44 @@ export const NotesTab = ({ project }) => {
     <div className="notes-tab">
       {/* Header Section */}
       <div className="notes-header">
-        <div className="command-header-row">
-          <h3 className="section-title-available">{project ? `${project.title} Notes` : "All Notes"}</h3>
-          <div className="notes-gradient-line"></div>
+        <h3 className="section-title-available">{project ? `${project.title} Notes` : "All Notes"}</h3>
+        <div className="notes-gradient-line"></div>
+        <div className="notes-actions">
+          <ActionButton
+            variant="secondary"
+            size="xs"
+            onClick={() => setShowStats(!showStats)}
+            title="Toggle Statistics">
+            <MaterialIcon icon={showStats ? "analytics" : "analytics"} size={20} color="var(--muted)" />
+          </ActionButton>
 
-          {/* Action Buttons */}
-          <div className="notes-actions">
-            <ActionButton
-              variant="secondary"
-              size="xs"
-              onClick={() => setShowStats(!showStats)}
-              title="Toggle Statistics">
-              <MaterialIcon icon={showStats ? "analytics" : "analytics"} size={20} color="var(--muted)" />
-            </ActionButton>
-
-            <ActionButton
-              variant="add-field"
-              size="xs"
-              onClick={() => setShowQuickNote(!showQuickNote)}
-              title="Quick Note">
-              <MaterialIcon icon="add" size={26} color="var(--muted)" />
-            </ActionButton>
-          </div>
+          <ActionButton
+            variant="add-field"
+            size="xs"
+            onClick={() => setShowQuickNote(!showQuickNote)}
+            title="Quick Note">
+            <MaterialIcon icon="add" size={26} color="var(--muted)" />
+          </ActionButton>
         </div>
+      </div>
+      {showStats && stats && <NoteStats stats={stats} projectTitle={project?.title} />}
 
-        {/* Stats Section */}
-        {showStats && stats && <NoteStats stats={stats} projectTitle={project?.title} />}
-
-        {/* Quick Note Input */}
-        {showQuickNote && (
-          <QuickNoteInput
-            onSubmit={handleQuickNoteCreate}
-            onCancel={() => setShowQuickNote(false)}
-            placeholder={project ? `Quick note for ${project.title}...` : "Quick note..."}
-          />
-        )}
-
+      {/* Quick Note Input */}
+      {showQuickNote && (
+        <QuickNoteInput
+          onSubmit={handleQuickNoteCreate}
+          onCancel={() => setShowQuickNote(false)}
+          placeholder={project ? `Quick note for ${project.title}...` : "Quick note..."}
+        />
+      )}
+      <div className="search-and-filter-container">
+        {/* Filters */}
+        <NoteFilters
+          filters={filters}
+          onFiltersChange={handleFiltersChange}
+          onClearFilters={clearFilters}
+          resultCount={getFilteredNoteCount()}
+        />
         {/* Search Bar */}
         <div className="notes-search">
           <div className="search-input-group">
@@ -254,14 +256,6 @@ export const NotesTab = ({ project }) => {
             </ActionButton>
           </div>
         </div>
-
-        {/* Filters */}
-        <NoteFilters
-          filters={filters}
-          onFiltersChange={handleFiltersChange}
-          onClearFilters={clearFilters}
-          resultCount={getFilteredNoteCount()}
-        />
 
         {/* Sort Options */}
         <div className="notes-sort">

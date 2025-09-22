@@ -67,8 +67,8 @@ export const NoteFilters = ({ filters, onFiltersChange, onClearFilters, resultCo
             e.stopPropagation();
             setIsExpanded(!isExpanded);
           }}>
-          <MaterialIcon icon={isExpanded ? "arrow_drop_down" : "arrow_right"} size={16} />
-          {isExpanded ? "Collapse" : "Expand"}
+          <MaterialIcon icon={isExpanded ? "arrow_drop_down" : "arrow_right"} size={20} />
+          {/* {isExpanded ? "Collapse" : "Expand"} */}
         </button>
       </div>
 

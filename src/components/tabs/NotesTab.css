@@ -10,10 +10,14 @@
 /* ===== HEADER SECTION ===== */
 .notes-header {
   margin-bottom: 24px;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: space-between;
+  align-items: center;
 }
 
 .notes-gradient-line {
-  flex: 1;
+  flex: auto;
   height: 2px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   border-radius: 2px;
@@ -23,17 +27,29 @@
 .notes-actions {
   display: flex;
   gap: 8px;
+  /* flex: 1; */
+}
+
+.search-and-filter-container {
+  display: grid;
+  gap: 12px;
+  /* grid-template-columns: minmax(500px, 1fr) minmax(300px, 1fr) 1fr; */
+  grid-template-columns: 1fr 1fr auto;
+
+  align-items: center;
 }
 
 /* ===== SEARCH BAR ===== */
 .notes-search {
   margin: 16px 0;
+  display: flex;
 }
 
 .search-input-group {
   display: flex;
   gap: 8px;
   align-items: center;
+  width: 100%;
 }
 
 .search-input {
@@ -65,7 +81,7 @@
 }
 
 .sort-select {
-  padding: 8px 12px;
+  padding: 12px;
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -142,7 +158,9 @@
   .notes-tab {
     padding: 0px;
   }
-
+  .notes-sort {
+    justify-content: start;
+  }
   .notes-grid {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -160,6 +178,11 @@
   .notes-actions {
     width: 100%;
     justify-content: end;
+  }
+
+  .search-and-filter-container {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
 }
 
