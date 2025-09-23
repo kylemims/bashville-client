@@ -44,6 +44,8 @@ export const NoteContent = ({
 
   // Render content with interactive checkboxes and code blocks
   const renderContentWithEnhancements = (textContent) => {
+    console.log("🎨 NoteContent rendering:", { textContent, checkboxes, codeBlocks });
+
     if (!textContent) return null;
 
     const lines = textContent.split("\n");

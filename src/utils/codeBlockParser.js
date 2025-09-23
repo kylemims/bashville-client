@@ -1,5 +1,13 @@
 /**
- * Utility functions for parsing and handling code blocks in note content
+ * Uexport const parseCodeBlocks = (content) => {
+  console.log("🎨 Parsing code blocks from content:", content);
+  if (!content) return { codeBlocks: [], parsedContent: content };
+
+  const lines = content.split('\n');
+  const codeBlocks = [];
+  let inCodeBlock = false;
+  let currentBlock = null;
+  let blockIndex = 0;unctions for parsing and handling code blocks in note content
  */
 
 /**
@@ -19,6 +27,7 @@ export const parseCodeBlocks = (content) => {
     // Check for code block start
     const codeStartMatch = line.match(/^(\s*)```(\w*)\s*$/);
     if (codeStartMatch && !inCodeBlock) {
+      console.log("🎨 Found code block start:", codeStartMatch);
       const [, indent, language] = codeStartMatch;
       currentBlock = {
         id: `code-${blockIndex}`,
@@ -34,6 +43,7 @@ export const parseCodeBlocks = (content) => {
 
     // Check for code block end
     if (line.match(/^(\s*)```\s*$/) && inCodeBlock && currentBlock) {
+      console.log("🎨 Found code block end");
       currentBlock.endLine = index;
       codeBlocks.push(currentBlock);
       inCodeBlock = false;
@@ -53,6 +63,7 @@ export const parseCodeBlocks = (content) => {
     return line;
   });
 
+  console.log("🎨 Code block parsing result:", { codeBlocks, parsedContent: parsedLines.join("\n") });
   return {
     codeBlocks,
     parsedContent: parsedLines.join("\n"),

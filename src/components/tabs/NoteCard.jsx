@@ -23,20 +23,22 @@ export const NoteCard = ({
   const [formData, setFormData] = useState({
     title: note.title || "",
     content: note.content || "",
-    category: note.category || "other",
+    category: note.category || "note",
     priority_level: note.priority_level || "medium",
-    custom_tags: note.custom_tags?.join(", ") || "",
+    custom_tags: Array.isArray(note.custom_tags) ? note.custom_tags.join(", ") : "",
     is_important: note.is_important || false,
+    project: note.project || null,
   });
 
   // Category display configurations
   const categoryConfig = {
     bug: { icon: "bug_report", color: "var(--color-secondary)", label: "Bug" },
-    todo: { icon: "task_alt", color: "var(--accent)", label: "Todo" },
+    todo: { icon: "task_alt", color: "var(--color-accent)", label: "Todo" },
     wishlist: { icon: "star", color: "var(--color-primary)", label: "Wishlist" },
     code: { icon: "code", color: "var(--muted)", label: "Code" },
     question: { icon: "help", color: "var(--color-accent)", label: "Question" },
     reminder: { icon: "schedule", color: "var(--color-primary)", label: "Reminder" },
+    note: { icon: "note", color: "var(--text)", label: "Note" },
     other: { icon: "note", color: "var(--text)", label: "Note" },
   };
 
@@ -57,7 +59,10 @@ export const NoteCard = ({
           : [],
       };
 
+      console.log("📝 Updating note with data:", updateData);
       const updatedNote = await updateNote(note.id, updateData);
+      console.log("📝 Received updated note:", updatedNote);
+
       onUpdate(updatedNote);
       setIsEditing(false);
       console.log("✅ Note updated successfully");
@@ -73,10 +78,11 @@ export const NoteCard = ({
     setFormData({
       title: note.title || "",
       content: note.content || "",
-      category: note.category || "other",
+      category: note.category || "note",
       priority_level: note.priority_level || "medium",
-      custom_tags: note.custom_tags?.join(", ") || "",
+      custom_tags: Array.isArray(note.custom_tags) ? note.custom_tags.join(", ") : "",
       is_important: note.is_important || false,
+      project: note.project || null,
     });
     setIsEditing(false);
     setError("");
@@ -205,7 +211,7 @@ export const NoteCard = ({
             </div>
 
             {/* Priority Pill */}
-            <PriorityPill priority={note.priority_level || "medium"} size="xs" />
+            <PriorityPill priority_level={note.priority_level || "medium"} size="xs" />
 
             <div className="note-indicators">
               {note.is_important && (
@@ -217,7 +223,7 @@ export const NoteCard = ({
                 />
               )}
               {note.is_completed && (
-                <MaterialIcon icon="check_circle" size={16} color="var(--accent)" title="Completed" />
+                <MaterialIcon icon="check_circle" size={16} color="var(--color-accent)" title="Completed" />
               )}
               {note.is_archived && (
                 <MaterialIcon icon="archive" size={16} color="var(--muted)" title="Archived" />

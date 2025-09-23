@@ -28,7 +28,7 @@
 .priority-low {
   background: rgba(70, 203, 167, 0.15);
   border-color: rgba(70, 203, 167, 0.3);
-  color: var(--accent);
+  color: var(--color-accent);
 }
 
 /* ===== SIZES ===== */
@@ -80,7 +80,7 @@
 
   .priority-low {
     background: rgba(70, 203, 167, 0.25);
-    border-color: var(--accent);
+    border-color: var(--color-accent);
   }
 }
 

@@ -29,7 +29,16 @@ const handleResponse = async (response) => {
     throw new Error(errorData.error || errorData.detail || `HTTP ${response.status}`);
   }
 
-  return response.json();
+  const data = await response.json();
+
+  // Handle nested response structure - if response has a 'note' key, extract it
+  if (data.note && typeof data.note === "object") {
+    console.log("📡 Extracting nested note data from response");
+    return data.note;
+  }
+
+  // Handle array responses or direct objects
+  return data;
 };
 
 // Helper function to build query parameters
@@ -362,6 +371,23 @@ export const bulkCompleteNotes = async (noteIds) => {
   return handleResponse(response);
 };
 
+// Bulk reorder notes for drag and drop
+export const bulkReorderNotes = async (updates) => {
+  const token = getToken();
+  if (!token) throw new Error("No authentication token");
+
+  const response = await fetch(`${API_BASE_URL}/notes/bulk_reorder`, {
+    method: "POST",
+    headers: {
+      Authorization: `Token ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ updates }),
+  });
+
+  return handleResponse(response);
+};
+
 // Export functions for easier access
 const noteService = {
   getNotes,
@@ -382,6 +408,7 @@ const noteService = {
   bulkDeleteNotes,
   bulkArchiveNotes,
   bulkCompleteNotes,
+  bulkReorderNotes,
 };
 
 export default noteService;

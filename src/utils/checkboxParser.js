@@ -8,6 +8,7 @@
  * Returns array of checkbox objects and modified content
  */
 export const parseCheckboxes = (content) => {
+  console.log("🔍 Parsing checkboxes from content:", content);
   if (!content) return { checkboxes: [], parsedContent: content };
 
   const lines = content.split("\n");
@@ -18,6 +19,7 @@ export const parseCheckboxes = (content) => {
     const checkboxMatch = line.match(/^(\s*)[-*]\s*\[([ xX])\]\s*(.*)$/);
 
     if (checkboxMatch) {
+      console.log("✅ Found checkbox:", checkboxMatch);
       const [, indent, checkState, text] = checkboxMatch;
       const isChecked = checkState.toLowerCase() === "x";
 
@@ -37,6 +39,7 @@ export const parseCheckboxes = (content) => {
     return line;
   });
 
+  console.log("🔍 Checkbox parsing result:", { checkboxes, parsedContent: parsedLines.join("\n") });
   return {
     checkboxes,
     parsedContent: parsedLines.join("\n"),

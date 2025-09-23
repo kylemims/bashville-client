@@ -1,7 +1,7 @@
 import { MaterialIcon } from "./MaterialIcon.jsx";
 import "./PriorityPill.css";
 
-export const PriorityPill = ({ priority, size = "sm", showIcon = true, showText = false }) => {
+export const PriorityPill = ({ priority_level, size = "sm", showIcon = true, showText = false }) => {
   const priorityConfig = {
     high: {
       icon: "priority_high",
@@ -19,11 +19,11 @@ export const PriorityPill = ({ priority, size = "sm", showIcon = true, showText 
       icon: "keyboard_arrow_down",
       label: "Low",
       className: "priority-low",
-      color: "var(--accent)", // Green
+      color: "var(--color-accent)", // Green
     },
   };
 
-  const config = priorityConfig[priority] || priorityConfig.medium;
+  const config = priorityConfig[priority_level] || priorityConfig.medium;
 
   return (
     <span className={`priority-pill ${config.className} priority-${size}`} title={`${config.label} Priority`}>
