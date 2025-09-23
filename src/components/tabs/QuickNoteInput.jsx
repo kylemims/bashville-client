@@ -30,12 +30,12 @@ export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..
   const predictCategory = (text) => {
     // Bug keywords
     if (/(bug|error|issue|broken|fix|crash|fail)/i.test(text)) {
-      return { category: "bug", confidence: "high", icon: "bug_report", color: "var(--color-secondary)" };
+      return { category: "bug", icon: "bug_report", color: "var(--color-secondary)" };
     }
 
     // Todo keywords
     if (/(todo|task|need to|should|must|implement|add|create)/i.test(text)) {
-      return { category: "todo", confidence: "high", icon: "task_alt", color: "var(--accent)" };
+      return { category: "todo", icon: "task_alt", color: "var(--accent)" };
     }
 
     // Code keywords
@@ -43,25 +43,25 @@ export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..
       /(function|class|variable|api|endpoint|query|database)/i.test(text) ||
       /```|`[^`]+`|\w+\(\)|\w+\.\w+/.test(text)
     ) {
-      return { category: "code", confidence: "medium", icon: "code", color: "var(--muted)" };
+      return { category: "code", icon: "code", color: "var(--muted)" };
     }
 
     // Question keywords
     if (/(how|why|what|when|where|\?)/i.test(text)) {
-      return { category: "question", confidence: "medium", icon: "help", color: "var(--color-accent)" };
+      return { category: "question", icon: "help", color: "var(--color-accent)" };
     }
 
     // Wishlist keywords
     if (/(wish|want|would be nice|feature|enhancement|improvement)/i.test(text)) {
-      return { category: "wishlist", confidence: "medium", icon: "star", color: "var(--color-primary)" };
+      return { category: "wishlist", icon: "star", color: "var(--color-primary)" };
     }
 
     // Reminder keywords
     if (/(remember|remind|later|tomorrow|deadline|due)/i.test(text)) {
-      return { category: "reminder", confidence: "medium", icon: "schedule", color: "var(--color-primary)" };
+      return { category: "reminder", icon: "schedule", color: "var(--color-primary)" };
     }
 
-    return { category: "other", confidence: "low", icon: "note", color: "var(--text)" };
+    return { category: "other", icon: "note", color: "var(--text)" };
   };
 
   const handleSubmit = async () => {
@@ -106,8 +106,7 @@ export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..
           <div className="category-prediction">
             <MaterialIcon icon={predictedCategory.icon} size={16} color={predictedCategory.color} />
             <span className="prediction-text">
-              Detected: <strong>{predictedCategory.category}</strong>
-              <span className="confidence">({predictedCategory.confidence} confidence)</span>
+              Detected as: <strong>{predictedCategory.category}</strong>
             </span>
           </div>
         )}

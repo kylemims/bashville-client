@@ -110,6 +110,9 @@ export const Dashboard = () => {
               </option>
             ))}
           </select>
+          <Link to="/notes" className="button secondary">
+            All Notes
+          </Link>
           <Link to="/projects/new" className="button">
             Create Project
           </Link>

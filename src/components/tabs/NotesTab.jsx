@@ -34,6 +34,8 @@ export const NotesTab = ({ project }) => {
   const [showQuickNote, setShowQuickNote] = useState(false);
   const [showStats, setShowStats] = useState(false);
   const [sortBy, setSortBy] = useState("-created_at"); // Most recent first
+  const [viewMode, setViewMode] = useState("grid"); // "grid" or "columns"
+  const [groupBy, setGroupBy] = useState("none"); // "none", "project", "category", "priority"
 
   // Load notes when component mounts or filters change
   const loadNotes = useCallback(async () => {
@@ -198,6 +200,91 @@ export const NotesTab = ({ project }) => {
     return notes.length;
   };
 
+  const groupNotes = (notes, groupBy) => {
+    if (groupBy === "none") {
+      return { "All Notes": notes };
+    }
+
+    const groups = {};
+
+    notes.forEach((note) => {
+      let groupKey;
+
+      switch (groupBy) {
+        case "project":
+          groupKey = note.project_title || note.project_name || "No Project";
+          break;
+        case "category":
+          groupKey = note.category_display || note.category || "Other";
+          break;
+        case "priority":
+          groupKey = `${
+            (note.priority_level || "medium").charAt(0).toUpperCase() +
+            (note.priority_level || "medium").slice(1)
+          } Priority`;
+          break;
+        default:
+          groupKey = "All Notes";
+      }
+
+      if (!groups[groupKey]) {
+        groups[groupKey] = [];
+      }
+      groups[groupKey].push(note);
+    });
+
+    return groups;
+  };
+
+  const renderNotesContent = () => {
+    if (viewMode === "grid") {
+      return (
+        <div className="notes-grid">
+          {notes.map((note) => (
+            <NoteCard
+              key={note.id}
+              note={note}
+              onUpdate={handleNoteUpdate}
+              onDelete={() => handleNoteDelete(note.id)}
+              onToggleCompletion={() => handleToggleCompletion(note.id)}
+              onToggleArchived={() => handleToggleArchived(note.id)}
+              onToggleImportant={() => handleToggleImportant(note.id)}
+            />
+          ))}
+        </div>
+      );
+    }
+
+    // Column view
+    const groupedNotes = groupNotes(notes, groupBy);
+
+    return (
+      <div className="notes-columns">
+        {Object.entries(groupedNotes).map(([groupName, groupNotes]) => (
+          <div key={groupName} className="notes-column" data-category={groupName.toLowerCase()}>
+            <div className="column-header">
+              <h4 className="column-title">{groupName}</h4>
+              <span className="column-count">{groupNotes.length}</span>
+            </div>
+            <div className="column-notes">
+              {groupNotes.map((note) => (
+                <NoteCard
+                  key={note.id}
+                  note={note}
+                  onUpdate={handleNoteUpdate}
+                  onDelete={() => handleNoteDelete(note.id)}
+                  onToggleCompletion={() => handleToggleCompletion(note.id)}
+                  onToggleArchived={() => handleToggleArchived(note.id)}
+                  onToggleImportant={() => handleToggleImportant(note.id)}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <div className="notes-tab">
       {/* Header Section */}
@@ -269,6 +356,35 @@ export const NotesTab = ({ project }) => {
             <option value="-is_important,created_at">Important First</option>
           </select>
         </div>
+
+        {/* View Mode Controls */}
+        <div className="notes-view-controls">
+          <div className="view-mode-selector">
+            <ActionButton
+              variant={viewMode === "grid" ? "primary" : "secondary"}
+              size="xs"
+              onClick={() => setViewMode("grid")}
+              title="Grid View">
+              <MaterialIcon icon="grid_view" size={16} />
+            </ActionButton>
+            <ActionButton
+              variant={viewMode === "columns" ? "primary" : "secondary"}
+              size="xs"
+              onClick={() => setViewMode("columns")}
+              title="Column View">
+              <MaterialIcon icon="view_column" size={16} />
+            </ActionButton>
+          </div>
+
+          {viewMode === "columns" && (
+            <select value={groupBy} onChange={(e) => setGroupBy(e.target.value)} className="group-by-select">
+              <option value="none">No Grouping</option>
+              <option value="project">Group by Project</option>
+              <option value="category">Group by Category</option>
+              <option value="priority">Group by Priority</option>
+            </select>
+          )}
+        </div>
       </div>
 
       {/* Error Message */}
@@ -301,21 +417,7 @@ export const NotesTab = ({ project }) => {
           </div>
         )}
 
-        {!loading && notes.length > 0 && (
-          <div className="notes-grid">
-            {notes.map((note) => (
-              <NoteCard
-                key={note.id}
-                note={note}
-                onUpdate={handleNoteUpdate}
-                onDelete={() => handleNoteDelete(note.id)}
-                onToggleCompletion={() => handleToggleCompletion(note.id)}
-                onToggleArchived={() => handleToggleArchived(note.id)}
-                onToggleImportant={() => handleToggleImportant(note.id)}
-              />
-            ))}
-          </div>
-        )}
+        {!loading && notes.length > 0 && renderNotesContent()}
       </div>
     </div>
   );

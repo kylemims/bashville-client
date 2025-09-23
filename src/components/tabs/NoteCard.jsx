@@ -3,6 +3,8 @@ import { updateNote } from "../../services/noteService";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import { FormField } from "../common/FormField.jsx";
+import { PriorityPill } from "../common/PriorityPill.jsx";
+import { NoteContent } from "../common/NoteContent.jsx";
 import "../common/FormField.css";
 import "./NoteCard.css";
 
@@ -22,7 +24,8 @@ export const NoteCard = ({
     title: note.title || "",
     content: note.content || "",
     category: note.category || "other",
-    tags: note.tags?.join(", ") || "",
+    priority_level: note.priority_level || "medium",
+    custom_tags: note.custom_tags?.join(", ") || "",
     is_important: note.is_important || false,
   });
 
@@ -46,8 +49,8 @@ export const NoteCard = ({
 
       const updateData = {
         ...formData,
-        tags: formData.tags
-          ? formData.tags
+        custom_tags: formData.custom_tags
+          ? formData.custom_tags
               .split(",")
               .map((tag) => tag.trim())
               .filter((tag) => tag)
@@ -71,7 +74,8 @@ export const NoteCard = ({
       title: note.title || "",
       content: note.content || "",
       category: note.category || "other",
-      tags: note.tags?.join(", ") || "",
+      priority_level: note.priority_level || "medium",
+      custom_tags: note.custom_tags?.join(", ") || "",
       is_important: note.is_important || false,
     });
     setIsEditing(false);
@@ -93,11 +97,6 @@ export const NoteCard = ({
     } else {
       return date.toLocaleDateString();
     }
-  };
-
-  const truncateText = (text, maxLength = 150) => {
-    if (!text || text.length <= maxLength) return text;
-    return text.substring(0, maxLength) + "...";
   };
 
   const renderContent = () => {
@@ -141,6 +140,19 @@ export const NoteCard = ({
               </select>
             </div>
 
+            <div className="form-field">
+              <label className="form-label">Priority</label>
+              <select
+                value={formData.priority_level}
+                onChange={(e) => setFormData({ ...formData, priority_level: e.target.value })}
+                className="input"
+                disabled={loading}>
+                <option value="low">Low Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="high">High Priority</option>
+              </select>
+            </div>
+
             <div className="importance-toggle">
               <label className="checkbox-label">
                 <input
@@ -156,8 +168,8 @@ export const NoteCard = ({
 
           <FormField
             label="Tags"
-            value={formData.tags}
-            onChange={(value) => setFormData({ ...formData, tags: value })}
+            value={formData.custom_tags}
+            onChange={(value) => setFormData({ ...formData, custom_tags: value })}
             placeholder="Enter tags separated by commas (e.g., frontend, api, urgent)"
             disabled={loading}
           />
@@ -192,6 +204,9 @@ export const NoteCard = ({
               <span>{config.label}</span>
             </div>
 
+            {/* Priority Pill */}
+            <PriorityPill priority={note.priority_level || "medium"} size="xs" />
+
             <div className="note-indicators">
               {note.is_important && (
                 <MaterialIcon
@@ -218,11 +233,23 @@ export const NoteCard = ({
 
         {/* Note Content */}
         <div className="note-text">
-          {isExpanded ? (
-            <pre className="note-content-full">{note.content || ""}</pre>
-          ) : (
-            <p className="note-content-preview">{truncateText(note.content)}</p>
-          )}
+          <NoteContent
+            content={note.content}
+            onContentUpdate={async (newContent) => {
+              try {
+                const updatedNote = await updateNote(note.id, {
+                  ...note,
+                  content: newContent,
+                });
+                onUpdate(updatedNote);
+                console.log("✅ Checkbox updated successfully");
+              } catch (err) {
+                console.error("❌ Failed to update checkbox:", err);
+              }
+            }}
+            isExpanded={isExpanded}
+            maxLength={150}
+          />
 
           {note.content && note.content.length > 150 && (
             <button className="expand-toggle" onClick={() => setIsExpanded(!isExpanded)}>
@@ -232,9 +259,9 @@ export const NoteCard = ({
         </div>
 
         {/* Tags */}
-        {note.tags && note.tags.length > 0 && (
+        {note.custom_tags && note.custom_tags.length > 0 && (
           <div className="note-tags">
-            {note.tags.map((tag, index) => (
+            {note.custom_tags.map((tag, index) => (
               <span key={index} className="tag">
                 {tag}
               </span>

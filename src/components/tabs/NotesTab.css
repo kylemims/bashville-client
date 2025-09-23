@@ -244,3 +244,233 @@
     gap: 20px;
   }
 }
+
+/* ===== VIEW MODE CONTROLS ===== */
+.notes-view-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.view-mode-selector {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.group-by-select {
+  padding: 6px 10px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 13px;
+  min-width: 140px;
+}
+
+.group-by-select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* ===== COLUMN VIEW ===== */
+.notes-columns {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding: 8px 0 20px 0;
+  min-height: 400px;
+  align-items: flex-start;
+}
+
+.notes-column {
+  flex: 0 0 340px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  max-height: 75vh;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 2px solid var(--border);
+  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  border-radius: 12px 12px 0 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.column-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.column-count {
+  font-size: 11px;
+  color: var(--text);
+  background: var(--accent);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
+}
+
+.column-notes {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  min-height: 0; /* Important for proper scrolling */
+}
+
+/* ===== CARDS IN COLUMN VIEW ===== */
+.column-notes .note-card {
+  margin: 0; /* Ensure no margin collapse */
+  flex-shrink: 0; /* Prevent cards from shrinking */
+}
+
+.column-notes .note-card + .note-card {
+  margin-top: 0; /* Rely on flexbox gap instead */
+}
+
+/* ===== COLUMN VIEW RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .notes-columns {
+    flex-direction: column;
+    overflow-x: visible;
+    gap: 16px;
+  }
+
+  .notes-column {
+    flex: none;
+    max-height: none;
+    width: 100%;
+  }
+
+  .notes-view-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .view-mode-selector {
+    justify-content: center;
+  }
+}
+
+/* ===== PROPER SCROLLING FOR COLUMNS ===== */
+.notes-columns {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) var(--bg-secondary);
+}
+
+.notes-columns::-webkit-scrollbar {
+  height: 8px;
+}
+
+.notes-columns::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+.notes-columns::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+.notes-columns::-webkit-scrollbar-thumb:hover {
+  background: var(--text);
+} /* ===== COLUMN DRAG & DROP READY ===== */
+.notes-column.drag-over {
+  border-color: var(--accent);
+  background: rgba(70, 203, 167, 0.1);
+}
+
+.column-notes.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.column-notes.empty::before {
+  content: "Drop notes here or create a new one";
+}
+
+/* ===== CATEGORY-SPECIFIC COLUMN STYLING ===== */
+.notes-column[data-category="bug"] .column-header {
+  border-bottom-color: var(--color-secondary);
+}
+
+.notes-column[data-category="bug"] .column-count {
+  background: var(--color-secondary);
+  color: var(--bg-primary);
+}
+
+.notes-column[data-category="todo"] .column-header,
+.notes-column[data-category="task/todo"] .column-header {
+  border-bottom-color: var(--accent);
+}
+
+.notes-column[data-category="todo"] .column-count,
+.notes-column[data-category="task/todo"] .column-count {
+  background: var(--accent);
+  color: var(--bg-primary);
+}
+
+.notes-column[data-category="code"] .column-header,
+.notes-column[data-category="code snippet"] .column-header {
+  border-bottom-color: var(--muted);
+}
+
+.notes-column[data-category="code"] .column-count,
+.notes-column[data-category="code snippet"] .column-count {
+  background: var(--muted);
+  color: var(--bg-primary);
+}
+
+.notes-column[data-category="wishlist"] .column-header {
+  border-bottom-color: var(--color-primary);
+}
+
+.notes-column[data-category="wishlist"] .column-count {
+  background: var(--color-primary);
+  color: var(--bg-primary);
+}
+
+.notes-column[data-category="question"] .column-header {
+  border-bottom-color: var(--color-accent);
+}
+
+.notes-column[data-category="question"] .column-count {
+  background: var(--color-accent);
+  color: var(--bg-primary);
+}
+
+.notes-column[data-category="reminder"] .column-header {
+  border-bottom-color: var(--color-primary);
+}
+
+.notes-column[data-category="reminder"] .column-count {
+  background: var(--color-primary);
+  color: var(--bg-primary);
+}

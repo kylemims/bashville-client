@@ -1,0 +1,96 @@
+/* ===== PRIORITY PILL COMPONENT ===== */
+.priority-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+/* ===== PRIORITY COLORS ===== */
+.priority-high {
+  background: rgba(212, 106, 106, 0.15);
+  border-color: rgba(212, 106, 106, 0.3);
+  color: var(--color-secondary);
+}
+
+.priority-medium {
+  background: rgba(254, 227, 148, 0.15);
+  border-color: rgba(254, 227, 148, 0.3);
+  color: var(--color-primary);
+}
+
+.priority-low {
+  background: rgba(70, 203, 167, 0.15);
+  border-color: rgba(70, 203, 167, 0.3);
+  color: var(--accent);
+}
+
+/* ===== SIZES ===== */
+.priority-xs {
+  padding: 1px 4px;
+  font-size: 10px;
+  border-radius: 8px;
+}
+
+.priority-sm {
+  padding: 2px 6px;
+  font-size: 11px;
+  border-radius: 10px;
+}
+
+.priority-md {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 12px;
+}
+
+/* ===== TEXT LABEL ===== */
+.priority-text {
+  font-weight: 500;
+  margin-left: 2px;
+}
+
+/* ===== HOVER EFFECTS ===== */
+.priority-pill:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+/* ===== HIGH CONTRAST SUPPORT ===== */
+@media (prefers-contrast: high) {
+  .priority-pill {
+    border-width: 2px;
+  }
+
+  .priority-high {
+    background: rgba(212, 106, 106, 0.25);
+    border-color: var(--color-secondary);
+  }
+
+  .priority-medium {
+    background: rgba(254, 227, 148, 0.25);
+    border-color: var(--color-primary);
+  }
+
+  .priority-low {
+    background: rgba(70, 203, 167, 0.25);
+    border-color: var(--accent);
+  }
+}
+
+/* ===== REDUCED MOTION SUPPORT ===== */
+@media (prefers-reduced-motion: reduce) {
+  .priority-pill {
+    transition: none;
+  }
+
+  .priority-pill:hover {
+    transform: none;
+  }
+}

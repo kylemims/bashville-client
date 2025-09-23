@@ -1,0 +1,193 @@
+/* ===== CODE BLOCK COMPONENT ===== */
+
+.code-block {
+  margin: 12px 0;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background-color: var(--bg-secondary);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ===== CODE HEADER ===== */
+
+.code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-language {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.code-language span {
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ===== CODE ACTIONS ===== */
+
+.code-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.code-action-btn {
+  background: none;
+  border: none;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+.code-action-btn:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text);
+  transform: scale(1.05);
+}
+
+.code-action-btn:active {
+  transform: scale(0.95);
+}
+
+/* ===== CODE CONTENT ===== */
+
+.code-content {
+  position: relative;
+  transition: max-height 0.3s ease;
+}
+
+/* Override SyntaxHighlighter styles for better integration */
+.code-content pre {
+  margin: 0 !important;
+  background: var(--bg-secondary) !important;
+}
+
+.code-content code {
+  font-family: "SF Mono", "Monaco", "Inconsolata", "Roboto Mono", monospace !important;
+}
+
+/* Line numbers styling */
+.code-content .linenumber {
+  color: var(--muted) !important;
+  background-color: var(--bg-primary) !important;
+  border-right: 1px solid var(--border) !important;
+  padding-right: 8px !important;
+  margin-right: 8px !important;
+  user-select: none;
+}
+
+/* ===== COPY FEEDBACK ===== */
+
+.copy-feedback {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: var(--accent);
+  color: var(--bg-primary);
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 10;
+  animation: fadeInOut 2s ease;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+/* ===== SIZE VARIANTS ===== */
+
+.code-block.compact {
+  margin: 8px 0;
+}
+
+.code-block.compact .code-header {
+  padding: 6px 10px;
+}
+
+.code-block.compact .code-language,
+.code-block.compact .copy-feedback {
+  font-size: 11px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+  .code-header {
+    padding: 6px 10px;
+  }
+
+  .code-language {
+    font-size: 11px;
+  }
+
+  .code-action-btn {
+    padding: 3px;
+  }
+
+  .copy-feedback {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+
+.code-action-btn:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .code-content,
+  .code-action-btn,
+  .copy-feedback {
+    transition: none;
+  }
+
+  .copy-feedback {
+    animation: none;
+  }
+
+  .code-action-btn:hover {
+    transform: none;
+  }
+
+  .code-action-btn:active {
+    transform: none;
+  }
+}

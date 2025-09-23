@@ -1,0 +1,111 @@
+/* ===== NOTE CONTENT RENDERER ===== */
+
+.note-content-renderer {
+  width: 100%;
+}
+
+/* ===== CHECKBOX PROGRESS INDICATOR ===== */
+
+.checkbox-progress {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  background-color: var(--bg-secondary);
+  border-radius: 6px;
+  border-left: 3px solid var(--accent);
+}
+
+.progress-text {
+  font-size: 12px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.progress-bar {
+  height: 4px;
+  background-color: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: var(--accent);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+/* ===== CONTENT BODY ===== */
+
+.note-content-body {
+  line-height: 1.5;
+}
+
+.note-text-line {
+  margin: 4px 0;
+  color: var(--text);
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.note-text-line:first-child {
+  margin-top: 0;
+}
+
+.note-text-line:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== PROCESSING INDICATOR ===== */
+
+.processing-indicator {
+  margin-top: 8px;
+  padding: 4px 8px;
+  background-color: rgba(70, 203, 167, 0.1);
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.processing-indicator span {
+  font-size: 12px;
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* ===== VARIANTS ===== */
+
+.note-content-renderer.compact .checkbox-progress {
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.note-content-renderer.compact .note-text-line {
+  margin: 2px 0;
+  font-size: 13px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+@media (max-width: 768px) {
+  .checkbox-progress {
+    padding: 6px 10px;
+    margin-bottom: 10px;
+  }
+
+  .progress-text {
+    font-size: 11px;
+  }
+
+  .note-text-line {
+    font-size: 13px;
+  }
+}
+
+/* ===== ACCESSIBILITY ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-fill {
+    transition: none;
+  }
+}
