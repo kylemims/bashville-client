@@ -13,6 +13,7 @@ import { ErrorMessage } from "../common/ErrorMessage.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import { NoteCard } from "./NoteCard.jsx";
+import { BlockBasedNoteCard } from "../project/BlockBasedNoteCard.jsx";
 import { QuickNoteInput } from "./QuickNoteInput.jsx";
 import { NoteFilters } from "./NoteFilters.jsx";
 import { NoteStats } from "./NoteStats.jsx";
@@ -35,6 +36,7 @@ export const NotesTab = ({ project }) => {
   const [showStats, setShowStats] = useState(false);
   const [sortBy, setSortBy] = useState("-created_at"); // Most recent first
   const [viewMode, setViewMode] = useState("grid"); // "grid" or "columns"
+  const [useBlockMode, setUseBlockMode] = useState(true); // New block-based architecture
   const [groupBy, setGroupBy] = useState("none"); // "none", "project", "category", "priority"
 
   // Load notes when component mounts or filters change
@@ -240,17 +242,26 @@ export const NotesTab = ({ project }) => {
     if (viewMode === "grid") {
       return (
         <div className="notes-grid">
-          {notes.map((note) => (
-            <NoteCard
-              key={note.id}
-              note={note}
-              onUpdate={handleNoteUpdate}
-              onDelete={() => handleNoteDelete(note.id)}
-              onToggleCompletion={() => handleToggleCompletion(note.id)}
-              onToggleArchived={() => handleToggleArchived(note.id)}
-              onToggleImportant={() => handleToggleImportant(note.id)}
-            />
-          ))}
+          {notes.map((note) =>
+            useBlockMode ? (
+              <BlockBasedNoteCard
+                key={note.id}
+                note={note}
+                onUpdate={handleNoteUpdate}
+                onDelete={() => handleNoteDelete(note.id)}
+              />
+            ) : (
+              <NoteCard
+                key={note.id}
+                note={note}
+                onUpdate={handleNoteUpdate}
+                onDelete={() => handleNoteDelete(note.id)}
+                onToggleCompletion={() => handleToggleCompletion(note.id)}
+                onToggleArchived={() => handleToggleArchived(note.id)}
+                onToggleImportant={() => handleToggleImportant(note.id)}
+              />
+            )
+          )}
         </div>
       );
     }
@@ -267,17 +278,26 @@ export const NotesTab = ({ project }) => {
               <span className="column-count">{groupNotes.length}</span>
             </div>
             <div className="column-notes">
-              {groupNotes.map((note) => (
-                <NoteCard
-                  key={note.id}
-                  note={note}
-                  onUpdate={handleNoteUpdate}
-                  onDelete={() => handleNoteDelete(note.id)}
-                  onToggleCompletion={() => handleToggleCompletion(note.id)}
-                  onToggleArchived={() => handleToggleArchived(note.id)}
-                  onToggleImportant={() => handleToggleImportant(note.id)}
-                />
-              ))}
+              {groupNotes.map((note) =>
+                useBlockMode ? (
+                  <BlockBasedNoteCard
+                    key={note.id}
+                    note={note}
+                    onUpdate={handleNoteUpdate}
+                    onDelete={() => handleNoteDelete(note.id)}
+                  />
+                ) : (
+                  <NoteCard
+                    key={note.id}
+                    note={note}
+                    onUpdate={handleNoteUpdate}
+                    onDelete={() => handleNoteDelete(note.id)}
+                    onToggleCompletion={() => handleToggleCompletion(note.id)}
+                    onToggleArchived={() => handleToggleArchived(note.id)}
+                    onToggleImportant={() => handleToggleImportant(note.id)}
+                  />
+                )
+              )}
             </div>
           </div>
         ))}
@@ -360,6 +380,13 @@ export const NotesTab = ({ project }) => {
         {/* View Mode Controls */}
         <div className="notes-view-controls">
           <div className="view-mode-selector">
+            <ActionButton
+              variant={useBlockMode ? "primary" : "secondary"}
+              size="xs"
+              onClick={() => setUseBlockMode(!useBlockMode)}
+              title="Toggle Block Mode">
+              <MaterialIcon icon="view_module" size={16} />
+            </ActionButton>
             <ActionButton
               variant={viewMode === "grid" ? "primary" : "secondary"}
               size="xs"

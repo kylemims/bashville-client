@@ -38,3 +38,7 @@ yarn-error.log*
 /bashvilleproject
 /generated_app
 /BACKEND_SCHEMA.Documentation.md
+/BACKEND_BLOCK_CHANGES.md
+/BACKEND_FIXES_CRITICAL.md
+/NOTES_FEATURE_IMPLEMENTATION
+/DJANGO_LINTING_GUIDE.md

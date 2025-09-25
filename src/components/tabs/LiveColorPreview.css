@@ -116,7 +116,9 @@
 .desktop-preview .preview-content-section {
   padding: 3rem 2rem;
 }
-rPreview.css */ .live-preview-container {
+
+/* LiveColorPreview.css */
+.live-preview-container {
   width: 100%;
   background: var(--preview-background, #ffffff);
   border: 2px solid var(--border, #e5e7eb);

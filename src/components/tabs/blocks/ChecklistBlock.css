@@ -1,0 +1,138 @@
+.checklist-block {
+  width: 100%;
+}
+
+.checklist-items {
+  margin-bottom: 8px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  margin: 2px 0; /* Minimal spacing between items */
+  border-radius: 3px;
+  transition: background-color 0.15s ease;
+}
+
+.checklist-item:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.checklist-item:hover .checklist-item-delete {
+  opacity: 1;
+}
+
+.checklist-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.checklist-checkbox:hover {
+  border-color: var(--color-accent);
+}
+
+.checklist-checkbox.completed {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--bg-primary);
+}
+
+.checklist-add-checkbox {
+  border-color: var(--muted);
+  opacity: 0.6;
+}
+
+.checklist-add-checkbox:hover {
+  opacity: 1;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.checklist-text {
+  flex: 1;
+  color: var(--text);
+  cursor: pointer;
+  line-height: 1.4;
+  transition: all 0.15s ease;
+}
+
+.checklist-text:hover {
+  color: var(--color-accent);
+}
+
+.checklist-text.completed {
+  text-decoration: line-through;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.checklist-item-delete {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.15s ease;
+  border-radius: 3px;
+}
+
+.checklist-item-delete:hover {
+  background: var(--color-secondary);
+  color: white;
+}
+
+.checklist-add-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  margin-top: 4px;
+}
+
+.checklist-add-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.4;
+}
+
+.checklist-add-input::placeholder {
+  color: var(--muted);
+}
+
+.checklist-item-edit {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  outline: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.4;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.checklist-item.editing {
+  background-color: rgba(255, 255, 255, 0.02);
+}

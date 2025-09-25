@@ -118,8 +118,16 @@ export const createQuickNote = async (content, projectId = null) => {
   const token = getToken();
   if (!token) throw new Error("No authentication token");
 
+  // Convert content to blocks format for compatibility with block-based backend
   const quickNoteData = {
-    content,
+    blocks: [
+      {
+        id: "quick-block-1",
+        type: "text",
+        content: content,
+        order: 0,
+      },
+    ],
     project: projectId,
   };
 
@@ -231,7 +239,11 @@ export const getNotesByCategory = async (category) => {
   const token = getToken();
   if (!token) throw new Error("No authentication token");
 
-  const response = await fetch(`${API_BASE_URL}/notes/by_category`, {
+  const url = category
+    ? `${API_BASE_URL}/notes/by_category?category=${category}`
+    : `${API_BASE_URL}/notes/by_category`;
+
+  const response = await fetch(url, {
     method: "GET",
     headers: {
       Authorization: `Token ${token}`,
@@ -247,7 +259,7 @@ export const getNotesByProject = async (projectId) => {
   const token = getToken();
   if (!token) throw new Error("No authentication token");
 
-  const response = await fetch(`${API_BASE_URL}/notes/by_project`, {
+  const response = await fetch(`${API_BASE_URL}/notes/by_project?project_id=${projectId}`, {
     method: "GET",
     headers: {
       Authorization: `Token ${token}`,
@@ -295,7 +307,7 @@ export const toggleNoteArchived = async (noteId) => {
   const token = getToken();
   if (!token) throw new Error("No authentication token");
 
-  const response = await fetch(`${API_BASE_URL}/notes/${noteId}/toggle_pin`, {
+  const response = await fetch(`${API_BASE_URL}/notes/${noteId}/toggle_archived`, {
     method: "POST",
     headers: {
       Authorization: `Token ${token}`,
@@ -311,7 +323,7 @@ export const toggleNoteImportant = async (noteId) => {
   const token = getToken();
   if (!token) throw new Error("No authentication token");
 
-  const response = await fetch(`${API_BASE_URL}/notes/${noteId}/toggle_pin`, {
+  const response = await fetch(`${API_BASE_URL}/notes/${noteId}/toggle_important`, {
     method: "POST",
     headers: {
       Authorization: `Token ${token}`,
@@ -333,7 +345,10 @@ export const bulkDeleteNotes = async (noteIds) => {
       Authorization: `Token ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ note_ids: noteIds }),
+    body: JSON.stringify({
+      note_ids: noteIds,
+      action: "delete",
+    }),
   });
 
   return handleResponse(response);
@@ -349,7 +364,10 @@ export const bulkArchiveNotes = async (noteIds) => {
       Authorization: `Token ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ note_ids: noteIds }),
+    body: JSON.stringify({
+      note_ids: noteIds,
+      action: "archive",
+    }),
   });
 
   return handleResponse(response);
@@ -365,7 +383,10 @@ export const bulkCompleteNotes = async (noteIds) => {
       Authorization: `Token ${token}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ note_ids: noteIds }),
+    body: JSON.stringify({
+      note_ids: noteIds,
+      action: "complete",
+    }),
   });
 
   return handleResponse(response);
