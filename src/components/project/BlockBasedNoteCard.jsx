@@ -138,6 +138,41 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
           <div className="note-preview-header">
             <h3 className="note-title">{note.title}</h3>
             <div className="note-preview-actions">
+              <div className="quick-actions">
+                <button
+                  type="button"
+                  className="quick-action-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addBlock("text");
+                    setIsExpanded(true);
+                  }}
+                  title="Add text">
+                  <MaterialIcon icon="text_fields" size={14} />
+                </button>
+                <button
+                  type="button"
+                  className="quick-action-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addBlock("checklist");
+                    setIsExpanded(true);
+                  }}
+                  title="Add checklist">
+                  <MaterialIcon icon="checklist" size={14} />
+                </button>
+                <button
+                  type="button"
+                  className="quick-action-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addBlock("code");
+                    setIsExpanded(true);
+                  }}
+                  title="Add code">
+                  <MaterialIcon icon="code" size={14} />
+                </button>
+              </div>
               <span className="block-count">{blocks.length} blocks</span>
               <MaterialIcon icon="expand_more" size={20} />
             </div>

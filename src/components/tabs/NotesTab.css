@@ -1,6 +1,6 @@
 /* ===== NOTES TAB STYLES ===== */
 .notes-tab {
-  padding: 20px;
+  /* padding: 20px; */
   max-width: 100%;
   background: var(--bg-primary);
   color: var(--text);
@@ -9,19 +9,11 @@
 
 /* ===== HEADER SECTION ===== */
 .notes-header {
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
   display: flex;
   /* flex-direction: column; */
   justify-content: space-between;
   align-items: center;
-}
-
-.notes-gradient-line {
-  flex: auto;
-  height: 2px;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
-  border-radius: 2px;
-  margin-top: 0.1rem;
 }
 
 .notes-actions {
@@ -164,8 +156,28 @@
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 16px;
+  gap: 20px;
   margin-top: 20px;
+  width: 100%;
+}
+
+/* Allow expanded cards to take more space */
+.notes-grid .block-note-card.expanded {
+  grid-column: span 2;
+  max-width: none;
+}
+
+/* Responsive grid adjustments */
+@media (min-width: 1200px) {
+  .notes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  }
+}
+
+@media (min-width: 1600px) {
+  .notes-grid {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
 }
 
 /* ===== RESPONSIVE DESIGN ===== */

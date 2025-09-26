@@ -152,6 +152,16 @@ export function CodeBlock({ block, onUpdate, onDelete, onMoveUp, onMoveDown, isF
                   fontFamily: '"Fira Code", "SF Mono", Monaco, Consolas, monospace',
                   padding: "12px",
                 },
+              }}
+              lineNumberStyle={{
+                minWidth: "2.5em",
+                paddingRight: "1em",
+                paddingLeft: "0.5em",
+                marginRight: "1em",
+                textAlign: "right",
+                color: "var(--muted)",
+                backgroundColor: "transparent",
+                borderRight: "1px solid var(--border)",
               }}>
               {block.content}
             </SyntaxHighlighter>

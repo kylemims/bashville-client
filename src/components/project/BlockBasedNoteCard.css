@@ -38,6 +38,38 @@
   color: var(--muted);
 }
 
+.quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.note-card-preview:hover .quick-actions {
+  opacity: 1;
+}
+
+.quick-action-btn {
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--border);
+  background: var(--bg-primary);
+  color: var(--muted);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.quick-action-btn:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--bg-primary);
+}
+
 .block-count {
   font-size: 12px;
   background: var(--bg-primary);
@@ -73,6 +105,13 @@
 /* Expanded State */
 .note-card-expanded {
   padding: 0;
+  min-width: 600px; /* Ensure minimum width for better readability */
+  max-width: 900px; /* Prevent overly wide cards */
+}
+
+.block-note-card.expanded {
+  width: 100%;
+  max-width: none; /* Allow full width when expanded */
 }
 
 .note-expanded-header {

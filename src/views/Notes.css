@@ -8,13 +8,13 @@
 /* ===== NOTES PAGE HEADER ===== */
 .notes-page-header {
   background: var(--bg-secondary);
-  border-bottom: 1px solid var(--border);
-  padding: 20px 24px;
+  border-bottom: 1px solid var(--bg-input);
+  padding: 10px 16px;
   margin-bottom: 0;
 }
 
 .header-content {
-  max-width: 1200px;
+  max-width: 1600px; /* Increased from 1200px for more space */
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -35,7 +35,7 @@
 }
 
 .page-title {
-  color: var(--text);
+  color: var(--color-primary);
   font-size: 28px;
   font-weight: 700;
   margin: 0;
@@ -56,15 +56,15 @@
 
 /* ===== NOTES PAGE CONTENT ===== */
 .notes-page-content {
-  max-width: 1200px;
+  max-width: 1600px; /* Increased for more space */
   margin: 0 auto;
-  padding: 0 24px;
+  /* padding: 0 24px; */
 }
 
 .notes-page-content .notes-tab {
   background: transparent;
   border-radius: 0;
-  padding: 24px 0;
+  /* padding: 12px 0; */
 }
 
 /* ===== RESPONSIVE DESIGN ===== */

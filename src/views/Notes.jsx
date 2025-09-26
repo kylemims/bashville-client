@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDocumentTitle } from "../hooks/useDocumentTitle";
 import { ActionButton } from "../components/common/ActionButton.jsx";
 import { MaterialIcon } from "../components/common/MaterialIcon.jsx";
@@ -9,6 +10,10 @@ import "./Notes.css";
 export const Notes = () => {
   const navigate = useNavigate();
   useDocumentTitle("All Notes • Bash Stash");
+
+  // ✅ UI/shell state lifted here because header buttons live here
+  const [showQuickNote, setShowQuickNote] = useState(false);
+  const [showStats, setShowStats] = useState(false);
 
   return (
     <div className="page-content page-enter">
@@ -30,6 +35,25 @@ export const Notes = () => {
             </div>
 
             <div className="header-actions">
+              {/* ✅ Moved buttons up; they toggle parent state */}
+              <ActionButton
+                variant="secondary"
+                size="md"
+                onClick={() => setShowStats((v) => !v)}
+                title="Toggle Statistics">
+                <MaterialIcon icon="analytics" size={18} />
+                Stats
+              </ActionButton>
+
+              <ActionButton
+                variant="secondary"
+                size="md"
+                onClick={() => setShowQuickNote((v) => !v)}
+                title="Quick Note">
+                <MaterialIcon icon="add" size={18} />
+                Quick Note
+              </ActionButton>
+
               <ActionButton
                 variant="secondary"
                 size="md"
@@ -43,7 +67,14 @@ export const Notes = () => {
         </div>
 
         <div className="notes-page-content">
-          <NotesTab project={null} />
+          <NotesTab
+            project={null}
+            // ✅ pass UI control down
+            showStats={showStats}
+            showQuickNote={showQuickNote}
+            onCloseQuickNote={() => setShowQuickNote(false)}
+            onOpenQuickNote={() => setShowQuickNote(true)}
+          />
         </div>
       </div>
     </div>

@@ -19,9 +19,15 @@ import { NoteFilters } from "./NoteFilters.jsx";
 import { NoteStats } from "./NoteStats.jsx";
 import "./NotesTab.css";
 
-export const NotesTab = ({ project }) => {
+export const NotesTab = ({
+  project,
+  showStats = false,
+  showQuickNote = false,
+  onCloseQuickNote,
+  onOpenQuickNote,
+}) => {
   const [notes, setNotes] = useState([]);
-  const [stats, setStats] = useState(null);
+  const [stats, setStats] = useState(null); // Add missing stats state
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -32,8 +38,6 @@ export const NotesTab = ({ project }) => {
     is_important: null,
     project: project?.id || null,
   });
-  const [showQuickNote, setShowQuickNote] = useState(false);
-  const [showStats, setShowStats] = useState(false);
   const [sortBy, setSortBy] = useState("-created_at"); // Most recent first
   const [viewMode, setViewMode] = useState("grid"); // "grid" or "columns"
   const [useBlockMode, setUseBlockMode] = useState(true); // New block-based architecture
@@ -81,6 +85,22 @@ export const NotesTab = ({ project }) => {
     loadStats();
   }, [loadNotes, loadStats]);
 
+  const handleQuickNoteCreate = async (content) => {
+    try {
+      setLoading(true);
+      setError("");
+
+      const newNote = await createQuickNote(content);
+      setNotes((prevNotes) => [newNote, ...prevNotes]);
+      console.log("✅ Quick note created");
+    } catch (err) {
+      console.error("❌ Failed to create quick note:", err);
+      setError(`Failed to create quick note: ${err.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
       // If empty search, just reload with current filters
@@ -99,26 +119,6 @@ export const NotesTab = ({ project }) => {
       setError(`Search failed: ${err.message}`);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleQuickNoteCreate = async (content) => {
-    try {
-      setError("");
-      const newNote = await createQuickNote(content, project?.id);
-
-      // Add the new note to the top of the list
-      setNotes((prevNotes) => [newNote, ...prevNotes]);
-
-      // Refresh stats
-      loadStats();
-
-      setShowQuickNote(false);
-
-      console.log("✅ Quick note created:", newNote);
-    } catch (err) {
-      console.error("❌ Failed to create quick note:", err);
-      setError(`Failed to create note: ${err.message}`);
     }
   };
 
@@ -307,35 +307,12 @@ export const NotesTab = ({ project }) => {
 
   return (
     <div className="notes-tab">
-      {/* Header Section */}
-      <div className="notes-header">
-        <h3 className="section-title-available">{project ? `${project.title} Notes` : "All Notes"}</h3>
-        <div className="notes-gradient-line"></div>
-        <div className="notes-actions">
-          <ActionButton
-            variant="secondary"
-            size="xs"
-            onClick={() => setShowStats(!showStats)}
-            title="Toggle Statistics">
-            <MaterialIcon icon={showStats ? "analytics" : "analytics"} size={20} color="var(--muted)" />
-          </ActionButton>
-
-          <ActionButton
-            variant="add-field"
-            size="xs"
-            onClick={() => setShowQuickNote(!showQuickNote)}
-            title="Quick Note">
-            <MaterialIcon icon="add" size={26} color="var(--muted)" />
-          </ActionButton>
-        </div>
-      </div>
       {showStats && stats && <NoteStats stats={stats} projectTitle={project?.title} />}
 
-      {/* Quick Note Input */}
       {showQuickNote && (
         <QuickNoteInput
           onSubmit={handleQuickNoteCreate}
-          onCancel={() => setShowQuickNote(false)}
+          onCancel={() => onCloseQuickNote?.()}
           placeholder={project ? `Quick note for ${project.title}...` : "Quick note..."}
         />
       )}
@@ -437,7 +414,7 @@ export const NotesTab = ({ project }) => {
                 ? `Start taking notes for ${project.title}`
                 : "Create your first note to get started"}
             </p>
-            <ActionButton variant="primary" size="md" onClick={() => setShowQuickNote(true)}>
+            <ActionButton variant="primary" size="md" onClick={() => onOpenQuickNote?.()}>
               <MaterialIcon icon="add" size={18} />
               Create Note
             </ActionButton>
