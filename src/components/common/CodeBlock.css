@@ -74,7 +74,7 @@
 /* Override SyntaxHighlighter styles for better integration */
 .code-content pre {
   margin: 0 !important;
-  background: var(--bg-secondary) !important;
+  background: var(--bg-primary);
 }
 
 .code-content code {
@@ -84,8 +84,8 @@
 /* Line numbers styling */
 .code-content .linenumber {
   color: var(--muted) !important;
-  background-color: var(--bg-primary) !important;
-  border-right: 1px solid var(--border) !important;
+  /* background-color: var(--bg-primary) !important; */
+  /* border-right: 1px solid var(--mutedx) !important; */
   padding-right: 8px !important;
   margin-right: 8px !important;
   user-select: none;

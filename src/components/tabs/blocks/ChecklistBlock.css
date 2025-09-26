@@ -27,7 +27,8 @@
 .checklist-checkbox {
   width: 18px;
   height: 18px;
-  border: 2px solid var(--border);
+  border: 2px solid var(--muted);
+  /* box-shadow: 0 0 0 2px #d46a6a20; */
   border-radius: 3px;
   background: transparent;
   display: flex;
@@ -46,6 +47,7 @@
   background: var(--color-accent);
   border-color: var(--color-accent);
   color: var(--bg-primary);
+  box-shadow: 00 0 0 2px #4d4f4f40;
 }
 
 .checklist-add-checkbox {

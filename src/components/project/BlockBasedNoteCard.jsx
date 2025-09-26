@@ -14,6 +14,20 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
 
   const blocks = note.blocks || [];
 
+  // Category display configurations (from NoteCard)
+  const categoryConfig = {
+    bug: { icon: "bug_report", color: "var(--color-secondary)", label: "Bug" },
+    todo: { icon: "task_alt", color: "var(--color-accent)", label: "Todo" },
+    wishlist: { icon: "star", color: "var(--color-primary)", label: "Wishlist" },
+    code: { icon: "code", color: "var(--muted)", label: "Code" },
+    question: { icon: "help", color: "var(--color-accent)", label: "Question" },
+    reminder: { icon: "schedule", color: "var(--color-primary)", label: "Reminder" },
+    note: { icon: "note", color: "var(--text)", label: "Note" },
+    other: { icon: "note", color: "var(--text)", label: "Note" },
+  };
+
+  const categoryDisplay = categoryConfig[note.category] || categoryConfig.other;
+
   // Handle note updates through API
   const handleNoteUpdate = async (updateData) => {
     if (updating) return; // Prevent duplicate calls
@@ -179,7 +193,15 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
           </div>
           <p className="note-preview-text">{getPreviewText()}</p>
           <div className="note-meta">
-            <span className="note-category">{note.category_display}</span>
+            <div
+              className="note-category"
+              style={{
+                backgroundColor: categoryDisplay.color,
+                color: categoryDisplay.color === "var(--text)" ? "var(--bg-primary)" : "var(--bg-primary)",
+              }}>
+              <MaterialIcon icon={categoryDisplay.icon} size={12} />
+              <span>{categoryDisplay.label}</span>
+            </div>
             <span className="note-date">{new Date(note.created_at).toLocaleDateString()}</span>
           </div>
         </div>

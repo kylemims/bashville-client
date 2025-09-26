@@ -8,6 +8,7 @@ import "./CodeBlock.css";
 
 export function CodeBlock({ block, onUpdate, onDelete, onMoveUp, onMoveDown, isFirst, isLast }) {
   const [isEditing, setIsEditing] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [content, setContent] = useState(block.content || "");
   const [language, setLanguage] = useState(block.language || "javascript");
 
@@ -68,6 +69,13 @@ export function CodeBlock({ block, onUpdate, onDelete, onMoveUp, onMoveDown, isF
     setIsEditing(true);
   };
 
+  // Check if code should show expand/collapse
+  const codeLines = (block.content || "").split("\n");
+  const shouldShowExpandButton = codeLines.length > 10;
+
+  const displayCode =
+    !isExpanded && shouldShowExpandButton ? codeLines.slice(0, 10).join("\n") + "\n..." : block.content;
+
   if (isEditing) {
     return (
       <BaseBlock
@@ -123,6 +131,15 @@ export function CodeBlock({ block, onUpdate, onDelete, onMoveUp, onMoveDown, isF
         <div className="code-block-header">
           <span className="code-language-label">{block.language || "code"}</span>
           <div className="code-block-actions">
+            {shouldShowExpandButton && (
+              <button
+                type="button"
+                className="code-expand-btn"
+                onClick={() => setIsExpanded(!isExpanded)}
+                title={isExpanded ? "Collapse" : "Show more"}>
+                <MaterialIcon icon={isExpanded ? "expand_less" : "expand_more"} size={14} />
+              </button>
+            )}
             <button type="button" className="code-copy-btn" onClick={copyCode} title="Copy code">
               <MaterialIcon icon="content_copy" size={14} />
             </button>
@@ -162,8 +179,14 @@ export function CodeBlock({ block, onUpdate, onDelete, onMoveUp, onMoveDown, isF
                 color: "var(--muted)",
                 backgroundColor: "transparent",
                 borderRight: "1px solid var(--border)",
+                display: "inline-block",
+                userSelect: "none",
+              }}
+              lineNumberContainerStyle={{
+                float: "left",
+                paddingRight: "10px",
               }}>
-              {block.content}
+              {displayCode}
             </SyntaxHighlighter>
           </div>
         ) : (

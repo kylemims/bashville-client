@@ -4,28 +4,30 @@ import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import "./QuickNoteInput.css";
 
 export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..." }) => {
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [predictedCategory, setPredictedCategory] = useState(null);
 
-  // Auto-focus the input when component mounts
+  // Auto-focus the title input when component mounts
   useEffect(() => {
-    const textarea = document.querySelector(".quick-note-textarea");
-    if (textarea) {
-      textarea.focus();
+    const titleInput = document.querySelector(".quick-note-title-input");
+    if (titleInput) {
+      titleInput.focus();
     }
   }, []);
 
-  // Predict category based on content (mirrors backend logic)
+  // Predict category based on title and content
   useEffect(() => {
-    if (!content.trim()) {
+    const combinedText = `${title} ${content}`.trim();
+    if (!combinedText) {
       setPredictedCategory(null);
       return;
     }
 
-    const prediction = predictCategory(content);
+    const prediction = predictCategory(combinedText);
     setPredictedCategory(prediction);
-  }, [content]);
+  }, [title, content]);
 
   const predictCategory = (text) => {
     // Bug keywords
@@ -65,11 +67,23 @@ export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..
   };
 
   const handleSubmit = async () => {
-    if (!content.trim()) return;
+    const titleText = title.trim();
+    const contentText = content.trim();
+
+    if (!titleText && !contentText) return;
 
     try {
       setIsSubmitting(true);
-      await onSubmit(content.trim());
+
+      // Create structured note data
+      const noteData = {
+        title: titleText || "Untitled Note",
+        content: contentText,
+        category: predictedCategory?.category || "other",
+      };
+
+      await onSubmit(noteData);
+      setTitle("");
       setContent("");
       setPredictedCategory(null);
     } catch (error) {
@@ -91,9 +105,21 @@ export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..
   return (
     <div className="quick-note-input">
       <div className="input-container">
+        {/* Title Input */}
+        <input
+          type="text"
+          className="quick-note-title-input"
+          placeholder="Note title..."
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          onKeyDown={handleKeyDown}
+          disabled={isSubmitting}
+        />
+
+        {/* Content Input */}
         <textarea
           className="quick-note-textarea"
-          placeholder={placeholder}
+          placeholder="Add note content (optional)..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -112,7 +138,9 @@ export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..
         )}
 
         {/* Character Counter */}
-        <div className="char-counter">{content.length} characters</div>
+        <div className="char-counter">
+          Title: {title.length} • Content: {content.length} characters
+        </div>
         <div className="input-actions">
           <div className="keyboard-hints">
             <span className="hint">
@@ -125,7 +153,7 @@ export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..
         </div>
       </div>
       {/* Quick Tips */}
-      {!content && (
+      {!title && !content && (
         <div className="quicktips-buttons-container">
           <div className="quick-tips">
             <h5>💡 Quick Tips:</h5>
@@ -147,7 +175,7 @@ export const QuickNoteInput = ({ onSubmit, onCancel, placeholder = "Quick note..
               variant="primary"
               size="sm"
               onClick={handleSubmit}
-              disabled={!content.trim() || isSubmitting}>
+              disabled={(!title.trim() && !content.trim()) || isSubmitting}>
               {isSubmitting ? (
                 <>
                   <MaterialIcon icon="hourglass_empty" size={16} />

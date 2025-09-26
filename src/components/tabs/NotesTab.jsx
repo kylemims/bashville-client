@@ -85,13 +85,26 @@ export const NotesTab = ({
     loadStats();
   }, [loadNotes, loadStats]);
 
-  const handleQuickNoteCreate = async (content) => {
+  const handleQuickNoteCreate = async (noteData) => {
     try {
       setLoading(true);
       setError("");
 
-      const newNote = await createQuickNote(content);
+      // Handle both old string format and new structured format
+      let newNote;
+      if (typeof noteData === "string") {
+        // Legacy format - content only
+        newNote = await createQuickNote(noteData);
+      } else {
+        // New structured format with title, content, category
+        newNote = await createQuickNote(noteData.content || noteData.title, project?.id, {
+          title: noteData.title,
+          category: noteData.category,
+        });
+      }
+
       setNotes((prevNotes) => [newNote, ...prevNotes]);
+      loadStats(); // Refresh stats
       console.log("✅ Quick note created");
     } catch (err) {
       console.error("❌ Failed to create quick note:", err);
