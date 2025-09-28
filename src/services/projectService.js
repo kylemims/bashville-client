@@ -67,8 +67,6 @@ export const getProjectById = async (projectId) => {
 
 export const createProject = async (projectData) => {
   const token = getToken();
-  console.log("Creating project with token:", token ? "✓" : "✗");
-  console.log("Project data:", projectData);
 
   const response = await fetch(`${API_BASE_URL}/projects`, {
     method: "POST",

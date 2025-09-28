@@ -7,6 +7,17 @@
   /* margin: 16px 0; */
 }
 
+/* Compact mode for ribbon interface */
+.note-filters.compact {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 /* ===== FILTERS HEADER ===== */
 .filters-header {
   display: flex;

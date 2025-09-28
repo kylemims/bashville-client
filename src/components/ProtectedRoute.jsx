@@ -7,7 +7,6 @@ export const ProtectedRoute = ({ children }) => {
   const location = useLocation();
 
   if (loading) {
-    console.log("Auth context is loading, showing loading state");
     return (
       <div className="loading">
         <div className="spinner"></div>
@@ -17,10 +16,8 @@ export const ProtectedRoute = ({ children }) => {
   }
 
   if (!isAuthenticated) {
-    console.log("User is NOT authenticated, redirecting to login");
     return <Navigate to={ROUTES.LOGIN} state={{ from: location.pathname }} replace />;
   }
 
-  console.log("User is authenticated, rendering protected content");
   return children;
 };

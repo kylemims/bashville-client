@@ -3,6 +3,10 @@
   width: 100%;
   max-width: none;
   padding: 0;
+  height: 100vh; /* Use full viewport height */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Prevent page-level scrolling */
 }
 
 /* ===== NOTES PAGE HEADER ===== */
@@ -14,7 +18,7 @@
 }
 
 .header-content {
-  max-width: 1600px; /* Increased from 1200px for more space */
+  max-width: 1600px; /* Increased for better space utilization */
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -56,15 +60,17 @@
 
 /* ===== NOTES PAGE CONTENT ===== */
 .notes-page-content {
-  max-width: 1600px; /* Increased for more space */
+  flex: 1; /* Take remaining space */
+  max-width: 1600px; /* Increased for better space utilization */
   margin: 0 auto;
-  /* padding: 0 24px; */
+  padding: 0 24px 24px 24px;
+  overflow-y: auto; /* Allow content scrolling */
+  height: 100%;
 }
 
 .notes-page-content .notes-tab {
   background: transparent;
   border-radius: 0;
-  /* padding: 12px 0; */
 }
 
 /* ===== RESPONSIVE DESIGN ===== */

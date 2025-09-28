@@ -3,7 +3,7 @@ import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import { useState } from "react";
 import "./NoteFilters.css";
 
-export const NoteFilters = ({ filters, onFiltersChange, onClearFilters, resultCount }) => {
+export const NoteFilters = ({ filters, onFiltersChange, onClearFilters, resultCount, compact = false }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const categoryOptions = [
@@ -41,6 +41,67 @@ export const NoteFilters = ({ filters, onFiltersChange, onClearFilters, resultCo
       filters.is_archived
     );
   };
+
+  // Compact mode for ribbon interface
+  if (compact) {
+    return (
+      <div className="note-filters compact">
+        <select
+          value={filters.category || ""}
+          onChange={(e) => handleFilterChange("category", e.target.value)}
+          className="ribbon-select">
+          {categoryOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={filters.is_completed === null ? "" : filters.is_completed.toString()}
+          onChange={(e) => {
+            const value = e.target.value === "" ? null : e.target.value === "true";
+            handleFilterChange("is_completed", value);
+          }}
+          className="ribbon-select">
+          {completionOptions.map((option) => (
+            <option
+              key={option.value === null ? "null" : option.value.toString()}
+              value={option.value === null ? "" : option.value.toString()}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={filters.is_important === null ? "" : filters.is_important.toString()}
+          onChange={(e) => {
+            const value = e.target.value === "" ? null : e.target.value === "true";
+            handleFilterChange("is_important", value);
+          }}
+          className="ribbon-select">
+          {importanceOptions.map((option) => (
+            <option
+              key={option.value === null ? "null" : option.value.toString()}
+              value={option.value === null ? "" : option.value.toString()}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+
+        {hasActiveFilters() && (
+          <ActionButton
+            variant="secondary"
+            size="xs"
+            onClick={onClearFilters}
+            title="Clear all filters"
+            className="ribbon-button">
+            <MaterialIcon icon="clear_all" size={14} />
+          </ActionButton>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="note-filters">

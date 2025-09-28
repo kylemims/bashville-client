@@ -55,7 +55,7 @@
   padding: 0.5rem 1rem;
   text-decoration: none;
 }
-.dashboard-header .button:hover {
+.dashboard-header .button:hover:not(.action-button) {
   background-color: var(--color-primary);
   text-decoration: none;
   transform: translateY(-1px);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { updateNote } from "../../services/noteService";
+import { patchNote } from "../../services/noteService.js";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import { TextBlock } from "../tabs/blocks/TextBlock.jsx";
 import { ChecklistBlock } from "../tabs/blocks/ChecklistBlock.jsx";
@@ -10,7 +10,16 @@ import "./BlockBasedNoteCard.css";
 export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAddingBlock, setIsAddingBlock] = useState(false);
+  const [isEditingMeta, setIsEditingMeta] = useState(false);
   const [updating, setUpdating] = useState(false);
+  const [tagInput, setTagInput] = useState("");
+
+  // Initialize tag input when editing starts
+  React.useEffect(() => {
+    if (isEditingMeta) {
+      setTagInput(Array.isArray(note.custom_tags) ? note.custom_tags.join(", ") : note.custom_tags || "");
+    }
+  }, [isEditingMeta, note.custom_tags]);
 
   const blocks = note.blocks || [];
 
@@ -28,6 +37,15 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
 
   const categoryDisplay = categoryConfig[note.category] || categoryConfig.other;
 
+  // Priority display configurations
+  const priorityConfig = {
+    low: { color: "var(--muted)", label: "Low", icon: "keyboard_arrow_down" },
+    medium: { color: "var(--color-primary)", label: "Medium", icon: "remove" },
+    high: { color: "var(--color-secondary)", label: "High", icon: "keyboard_arrow_up" },
+  };
+
+  const priorityDisplay = priorityConfig[note.priority_level] || priorityConfig.medium;
+
   // Handle note updates through API
   const handleNoteUpdate = async (updateData) => {
     if (updating) return; // Prevent duplicate calls
@@ -36,33 +54,24 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
       setUpdating(true);
       console.log("🔄 Updating note via API:", note.id, updateData);
 
-      const updatedNote = await updateNote(note.id, updateData);
+      const updatedNote = await patchNote(note.id, updateData);
       console.log("✅ Note updated successfully:", updatedNote);
 
       // Call the parent update handler with the full updated note
       onUpdate(updatedNote);
     } catch (error) {
       console.error("❌ Failed to update note:", error);
+      console.error("❌ Error details:", error.message, error.response);
+
+      // Try to get more specific error information
+      if (error.response && error.response.data) {
+        console.error("❌ Backend error response:", error.response.data);
+      }
+
       // TODO: Show error toast or message
     } finally {
       setUpdating(false);
     }
-  };
-
-  // Generate preview text from blocks
-  const getPreviewText = () => {
-    if (blocks.length === 0) return "Empty note";
-
-    const firstBlock = blocks[0];
-    if (firstBlock.type === "text") {
-      return firstBlock.content?.substring(0, 100) + (firstBlock.content?.length > 100 ? "..." : "");
-    } else if (firstBlock.type === "checklist") {
-      const itemCount = firstBlock.items?.length || 0;
-      return `Checklist with ${itemCount} items`;
-    } else if (firstBlock.type === "code") {
-      return `Code block (${firstBlock.language || "code"})`;
-    }
-    return "Note content";
   };
 
   const updateBlock = (blockId, updates) => {
@@ -148,9 +157,16 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
     <div className={`block-note-card ${isExpanded ? "expanded" : ""}`}>
       {/* Collapsed view */}
       {!isExpanded && (
-        <div className="note-card-preview" onClick={() => setIsExpanded(true)}>
+        <div
+          className={`note-card-preview ${note.is_completed ? "completed" : ""}`}
+          onClick={() => setIsExpanded(true)}>
           <div className="note-preview-header">
-            <h3 className="note-title">{note.title}</h3>
+            <div className="note-title-row">
+              {note.is_completed && (
+                <MaterialIcon icon="check_circle" size={16} color="var(--color-accent)" />
+              )}
+              <h3 className={`note-title ${note.is_completed ? "completed" : ""}`}>{note.title}</h3>
+            </div>
             <div className="note-preview-actions">
               <div className="quick-actions">
                 <button
@@ -191,16 +207,39 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
               <MaterialIcon icon="expand_more" size={20} />
             </div>
           </div>
-          <p className="note-preview-text">{getPreviewText()}</p>
           <div className="note-meta">
-            <div
-              className="note-category"
-              style={{
-                backgroundColor: categoryDisplay.color,
-                color: categoryDisplay.color === "var(--text)" ? "var(--bg-primary)" : "var(--bg-primary)",
-              }}>
-              <MaterialIcon icon={categoryDisplay.icon} size={12} />
-              <span>{categoryDisplay.label}</span>
+            <div>
+              <div
+                className="note-category"
+                style={{
+                  backgroundColor: categoryDisplay.color,
+                  color: categoryDisplay.color === "var(--text)" ? "var(--bg-primary)" : "var(--bg-primary)",
+                }}>
+                <MaterialIcon icon={categoryDisplay.icon} size={12} />
+                <span>{categoryDisplay.label}</span>
+              </div>
+              <div
+                className="note-priority"
+                style={{
+                  backgroundColor: priorityDisplay.color,
+                  color: "var(--bg-primary)",
+                }}>
+                <MaterialIcon icon={priorityDisplay.icon} size={10} />
+                <span>{priorityDisplay.label}</span>
+              </div>
+              {/* Tags display */}
+              {note.custom_tags && note.custom_tags.length > 0 && (
+                <div className="note-tags">
+                  {note.custom_tags.slice(0, 3).map((tag, index) => (
+                    <span key={index} className="note-tag">
+                      {tag}
+                    </span>
+                  ))}
+                  {note.custom_tags.length > 3 && (
+                    <span className="note-tag-more">+{note.custom_tags.length - 3}</span>
+                  )}
+                </div>
+              )}
             </div>
             <span className="note-date">{new Date(note.created_at).toLocaleDateString()}</span>
           </div>
@@ -215,11 +254,23 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
             <input
               type="text"
               value={note.title}
-              onChange={(e) => handleNoteUpdate({ title: e.target.value })}
+              onChange={(e) =>
+                handleNoteUpdate({
+                  title: e.target.value,
+                  blocks: note.blocks, // Include blocks for Django validation
+                })
+              }
               className="note-title-edit"
               placeholder="Note title..."
             />
             <div className="note-header-actions">
+              <button
+                type="button"
+                className="note-action-btn"
+                onClick={() => setIsEditingMeta(!isEditingMeta)}
+                title="Edit details">
+                <MaterialIcon icon="edit" size={18} />
+              </button>
               <button
                 type="button"
                 className="note-action-btn"
@@ -243,6 +294,142 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
               </button>
             </div>
           </div>
+
+          {/* Metadata editing section */}
+          {isEditingMeta && (
+            <div className="note-meta-editor">
+              <div className="meta-editor-row">
+                <div className="meta-field">
+                  <label className="meta-label">Category</label>
+                  <select
+                    value={note.category || "note"}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      handleNoteUpdate({
+                        category: e.target.value,
+                        blocks: note.blocks, // Include blocks for Django validation
+                      });
+                    }}
+                    onFocus={(e) => e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()}
+                    className="meta-select"
+                    disabled={updating}>
+                    <option value="note">Note</option>
+                    <option value="bug">Bug</option>
+                    <option value="todo">Todo</option>
+                    <option value="wishlist">Wishlist</option>
+                    <option value="code">Code</option>
+                    <option value="question">Question</option>
+                    <option value="reminder">Reminder</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <div className="meta-field">
+                  <label className="meta-label">Priority</label>
+                  <select
+                    value={note.priority_level || "medium"}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      handleNoteUpdate({
+                        priority_level: e.target.value,
+                        blocks: note.blocks, // Include blocks for Django validation
+                      });
+                    }}
+                    onFocus={(e) => e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()}
+                    className="meta-select"
+                    disabled={updating}>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                  </select>
+                </div>
+                <div className="meta-field">
+                  <label className="meta-label">
+                    <MaterialIcon icon="task_alt" size={16} />
+                    Complete
+                  </label>
+                  <input
+                    type="checkbox"
+                    checked={note.is_completed || false}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      handleNoteUpdate({
+                        is_completed: e.target.checked,
+                        blocks: note.blocks, // Include blocks for Django validation
+                      });
+                    }}
+                    onFocus={(e) => e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()}
+                    className="meta-checkbox"
+                    disabled={updating}
+                  />
+                </div>
+                <div className="meta-field">
+                  <label className="meta-label">
+                    <MaterialIcon icon="star" size={16} />
+                    Important
+                  </label>
+                  <input
+                    type="checkbox"
+                    checked={note.is_important || false}
+                    onChange={(e) => {
+                      e.stopPropagation();
+                      handleNoteUpdate({
+                        is_important: e.target.checked,
+                        blocks: note.blocks, // Include blocks for Django validation
+                      });
+                    }}
+                    onFocus={(e) => e.stopPropagation()}
+                    onClick={(e) => e.stopPropagation()}
+                    className="meta-checkbox"
+                    disabled={updating}
+                  />
+                </div>
+              </div>
+              <div className="meta-field">
+                <label className="meta-label">Tags</label>
+                <input
+                  type="text"
+                  value={tagInput}
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    setTagInput(e.target.value);
+                  }}
+                  onBlur={(e) => {
+                    e.stopPropagation();
+                    const tags = tagInput
+                      .split(",")
+                      .map((tag) => tag.trim())
+                      .filter(Boolean);
+
+                    // Only update if tags actually changed
+                    const currentTags = Array.isArray(note.custom_tags) ? note.custom_tags : [];
+                    const tagsChanged = JSON.stringify(tags.sort()) !== JSON.stringify(currentTags.sort());
+
+                    if (tagsChanged) {
+                      handleNoteUpdate({
+                        custom_tags: tags,
+                        blocks: note.blocks, // Include blocks for Django validation
+                      });
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    e.stopPropagation();
+                    // Save on Enter key
+                    if (e.key === "Enter") {
+                      e.target.blur(); // Trigger onBlur to save
+                    }
+                  }}
+                  onFocus={(e) => e.stopPropagation()}
+                  onClick={(e) => e.stopPropagation()}
+                  placeholder="Add tags separated by commas..."
+                  className="meta-input"
+                  disabled={updating}
+                />
+              </div>
+            </div>
+          )}
 
           {/* Migration helper for legacy notes */}
           <NoteMigrationHelper note={note} onMigrate={handleNoteUpdate} />
@@ -279,7 +466,18 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
           {/* Footer */}
           <div className="note-expanded-footer">
             <div className="note-meta">
-              <span className="note-category">{note.category_display}</span>
+              <div>
+                <span className="note-category">{note.category_display}</span>
+                <div
+                  className="note-priority"
+                  style={{
+                    backgroundColor: priorityDisplay.color,
+                    color: "var(--bg-primary)",
+                  }}>
+                  <MaterialIcon icon={priorityDisplay.icon} size={10} />
+                  <span>{priorityDisplay.label}</span>
+                </div>
+              </div>
               <span className="note-date">Updated {new Date(note.updated_at).toLocaleDateString()}</span>
             </div>
           </div>

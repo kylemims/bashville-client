@@ -7,9 +7,6 @@ const getToken = () => {
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {
-  console.log("📡 Response status:", response.status);
-  console.log("📡 Response URL:", response.url);
-
   if (response.status === 401) {
     // Token expired or invalid - trigger logout
     localStorage.removeItem(STORAGE_KEYS.AUTH_TOKEN);
@@ -26,14 +23,25 @@ const handleResponse = async (response) => {
       url: response.url,
       errorData,
     });
-    throw new Error(errorData.error || errorData.detail || `HTTP ${response.status}`);
+
+    // Extract Django validation errors for better debugging
+    let errorMessage = "API request failed";
+    if (errorData.non_field_errors && Array.isArray(errorData.non_field_errors)) {
+      errorMessage = errorData.non_field_errors.join(", ");
+    } else if (errorData.detail) {
+      errorMessage = errorData.detail;
+    } else if (errorData.error) {
+      errorMessage = errorData.error;
+    }
+
+    console.error("❌ Extracted error message:", errorMessage);
+    throw new Error(errorMessage);
   }
 
   const data = await response.json();
 
   // Handle nested response structure - if response has a 'note' key, extract it
   if (data.note && typeof data.note === "object") {
-    console.log("📡 Extracting nested note data from response");
     return data.note;
   }
 
@@ -65,9 +73,6 @@ export const getNotes = async (filters = {}) => {
 
   const queryString = buildQueryParams(filters);
   const url = `${API_BASE_URL}/notes${queryString ? `?${queryString}` : ""}`;
-
-  console.log("🔍 Requesting Notes URL:", url);
-  console.log("🔑 Using token:", token ? "✅ Token present" : "❌ No token");
 
   const response = await fetch(url, {
     method: "GET",

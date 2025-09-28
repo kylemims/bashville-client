@@ -7,6 +7,7 @@ export const ActionButton = ({
   size = "md",
   disabled = false,
   type = "button",
+  className = "",
   ...props
 }) => {
   const getClassName = () => {
@@ -14,8 +15,9 @@ export const ActionButton = ({
     const variantClass = `action-button--${variant}`;
     const sizeClass = `action-button--${size}`;
     const disabledClass = disabled ? "action-button--disabled" : "";
+    const additionalClass = className;
 
-    return [base, variantClass, sizeClass, disabledClass].filter(Boolean).join(" ");
+    return [base, variantClass, sizeClass, disabledClass, additionalClass].filter(Boolean).join(" ");
   };
 
   return (

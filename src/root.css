@@ -67,11 +67,11 @@ a {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
-.button:hover {
+.button:hover:not(.action-button) {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
 }
-.button:active {
+.button:active:not(.action-button) {
   transform: translateY(0);
 }
 .button.secondary {

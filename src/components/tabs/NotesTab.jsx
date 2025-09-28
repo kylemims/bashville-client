@@ -1,18 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import {
-  getNotes,
-  createQuickNote,
-  deleteNote,
-  toggleNoteCompletion,
-  toggleNoteArchived,
-  toggleNoteImportant,
-  getNoteStats,
-  searchNotes,
-} from "../../services/noteService";
+import { getNotes, createQuickNote, deleteNote, getNoteStats, searchNotes } from "../../services/noteService";
 import { ErrorMessage } from "../common/ErrorMessage.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
-import { NoteCard } from "./NoteCard.jsx";
 import { BlockBasedNoteCard } from "../project/BlockBasedNoteCard.jsx";
 import { QuickNoteInput } from "./QuickNoteInput.jsx";
 import { NoteFilters } from "./NoteFilters.jsx";
@@ -159,42 +149,6 @@ export const NotesTab = ({
     }
   };
 
-  const handleToggleCompletion = async (noteId) => {
-    try {
-      setError("");
-      const updatedNote = await toggleNoteCompletion(noteId);
-      handleNoteUpdate(updatedNote);
-      console.log("✅ Note completion toggled");
-    } catch (err) {
-      console.error("❌ Failed to toggle completion:", err);
-      setError(`Failed to update note: ${err.message}`);
-    }
-  };
-
-  const handleToggleArchived = async (noteId) => {
-    try {
-      setError("");
-      const updatedNote = await toggleNoteArchived(noteId);
-      handleNoteUpdate(updatedNote);
-      console.log("✅ Note archived status toggled");
-    } catch (err) {
-      console.error("❌ Failed to toggle archived:", err);
-      setError(`Failed to update note: ${err.message}`);
-    }
-  };
-
-  const handleToggleImportant = async (noteId) => {
-    try {
-      setError("");
-      const updatedNote = await toggleNoteImportant(noteId);
-      handleNoteUpdate(updatedNote);
-      console.log("✅ Note importance toggled");
-    } catch (err) {
-      console.error("❌ Failed to toggle importance:", err);
-      setError(`Failed to update note: ${err.message}`);
-    }
-  };
-
   const handleFiltersChange = (newFilters) => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   };
@@ -255,26 +209,14 @@ export const NotesTab = ({
     if (viewMode === "grid") {
       return (
         <div className="notes-grid">
-          {notes.map((note) =>
-            useBlockMode ? (
-              <BlockBasedNoteCard
-                key={note.id}
-                note={note}
-                onUpdate={handleNoteUpdate}
-                onDelete={() => handleNoteDelete(note.id)}
-              />
-            ) : (
-              <NoteCard
-                key={note.id}
-                note={note}
-                onUpdate={handleNoteUpdate}
-                onDelete={() => handleNoteDelete(note.id)}
-                onToggleCompletion={() => handleToggleCompletion(note.id)}
-                onToggleArchived={() => handleToggleArchived(note.id)}
-                onToggleImportant={() => handleToggleImportant(note.id)}
-              />
-            )
-          )}
+          {notes.map((note) => (
+            <BlockBasedNoteCard
+              key={note.id}
+              note={note}
+              onUpdate={handleNoteUpdate}
+              onDelete={() => handleNoteDelete(note.id)}
+            />
+          ))}
         </div>
       );
     }
@@ -291,26 +233,14 @@ export const NotesTab = ({
               <span className="column-count">{groupNotes.length}</span>
             </div>
             <div className="column-notes">
-              {groupNotes.map((note) =>
-                useBlockMode ? (
-                  <BlockBasedNoteCard
-                    key={note.id}
-                    note={note}
-                    onUpdate={handleNoteUpdate}
-                    onDelete={() => handleNoteDelete(note.id)}
-                  />
-                ) : (
-                  <NoteCard
-                    key={note.id}
-                    note={note}
-                    onUpdate={handleNoteUpdate}
-                    onDelete={() => handleNoteDelete(note.id)}
-                    onToggleCompletion={() => handleToggleCompletion(note.id)}
-                    onToggleArchived={() => handleToggleArchived(note.id)}
-                    onToggleImportant={() => handleToggleImportant(note.id)}
-                  />
-                )
-              )}
+              {groupNotes.map((note) => (
+                <BlockBasedNoteCard
+                  key={note.id}
+                  note={note}
+                  onUpdate={handleNoteUpdate}
+                  onDelete={() => handleNoteDelete(note.id)}
+                />
+              ))}
             </div>
           </div>
         ))}
@@ -329,77 +259,139 @@ export const NotesTab = ({
           placeholder={project ? `Quick note for ${project.title}...` : "Quick note..."}
         />
       )}
-      <div className="search-and-filter-container">
-        {/* Search Bar */}
-        <div className="notes-search">
-          <div className="search-input-group">
-            <input
-              type="text"
-              placeholder="Search notes... (try: project:name, tag:bug, category:todo)"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              className="search-input"
-            />
-            <ActionButton variant="primary" size="sm" onClick={handleSearch} disabled={loading}>
-              <MaterialIcon icon="search" size={17} />
-            </ActionButton>
+      {/* Ribbon Interface - Microsoft Word style */}
+      <div className="notes-ribbon">
+        <div className="ribbon-tabs">
+          <div className="ribbon-tab active">
+            <MaterialIcon icon="home" size={16} />
+            <span>Home</span>
           </div>
         </div>
-        {/* Filters */}
-        <NoteFilters
-          filters={filters}
-          onFiltersChange={handleFiltersChange}
-          onClearFilters={clearFilters}
-          resultCount={getFilteredNoteCount()}
-        />
 
-        {/* Sort Options */}
-        <div className="notes-sort">
-          <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="sort-select">
-            <option value="-created_at">Newest First</option>
-            <option value="created_at">Oldest First</option>
-            <option value="-updated_at">Recently Updated</option>
-            <option value="title">Title A-Z</option>
-            <option value="-title">Title Z-A</option>
-            <option value="category">Category</option>
-            <option value="-is_important,created_at">Important First</option>
-          </select>
-        </div>
-
-        {/* View Mode Controls */}
-        <div className="notes-view-controls">
-          <div className="view-mode-selector">
-            <ActionButton
-              variant={useBlockMode ? "primary" : "secondary"}
-              size="xs"
-              onClick={() => setUseBlockMode(!useBlockMode)}
-              title="Toggle Block Mode">
-              <MaterialIcon icon="view_module" size={16} />
-            </ActionButton>
-            <ActionButton
-              variant={viewMode === "grid" ? "primary" : "secondary"}
-              size="xs"
-              onClick={() => setViewMode("grid")}
-              title="Grid View">
-              <MaterialIcon icon="grid_view" size={16} />
-            </ActionButton>
-            <ActionButton
-              variant={viewMode === "columns" ? "primary" : "secondary"}
-              size="xs"
-              onClick={() => setViewMode("columns")}
-              title="Column View">
-              <MaterialIcon icon="view_column" size={16} />
-            </ActionButton>
+        <div className="ribbon-content">
+          {/* Actions Group */}
+          <div className="ribbon-group">
+            <div className="group-label">Actions</div>
+            <div className="group-controls">
+              {!showQuickNote && (
+                <ActionButton
+                  variant="accent"
+                  size="sm"
+                  onClick={() => onOpenQuickNote?.()}
+                  className="ribbon-button">
+                  <MaterialIcon icon="add" size={16} />
+                  <span>Quick Note</span>
+                </ActionButton>
+              )}
+            </div>
           </div>
 
-          {viewMode === "columns" && (
-            <select value={groupBy} onChange={(e) => setGroupBy(e.target.value)} className="group-by-select">
-              <option value="none">No Grouping</option>
-              <option value="project">Group by Project</option>
-              <option value="category">Group by Category</option>
-              <option value="priority">Group by Priority</option>
-            </select>
+          {/* Search Group */}
+          <div className="ribbon-group">
+            <div className="group-label">Search</div>
+            <div className="group-controls search-controls">
+              <div className="search-input-group">
+                <input
+                  type="text"
+                  placeholder="Search notes..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                  className="ribbon-search-input"
+                />
+                <ActionButton variant="primary" size="sm" onClick={handleSearch} disabled={loading}>
+                  <MaterialIcon icon="search" size={16} />
+                </ActionButton>
+              </div>
+            </div>
+          </div>
+
+          {/* Filters Group */}
+          <div className="ribbon-group">
+            <div className="group-label">Filter & Sort</div>
+            <div className="group-controls">
+              <NoteFilters
+                filters={filters}
+                onFiltersChange={handleFiltersChange}
+                onClearFilters={clearFilters}
+                resultCount={getFilteredNoteCount()}
+                compact={true}
+              />
+              <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="ribbon-select">
+                <option value="-created_at">Newest First</option>
+                <option value="created_at">Oldest First</option>
+                <option value="-updated_at">Recently Updated</option>
+                <option value="title">Title A-Z</option>
+                <option value="-title">Title Z-A</option>
+                <option value="category">Category</option>
+                <option value="-is_important,created_at">Important First</option>
+              </select>
+            </div>
+          </div>
+
+          {/* View Group */}
+          <div className="ribbon-group">
+            <div className="group-label">View</div>
+            <div className="group-controls">
+              <div className="view-mode-selector">
+                <ActionButton
+                  variant={useBlockMode ? "primary" : "secondary"}
+                  size="xs"
+                  onClick={() => setUseBlockMode(!useBlockMode)}
+                  title="Toggle Block Mode"
+                  className="ribbon-icon-button">
+                  <MaterialIcon icon="view_module" size={16} />
+                </ActionButton>
+                <ActionButton
+                  variant={viewMode === "grid" ? "primary" : "secondary"}
+                  size="xs"
+                  onClick={() => setViewMode("grid")}
+                  title="Grid View"
+                  className="ribbon-icon-button">
+                  <MaterialIcon icon="grid_view" size={16} />
+                </ActionButton>
+                <ActionButton
+                  variant={viewMode === "columns" ? "primary" : "secondary"}
+                  size="xs"
+                  onClick={() => setViewMode("columns")}
+                  title="Column View"
+                  className="ribbon-icon-button">
+                  <MaterialIcon icon="view_column" size={16} />
+                </ActionButton>
+              </div>
+              {viewMode === "columns" && (
+                <select
+                  value={groupBy}
+                  onChange={(e) => setGroupBy(e.target.value)}
+                  className="ribbon-select">
+                  <option value="none">No Grouping</option>
+                  <option value="project">Group by Project</option>
+                  <option value="category">Group by Category</option>
+                  <option value="priority">Group by Priority</option>
+                </select>
+              )}
+            </div>
+          </div>
+
+          {/* Stats Group */}
+          {stats && (
+            <div className="ribbon-group">
+              <div className="group-label">Stats</div>
+              <div className="group-controls stats-display">
+                <div className="stat-item">
+                  <MaterialIcon icon="note" size={16} />
+                  <span>{stats.total_notes}</span>
+                </div>
+                <div className="stat-item">
+                  <MaterialIcon icon="check_circle" size={16} />
+                  <span>{stats.completed_notes}</span>
+                </div>
+                <div className="stat-item">
+                  <MaterialIcon icon="star" size={16} />
+                  <span>{stats.important_notes}</span>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>
