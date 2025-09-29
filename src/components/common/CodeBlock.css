@@ -71,6 +71,42 @@
   transition: max-height 0.3s ease;
 }
 
+/* ===== CODE EXPAND OVERLAY ===== */
+
+.code-expand-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(transparent, var(--bg-primary) 70%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 12px;
+  z-index: 5;
+}
+
+.code-expand-text-btn {
+  background: rgba(70, 203, 167, 0.1);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.code-expand-text-btn:hover {
+  background: rgba(70, 203, 167, 0.2);
+  transform: translateY(-1px);
+}
+
 /* Override SyntaxHighlighter styles for better integration */
 .code-content pre {
   margin: 0 !important;

@@ -29,8 +29,9 @@ export const CodeBlock = ({
     }
   };
 
-  const displayCode =
-    !isExpanded && shouldShowExpandButton ? codeLines.slice(0, 10).join("\n") + "\n..." : code;
+  const displayCode = !isExpanded && shouldShowExpandButton ? codeLines.slice(0, 10).join("\n") : code;
+
+  const showEllipsis = !isExpanded && shouldShowExpandButton;
 
   return (
     <div className={`code-block ${className}`}>
@@ -67,6 +68,7 @@ export const CodeBlock = ({
         style={{
           maxHeight: isExpanded ? "none" : `${maxHeight}px`,
           overflow: isExpanded ? "visible" : "auto",
+          position: "relative",
         }}>
         <SyntaxHighlighter
           language={normalizedLanguage}
@@ -88,6 +90,18 @@ export const CodeBlock = ({
           }}>
           {displayCode}
         </SyntaxHighlighter>
+
+        {showEllipsis && (
+          <div className="code-expand-overlay">
+            <button
+              className="code-expand-text-btn"
+              onClick={() => setIsExpanded(true)}
+              title="Show more code">
+              <MaterialIcon icon="expand_more" size={16} />
+              <span>Show {codeLines.length - 10} more lines...</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Copy feedback */}

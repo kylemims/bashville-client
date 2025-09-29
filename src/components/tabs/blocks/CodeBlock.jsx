@@ -74,7 +74,9 @@ export function CodeBlock({ block, onUpdate, onDelete, onMoveUp, onMoveDown, isF
   const shouldShowExpandButton = codeLines.length > 10;
 
   const displayCode =
-    !isExpanded && shouldShowExpandButton ? codeLines.slice(0, 10).join("\n") + "\n..." : block.content;
+    !isExpanded && shouldShowExpandButton ? codeLines.slice(0, 10).join("\n") : block.content;
+
+  const showEllipsis = !isExpanded && shouldShowExpandButton;
 
   if (isEditing) {
     return (
@@ -188,6 +190,18 @@ export function CodeBlock({ block, onUpdate, onDelete, onMoveUp, onMoveDown, isF
               }}>
               {displayCode}
             </SyntaxHighlighter>
+            {showEllipsis && (
+              <div className="code-expand-overlay">
+                <button
+                  type="button"
+                  className="code-expand-text-btn"
+                  onClick={() => setIsExpanded(true)}
+                  title="Show more code">
+                  <MaterialIcon icon="expand_more" size={16} />
+                  <span>Show {codeLines.length - 10} more lines...</span>
+                </button>
+              </div>
+            )}
           </div>
         ) : (
           <div className="code-content code-placeholder">
