@@ -171,7 +171,7 @@ export const BackendTab = ({ project }) => {
               <h3 className="section-title-with-line">Models</h3>
               <div className="section-gradient-line"></div>
               <ActionButton variant="add-field" size="xs" onClick={addModel} title="Add Model">
-                <MaterialIcon icon="add" size={26} color="var(--muted)" />
+                <MaterialIcon icon="add" size={24} color="var(--muted)" />
               </ActionButton>
             </div>
 

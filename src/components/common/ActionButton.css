@@ -194,6 +194,16 @@
   background: rgba(210, 110, 102, 0.2);
 }
 
+.action-button--raw {
+  padding: 0px;
+  background: none;
+  color: var(--muted);
+}
+
+.action-button--raw:hover:not(:disabled) {
+  background: rgba(210, 110, 102, 0.2);
+}
+
 .action-button--xs {
   padding: 0.3rem 0.6rem;
   font-size: 0.7rem;

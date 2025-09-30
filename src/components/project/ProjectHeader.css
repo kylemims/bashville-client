@@ -1,5 +1,5 @@
 .project-header {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .back-button-section {
@@ -15,17 +15,27 @@
 }
 
 .project-title-section {
+  display: flex;
+  gap: 1rem;
   flex: 1;
   min-width: 0;
 }
 
 .project-title {
-  color: var(--color-primary);
+  color: var(--text);
   font-size: 1.75rem;
   font-weight: 800;
   margin: 0;
   line-height: 1.2;
 }
+
+/* .title-header-edit {
+  background: none;
+}
+.title-header-edit.action-button--xs {
+  width: 20px;
+  height: 20px;
+} */
 
 .project-actions {
   display: flex;

@@ -57,14 +57,13 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
 
   return (
     <div className="project-header">
-      <div className="back-button-section">
-        <ActionButton onClick={onBack} variant="bgsecondary" size="sm" aria-label="Back to Dashboard">
-          <MaterialIcon icon="arrow_back" size={16} />
-        </ActionButton>
-      </div>
+      <div className="back-button-section"></div>
 
       <div className="header-main-row">
         <div className="project-title-section">
+          <ActionButton onClick={onBack} variant="back" size="xs" aria-label="Back to Dashboard">
+            <MaterialIcon icon="arrow_left" size={34} />
+          </ActionButton>
           {isEditing ? (
             <div className="project-title-edit">
               <input
@@ -106,6 +105,16 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
           ) : (
             <h1 className="project-title">{title}</h1>
           )}
+          <ActionButton
+            onClick={handleEditStart}
+            variant="raw"
+            size="xs"
+            title="Edit project name"
+            aria-label="Edit project name"
+            disabled={isEditing}
+            className="title-header-edit">
+            <MaterialIcon icon="edit" size={16} />
+          </ActionButton>
         </div>
 
         <div className="project-actions">
@@ -117,15 +126,7 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
             disabled={isEditing}>
             <MaterialIcon icon="markdown" size={24} />
           </ActionButton>
-          <ActionButton
-            onClick={handleEditStart}
-            variant="back"
-            size="sm"
-            title="Edit project name"
-            aria-label="Edit project name"
-            disabled={isEditing}>
-            <MaterialIcon icon="edit_square" size={24} />
-          </ActionButton>
+
           <ActionButton
             onClick={onProjectDelete}
             variant="back-secondary"
