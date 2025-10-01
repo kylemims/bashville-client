@@ -43,68 +43,69 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
   return (
     <div className="project-card">
       <div className="project-card-header">
-        <h3 className="project-title">{project.title}</h3>
-        <div className="project-type-badge" style={{ borderColor: typeConfig.color }}>
-          <MaterialIcon icon={typeConfig.icon} />
-          <span className="project-type-label">{typeConfig.label}</span>
-          <span className="project-complexity">{typeConfig.complexity}</span>
+        <div className="title-and-line-container">
+          <h3 className="project-title">{project.title}</h3>
+          <div className="command-gradient-line"></div>
+          <ActionButton
+            onClick={() => onLaunch(project)}
+            className="action-btn launch-btn"
+            variant="launch"
+            size="sm"
+            title="Generate Setup Scripts"
+            aria-label="Generate setup scripts">
+            <MaterialIcon
+              icon="rocket_launch"
+              size={26}
+              color="var(--color-accent)"
+              className="hover-primary"
+            />
+          </ActionButton>
         </div>
+      </div>
 
-        {project.description && <p className="project-description">{project.description}</p>}
+      {project.description && <p className="project-description">{project.description}</p>}
 
-        <div className="project-stats">
+      <div className="project-stats">
+        <div className="project-stat">
           <div className="project-stat">
             <MaterialIcon icon="bolt" size={16} color="var(--color-accent)" />
             <span className="stat-text">
               {hasCommands ? `${project.commands_preview.length} commands` : "No commands"}
             </span>
           </div>
-          <div className="project-stat">
-            {hasColors ? (
-              <>
-                <ColorPreview palette={hasColors} size="md" showTooltip={true} />
-                <span className="stat-text">{hasColors.name}</span>
-              </>
-            ) : (
-              <>
-                <MaterialIcon icon="palette" size={16} color="var(--muted)" />
-                <span className="stat-text">No palette</span>
-              </>
-            )}
-          </div>
+          {hasColors ? (
+            <>
+              <ColorPreview palette={hasColors} size="md" showTooltip={true} />
+              <span className="stat-text">{hasColors.name}</span>
+            </>
+          ) : (
+            <>
+              <MaterialIcon icon="palette" size={16} color="var(--muted)" />
+              <span className="stat-text">No palette</span>
+            </>
+          )}
         </div>
 
-        <Link to={`/projects/${project.id}`} className="project-view-btn">
-          VIEW PROJECT
-        </Link>
-      </div>
-      <div className="project-actions">
-        <Link
-          to={`/projects/${project.id}`}
-          className="action-btn edit-btn"
-          title="Edit Project"
-          aria-label="Edit project">
-          <MaterialIcon icon="edit_square" size={23} color="var(--muted)" className="hover-primary" />
-        </Link>
-        <ActionButton
-          onClick={() => onDelete(project.id)}
-          className="action-btn delete-btn"
-          variant="delete"
-          size="sm"
-          disabled={isDeleting}
-          title="Delete Project"
-          aria-label="Delete project">
-          <MaterialIcon icon="delete" size={26} color="var(--color-secondary)" className="hover-primary" />
-        </ActionButton>
-        <ActionButton
-          onClick={() => onLaunch(project)}
-          className="action-btn launch-btn"
-          variant="launch"
-          size="sm"
-          title="Generate Setup Scripts"
-          aria-label="Generate setup scripts">
-          <MaterialIcon icon="markdown" size={26} color="var(--color-accent)" className="hover-primary" />
-        </ActionButton>
+        <div className="project-actions">
+          <Link to={`/projects/${project.id}`} className="project-view-btn">
+            VIEW PROJECT
+          </Link>
+          <div className="project-type-badge" style={{ borderColor: typeConfig.color }}>
+            <MaterialIcon icon={typeConfig.icon} />
+            <span className="project-type-label">{typeConfig.label}</span>
+            <span className="project-complexity">{typeConfig.complexity}</span>
+          </div>
+          <ActionButton
+            onClick={() => onDelete(project.id)}
+            className="action-btn delete-btn"
+            variant="delete"
+            size="sm"
+            disabled={isDeleting}
+            title="Delete Project"
+            aria-label="Delete project">
+            <MaterialIcon icon="delete" size={26} color="var(--color-secondary)" className="hover-primary" />
+          </ActionButton>
+        </div>
       </div>
     </div>
   );

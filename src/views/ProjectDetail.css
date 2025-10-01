@@ -1,0 +1,14 @@
+.project-tab-title-row {
+  display: flex;
+}
+
+.tab-ribbon-style {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}

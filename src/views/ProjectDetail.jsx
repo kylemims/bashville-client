@@ -14,6 +14,8 @@ import { ProjectHeader } from "../components/project/ProjectHeader";
 import { ProjectTabs } from "../components/project/ProjectTabs";
 import { BackendTab } from "../components/tabs/BackendTab.jsx";
 import { GenerateProjectModal } from "../components/project/GenerateProjectModal.jsx";
+// import { MaterialIcon } from "../components/common/MaterialIcon.jsx";
+import "./ProjectDetail.css";
 import { ROUTES } from "../utils/constants";
 
 export const ProjectDetail = () => {
@@ -141,7 +143,7 @@ export const ProjectDetail = () => {
 
   return (
     <div className="page-content page-enter">
-      <div className="project-detail">
+      <div className="project-tab-title-row">
         <ProjectHeader
           title={state.project.title}
           onBack={() => navigate(ROUTES.DASHBOARD)}
@@ -149,44 +151,43 @@ export const ProjectDetail = () => {
           onProjectDelete={handleDeleteProject}
           onProjectUpdate={handleProjectUpdate}
         />
+      </div>
+      <ProjectTabs
+        activeTab={state.activeTab}
+        onTabChange={(tab) => updateState({ activeTab: tab })}
+        onAddNew={handleAddNew}
+      />
 
-        <ProjectTabs
-          activeTab={state.activeTab}
-          onTabChange={(tab) => updateState({ activeTab: tab })}
-          onAddNew={handleAddNew}
-        />
+      <div className="tab-content">
+        {state.activeTab === "commands" ? (
+          <CommandsTab
+            {...tabProps}
+            availableCommands={state.availableCommands}
+            onCommandsUpdate={(commands) => updateState({ availableCommands: commands })}
+            showNewCommandForm={showNewCommandForm}
+            onNewCommandFormChange={setShowNewCommandForm}
+          />
+        ) : state.activeTab === "colors" ? (
+          <ColorsTab
+            {...tabProps}
+            availablePalettes={state.availablePalettes}
+            onPalettesUpdate={(palettes) => updateState({ availablePalettes: palettes })}
+            showNewPaletteForm={showNewPaletteForm}
+            onNewPaletteFormChange={setShowNewPaletteForm}
+          />
+        ) : state.activeTab === "notes" ? (
+          <NotesTab project={state.project} />
+        ) : (
+          <BackendTab project={state.project} />
+        )}
 
-        <div className="tab-content">
-          {state.activeTab === "commands" ? (
-            <CommandsTab
-              {...tabProps}
-              availableCommands={state.availableCommands}
-              onCommandsUpdate={(commands) => updateState({ availableCommands: commands })}
-              showNewCommandForm={showNewCommandForm}
-              onNewCommandFormChange={setShowNewCommandForm}
-            />
-          ) : state.activeTab === "colors" ? (
-            <ColorsTab
-              {...tabProps}
-              availablePalettes={state.availablePalettes}
-              onPalettesUpdate={(palettes) => updateState({ availablePalettes: palettes })}
-              showNewPaletteForm={showNewPaletteForm}
-              onNewPaletteFormChange={setShowNewPaletteForm}
-            />
-          ) : state.activeTab === "notes" ? (
-            <NotesTab project={state.project} />
-          ) : (
-            <BackendTab project={state.project} />
-          )}
-
-          {showSetupGenerator && (
-            <GenerateProjectModal
-              project={state.project}
-              isOpen={showSetupGenerator}
-              onClose={() => setShowSetupGenerator(false)}
-            />
-          )}
-        </div>
+        {showSetupGenerator && (
+          <GenerateProjectModal
+            project={state.project}
+            isOpen={showSetupGenerator}
+            onClose={() => setShowSetupGenerator(false)}
+          />
+        )}
       </div>
     </div>
   );
