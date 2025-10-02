@@ -3,10 +3,12 @@ import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
 import { ColorPreview } from "../common/ColorPreview.jsx";
 import "./ProjectCard.css";
+import { useNavigate } from "react-router-dom";
 
 export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerateSetup }) => {
   const hasCommands = project.commands_preview && project.commands_preview.length > 0;
   const hasColors = project.color_palette_preview;
+  const navigate = useNavigate();
 
   const getProjectTypeConfig = (type) => {
     const configs = {
@@ -47,16 +49,16 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
           <h3 className="project-title">{project.title}</h3>
           <div className="command-gradient-line"></div>
           <ActionButton
-            onClick={() => onLaunch(project)}
+            onClick={() => navigate(`/projects/${project.id}`)}
             className="action-btn launch-btn"
             variant="launch"
             size="sm"
-            title="Generate Setup Scripts"
-            aria-label="Generate setup scripts">
+            title="View project details"
+            aria-label="View project details">
             <MaterialIcon
-              icon="rocket_launch"
-              size={26}
-              color="var(--color-accent)"
+              icon="visibility"
+              size={28}
+              color="var(--color-primary)"
               className="hover-primary"
             />
           </ActionButton>
@@ -87,9 +89,6 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
         </div>
 
         <div className="project-actions">
-          <Link to={`/projects/${project.id}`} className="project-view-btn">
-            VIEW PROJECT
-          </Link>
           <div className="project-type-badge" style={{ borderColor: typeConfig.color }}>
             <MaterialIcon icon={typeConfig.icon} />
             <span className="project-type-label">{typeConfig.label}</span>
@@ -103,8 +102,26 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
             disabled={isDeleting}
             title="Delete Project"
             aria-label="Delete project">
-            <MaterialIcon icon="delete" size={26} color="var(--color-secondary)" className="hover-primary" />
+            <MaterialIcon icon="delete" size={24} color="var(--color-secondary)" className="hover-primary" />
           </ActionButton>
+          <ActionButton
+            onClick={() => onLaunch(project)}
+            className="action-btn launch-btn"
+            variant="launch"
+            size="sm"
+            title="Generate Setup Scripts"
+            aria-label="Generate setup scripts">
+            <MaterialIcon
+              icon="rocket_launch"
+              size={28}
+              color="var(--color-accent)"
+              className="hover-primary"
+            />
+          </ActionButton>
+
+          {/* <Link to={`/projects/${project.id}`} className="project-view-btn">
+            VIEW PROJECT
+          </Link> */}
         </div>
       </div>
     </div>
