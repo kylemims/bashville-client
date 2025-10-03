@@ -356,9 +356,17 @@
   flex-direction: column;
 }
 .project-description {
-  color: var(--muted);
+  color: var(--text);
   font-size: 0.9rem;
   line-height: 1.4;
+  background-color: var(--bg-primary);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.75rem;
+  border-radius: 6px;
+  min-height: 40px;
+  border: solid 1px var(--bg-input);
+  border-left: solid 3px var(--color-primary);
   /* flex: 1; */
   /* width: 100%; */
 }
