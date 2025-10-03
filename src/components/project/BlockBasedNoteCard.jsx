@@ -185,83 +185,85 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
               {note.is_completed && (
                 <MaterialIcon icon="check_circle" size={16} color="var(--color-accent)" />
               )}
-              <h3 className={`note-title ${note.is_completed ? "completed" : ""}`}>{note.title}</h3>
             </div>
-            <div className="note-preview-actions">
-              <div className="quick-actions">
-                <button
-                  type="button"
-                  className="quick-action-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addBlock("text");
-                    setIsExpanded(true);
-                  }}
-                  title="Add text">
-                  <MaterialIcon icon="text_fields" size={14} />
-                </button>
-                <button
-                  type="button"
-                  className="quick-action-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addBlock("checklist");
-                    setIsExpanded(true);
-                  }}
-                  title="Add checklist">
-                  <MaterialIcon icon="checklist" size={14} />
-                </button>
-                <button
-                  type="button"
-                  className="quick-action-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    addBlock("code");
-                    setIsExpanded(true);
-                  }}
-                  title="Add code">
-                  <MaterialIcon icon="code" size={14} />
-                </button>
-              </div>
-              <span className="block-count">{blocks.length} blocks</span>
-              <MaterialIcon icon="expand_more" size={20} />
+            <div
+              className="note-category"
+              style={{
+                backgroundColor: categoryDisplay.color,
+                color: categoryDisplay.color === "var(--text)" ? "var(--bg-primary)" : "var(--bg-primary)",
+              }}>
+              <MaterialIcon icon={categoryDisplay.icon} size={12} />
+              <span>{categoryDisplay.label}</span>
             </div>
+            <div
+              className="note-priority"
+              style={{
+                backgroundColor: priorityDisplay.color,
+                color: "var(--bg-primary)",
+              }}>
+              <MaterialIcon icon={priorityDisplay.icon} size={10} />
+              <span>{priorityDisplay.label}</span>
+            </div>
+
+            <span className="block-count">{blocks.length} blocks</span>
+            <MaterialIcon icon="expand_more" size={20} />
           </div>
-          <div className="note-meta">
-            <div>
-              <div
-                className="note-category"
-                style={{
-                  backgroundColor: categoryDisplay.color,
-                  color: categoryDisplay.color === "var(--text)" ? "var(--bg-primary)" : "var(--bg-primary)",
-                }}>
-                <MaterialIcon icon={categoryDisplay.icon} size={12} />
-                <span>{categoryDisplay.label}</span>
+        </div>
+        <div className="note-meta">
+          <div>
+            <h3 className={`note-title ${note.is_completed ? "completed" : ""}`}>{note.title}</h3>
+
+            {/* Tags display */}
+            {note.custom_tags && note.custom_tags.length > 0 && (
+              <div className="note-tags">
+                {note.custom_tags.slice(0, 3).map((tag, index) => (
+                  <span key={index} className="note-tag">
+                    {tag}
+                  </span>
+                ))}
+                {note.custom_tags.length > 3 && (
+                  <span className="note-tag-more">+{note.custom_tags.length - 3}</span>
+                )}
               </div>
-              <div
-                className="note-priority"
-                style={{
-                  backgroundColor: priorityDisplay.color,
-                  color: "var(--bg-primary)",
-                }}>
-                <MaterialIcon icon={priorityDisplay.icon} size={10} />
-                <span>{priorityDisplay.label}</span>
-              </div>
-              {/* Tags display */}
-              {note.custom_tags && note.custom_tags.length > 0 && (
-                <div className="note-tags">
-                  {note.custom_tags.slice(0, 3).map((tag, index) => (
-                    <span key={index} className="note-tag">
-                      {tag}
-                    </span>
-                  ))}
-                  {note.custom_tags.length > 3 && (
-                    <span className="note-tag-more">+{note.custom_tags.length - 3}</span>
-                  )}
-                </div>
-              )}
-            </div>
-            <span className="note-date">{new Date(note.created_at).toLocaleDateString()}</span>
+            )}
+          </div>
+          <span className="note-date">{new Date(note.created_at).toLocaleDateString()}</span>
+        </div>
+        <div className="note-preview-actions">
+          <div className="quick-actions">
+            <button
+              type="button"
+              className="quick-action-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                addBlock("text");
+                setIsExpanded(true);
+              }}
+              title="Add text">
+              <MaterialIcon icon="text_fields" size={14} />
+            </button>
+            <button
+              type="button"
+              className="quick-action-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                addBlock("checklist");
+                setIsExpanded(true);
+              }}
+              title="Add checklist">
+              <MaterialIcon icon="checklist" size={14} />
+            </button>
+            <button
+              type="button"
+              className="quick-action-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                addBlock("code");
+                setIsExpanded(true);
+              }}
+              title="Add code">
+              <MaterialIcon icon="code" size={14} />
+            </button>
           </div>
         </div>
       </div>

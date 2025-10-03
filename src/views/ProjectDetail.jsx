@@ -24,6 +24,7 @@ export const ProjectDetail = () => {
   const [showNewCommandForm, setShowNewCommandForm] = useState(false);
   const [showNewPaletteForm, setShowNewPaletteForm] = useState(false);
   const [showSetupGenerator, setShowSetupGenerator] = useState(false);
+  const [showQuickNote, setShowQuickNote] = useState(false);
   const [state, setState] = useState({
     project: null,
     availableCommands: [],
@@ -38,6 +39,8 @@ export const ProjectDetail = () => {
       setShowNewCommandForm(true);
     } else if (state.activeTab === "colors") {
       setShowNewPaletteForm(true);
+    } else if (state.activeTab === "notes") {
+      setShowQuickNote(true);
     }
   };
 
@@ -176,7 +179,18 @@ export const ProjectDetail = () => {
             onNewPaletteFormChange={setShowNewPaletteForm}
           />
         ) : state.activeTab === "notes" ? (
-          <NotesTab project={state.project} />
+          <NotesTab
+            project={state.project}
+            showQuickNote={showQuickNote}
+            onOpenQuickNote={() => {
+              console.log("Opening quick note form");
+              setShowQuickNote(true);
+            }}
+            onCloseQuickNote={() => {
+              console.log("Closing quick note form");
+              setShowQuickNote(false);
+            }}
+          />
         ) : (
           <BackendTab project={state.project} />
         )}

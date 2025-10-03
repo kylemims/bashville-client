@@ -125,15 +125,15 @@ export const Dashboard = () => {
         projects.length === 0 ? (
           <EmptyState />
         ) : (
-          <div className="projects-section">
-            <div className="projects-stats">
+          <div className="project-dashboard-section">
+            <div className="project-dashboard-stats">
               <span className="stats-text">No projects match the selected filter</span>
             </div>
           </div>
         )
       ) : (
-        <div className="projects-section">
-          <div className="projects-stats">
+        <div className="project-dashboard-section">
+          <div className="project-dashboard-stats">
             <span className="stats-text">
               {filteredProjects.length} of {projects.length} project{projects.length !== 1 ? "s" : ""}
               {filterType !== "all" && ` (${projectTypes.find((t) => t.value === filterType)?.label})`}

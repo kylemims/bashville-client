@@ -95,6 +95,7 @@ export const NotesTab = ({
 
       setNotes((prevNotes) => [newNote, ...prevNotes]);
       loadStats(); // Refresh stats
+      onCloseQuickNote?.(); // Close the quick note form after successful creation
       console.log("✅ Quick note created");
     } catch (err) {
       console.error("❌ Failed to create quick note:", err);
@@ -277,7 +278,10 @@ export const NotesTab = ({
                 <ActionButton
                   variant="accent"
                   size="sm"
-                  onClick={() => onOpenQuickNote?.()}
+                  onClick={() => {
+                    console.log("Quick Note button clicked");
+                    onOpenQuickNote?.();
+                  }}
                   className="ribbon-button">
                   <MaterialIcon icon="add" size={16} />
                   <span>Quick Note</span>
@@ -419,7 +423,13 @@ export const NotesTab = ({
                 ? `Start taking notes for ${project.title}`
                 : "Create your first note to get started"}
             </p>
-            <ActionButton variant="primary" size="md" onClick={() => onOpenQuickNote?.()}>
+            <ActionButton
+              variant="primary"
+              size="md"
+              onClick={() => {
+                console.log("Create Note button clicked in empty state");
+                onOpenQuickNote?.();
+              }}>
               <MaterialIcon icon="add" size={18} />
               Create Note
             </ActionButton>
