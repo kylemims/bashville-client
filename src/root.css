@@ -38,7 +38,7 @@ body {
 
 @media (min-width: 768px) {
   body {
-    padding: 24px;
+    padding: 12px 24px;
   }
 }
 

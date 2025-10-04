@@ -94,10 +94,10 @@ export const Dashboard = () => {
     <div className="page-content page-enter">
       <div className="dashboard-header">
         <div className="dashboard-title-section">
-          <h1 className="dashboard-title">
-            {user?.username ? `${user.username}'s Projects` : "Your Projects"}
-          </h1>
-          <p className="dashboard-subtitle">Manage your development project stashes</p>
+          <h1 className="dashboard-title">Project Dashboard</h1>
+          <p className="dashboard-subtitle">
+            {filteredProjects.length} of {projects.length} project{projects.length !== 1 ? "s" : ""}
+          </p>
         </div>
         <div className="dashboard-controls">
           <select
@@ -105,17 +105,19 @@ export const Dashboard = () => {
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}>
             {projectTypes.map((type) => (
-              <option key={type.value} value={type.value}>
+              <option className="dashboard-project-filter-select" key={type.value} value={type.value}>
                 {type.label}
               </option>
             ))}
           </select>
-          <Link to="/notes" className="button secondary">
-            All Notes
-          </Link>
-          <Link to="/projects/new" className="button">
-            Create Project
-          </Link>
+          <div className="dashboard-buttons-group">
+            <Link to="/notes" className="dashboard-notes-button">
+              All Notes
+            </Link>
+            <Link to="/projects/new" className="dashboard-create-button">
+              Create Project
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -135,7 +137,6 @@ export const Dashboard = () => {
         <div className="project-dashboard-section">
           <div className="project-dashboard-stats">
             <span className="stats-text">
-              {filteredProjects.length} of {projects.length} project{projects.length !== 1 ? "s" : ""}
               {filterType !== "all" && ` (${projectTypes.find((t) => t.value === filterType)?.label})`}
             </span>
           </div>

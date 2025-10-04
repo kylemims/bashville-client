@@ -19,7 +19,7 @@
 @media (min-width: 1220px) {
   .navbar-container {
     max-width: 1800px;
-    padding: 0 2rem;
+    padding: 0 1rem;
   }
 }
 
@@ -27,7 +27,7 @@
   color: var(--color-primary) !important;
   font-weight: 800 !important;
   text-decoration: none !important;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }
 
 .navbar-brand:hover {
@@ -64,6 +64,8 @@
   padding: 0.5rem 0;
   transition: all 0.3s ease;
   text-decoration: none;
+  font-size: 0.875rem;
+  text-transform: uppercase;
 }
 .navbar-nav a:hover {
   color: black;
@@ -164,7 +166,7 @@
 
 .navbar-user-greeting {
   color: var(--color-accent);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
@@ -174,7 +176,7 @@
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
