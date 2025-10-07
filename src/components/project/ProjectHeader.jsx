@@ -57,13 +57,14 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
 
   return (
     <div className="project-header">
-      <div className="back-button-section"></div>
-
       <div className="header-main-row">
         <div className="project-title-section">
-          <ActionButton onClick={onBack} variant="back" size="xs" aria-label="Back to Dashboard">
-            <MaterialIcon icon="arrow_left" size={34} />
+          <ActionButton variant="back" onClick={onBack} title="Back to Dashboard">
+            <MaterialIcon icon="arrow_back" size={20} />
           </ActionButton>
+          <h1 className="project-title">{title}</h1>
+        </div>
+        <div className="project-actions">
           {isEditing ? (
             <div className="project-title-edit">
               <input
@@ -103,21 +104,18 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
               {error && <span className="title-edit-error">{error}</span>}
             </div>
           ) : (
-            <h1 className="project-title">{title}</h1>
+            <ActionButton
+              onClick={handleEditStart}
+              variant="raw"
+              size="xs"
+              title="Edit project name"
+              aria-label="Edit project name"
+              disabled={isEditing}
+              className="title-header-edit">
+              <MaterialIcon icon="edit" size={16} />
+            </ActionButton>
           )}
-          <ActionButton
-            onClick={handleEditStart}
-            variant="raw"
-            size="xs"
-            title="Edit project name"
-            aria-label="Edit project name"
-            disabled={isEditing}
-            className="title-header-edit">
-            <MaterialIcon icon="edit" size={16} />
-          </ActionButton>
-        </div>
 
-        <div className="project-actions">
           <ActionButton
             onClick={onGenerateSetup}
             variant="accent"

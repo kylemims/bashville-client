@@ -51,17 +51,17 @@ export const Notes = () => {
                 onClick={() => setShowQuickNote((v) => !v)}
                 title="Quick Note">
                 <MaterialIcon icon="add" size={18} />
-                Quick Note
+                Note
               </ActionButton>
 
-              <ActionButton
+              {/* <ActionButton
                 variant="secondary"
                 size="md"
                 onClick={() => navigate(ROUTES.DASHBOARD)}
                 title="Back to Dashboard">
                 <MaterialIcon icon="dashboard" size={18} />
                 Dashboard
-              </ActionButton>
+              </ActionButton> */}
             </div>
           </div>
         </div>
@@ -71,6 +71,7 @@ export const Notes = () => {
             project={null}
             // ✅ pass UI control down
             showStats={showStats}
+            onCloseStats={() => setShowStats(false)}
             showQuickNote={showQuickNote}
             onCloseQuickNote={() => setShowQuickNote(false)}
             onOpenQuickNote={() => setShowQuickNote(true)}

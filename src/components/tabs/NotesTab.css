@@ -208,7 +208,7 @@
   }
 }
 .notes-tab {
-  padding: 20px;
+  /* padding: 20px; */
   max-width: 100%;
   height: 100%; /* Use full available height */
   background: var(--bg-primary);

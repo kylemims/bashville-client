@@ -1,24 +1,26 @@
 .project-header {
+  display: flex;
   margin-bottom: 1rem;
-}
-
-.back-button-section {
-  margin-bottom: 0.75rem;
 }
 
 .header-main-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 1rem;
-  padding: 0 0.25rem;
+  margin: 0px;
+
+  /* padding: 0 0.25rem; */
 }
 
 .project-title-section {
   display: flex;
-  gap: 1rem;
-  flex: 1;
-  min-width: 0;
+  justify-content: flex-end;
+  /* gap: 1rem; */
+  /* flex: 1; */
+  /* min-width: 0; */
+}
+
+.project-title-section :first-child {
+  background: none;
 }
 
 .project-title {

@@ -88,7 +88,6 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
             <div className="project-type-badge" style={{ borderColor: typeConfig.color }}>
               <MaterialIcon icon={typeConfig.icon} />
               <span className="project-type-label">{typeConfig.label}</span>
-              <span className="project-complexity">{typeConfig.complexity}</span>
             </div>
           </div>
         </div>
@@ -104,7 +103,7 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
             aria-label="View project details">
             <MaterialIcon
               icon="visibility"
-              size={22}
+              size={20}
               color="var(--color-primary)"
               className="hover-primary"
             />
@@ -117,7 +116,7 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
             disabled={isDeleting}
             title="Delete Project"
             aria-label="Delete project">
-            <MaterialIcon icon="delete" size={22} color="var(--color-secondary)" className="hover-primary" />
+            <MaterialIcon icon="delete" size={20} color="var(--color-secondary)" className="hover-primary" />
           </ActionButton>
           <ActionButton
             onClick={() => onLaunch(project)}
@@ -128,7 +127,7 @@ export const ProjectCard = ({ project, onDelete, onLaunch, isDeleting, onGenerat
             aria-label="Generate setup scripts">
             <MaterialIcon
               icon="rocket_launch"
-              size={22}
+              size={20}
               color="var(--color-accent)"
               className="hover-primary"
             />

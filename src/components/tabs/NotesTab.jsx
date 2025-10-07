@@ -12,6 +12,7 @@ import "./NotesTab.css";
 export const NotesTab = ({
   project,
   showStats = false,
+  onCloseStats,
   showQuickNote = false,
   onCloseQuickNote,
   onOpenQuickNote,
@@ -251,7 +252,9 @@ export const NotesTab = ({
 
   return (
     <div className="notes-tab">
-      {showStats && stats && <NoteStats stats={stats} projectTitle={project?.title} />}
+      {showStats && stats && (
+        <NoteStats stats={stats} projectTitle={project?.title} onCloseStats={onCloseStats} />
+      )}
 
       {showQuickNote && (
         <QuickNoteInput
@@ -262,13 +265,6 @@ export const NotesTab = ({
       )}
       {/* Ribbon Interface - Microsoft Word style */}
       <div className="notes-ribbon">
-        <div className="ribbon-tabs">
-          <div className="ribbon-tab active">
-            <MaterialIcon icon="home" size={16} />
-            <span>Home</span>
-          </div>
-        </div>
-
         <div className="ribbon-content">
           {/* Actions Group */}
           <div className="ribbon-group">

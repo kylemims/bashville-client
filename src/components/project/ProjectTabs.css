@@ -6,13 +6,17 @@
   /* border-bottom: 1px solid var(--muted); */
   /* margin-bottom: 2rem; */
   /* padding-bottom: 0.5rem; */
-  padding-left: 20px;
+  /* padding-left: 20px; */
 }
 
 .project-tabs {
   display: flex;
   gap: 0;
   align-items: center;
+}
+
+.project-tabs :first-child {
+  border-top-left-radius: var(--radius);
 }
 
 .project-tabs-actions {

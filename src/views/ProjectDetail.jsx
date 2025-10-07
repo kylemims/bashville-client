@@ -14,7 +14,7 @@ import { ProjectHeader } from "../components/project/ProjectHeader";
 import { ProjectTabs } from "../components/project/ProjectTabs";
 import { BackendTab } from "../components/tabs/BackendTab.jsx";
 import { GenerateProjectModal } from "../components/project/GenerateProjectModal.jsx";
-// import { MaterialIcon } from "../components/common/MaterialIcon.jsx";
+import { MaterialIcon } from "../components/common/MaterialIcon.jsx";
 import "./ProjectDetail.css";
 import { ROUTES } from "../utils/constants";
 
@@ -109,8 +109,8 @@ export const ProjectDetail = () => {
       <div className="page-content">
         <div className="page-card">
           <ErrorMessage message={state.error || "Project not found"} />
-          <ActionButton onClick={() => navigate(ROUTES.DASHBOARD)} variant="primary">
-            Back to Dashboard
+          <ActionButton variant="back" onClick={() => navigate(ROUTES.DASHBOARD)} title="Back to Dashboard">
+            <MaterialIcon icon="arrow_back" size={20} />
           </ActionButton>
         </div>
       </div>

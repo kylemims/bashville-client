@@ -1,4 +1,22 @@
 /* ===== NOTE STATS STYLES ===== */
+.note-stats-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 1000;
+  overflow: auto;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
 .note-stats {
   background: var(--bg-secondary);
   border: 1px solid var(--border);
@@ -6,10 +24,21 @@
   padding: 20px;
   margin: 16px 0;
   animation: statsSlideIn 0.3s ease-out;
+  /* resize: vertical; */
+  overflow: auto;
+  /* resize: vertical; */
+  max-height: 100dvh;
+  min-height: 300px;
+  z-index: 1000;
+  width: 100%;
+  max-width: 800px;
 }
 
 /* ===== STATS HEADER ===== */
 .stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
@@ -28,9 +57,11 @@
 /* ===== STATS GRID ===== */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  /* grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); */
+  grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr);
   gap: 16px;
   margin-bottom: 24px;
+  /* overflow: auto; */
 }
 
 .stat-card {
@@ -42,8 +73,8 @@
   align-items: center;
   justify-content: space-between;
   transition: all 0.2s ease;
-  position: relative;
-  overflow: hidden;
+  /* position: relative; */
+  /* overflow: auto; */
 }
 
 .stat-card:hover {
@@ -54,6 +85,7 @@
 
 .stat-content {
   flex: 1;
+  /* overflow: auto; */
 }
 
 .stat-number {
@@ -113,8 +145,8 @@
 }
 
 .category-grid {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
@@ -127,8 +159,8 @@
   background: var(--bg-primary);
   border: 1px solid var(--border);
   border-radius: 6px;
-  position: relative;
-  overflow: hidden;
+  /* position: relative; */
+  /* overflow: hidden; */
 }
 
 .category-info {
@@ -275,6 +307,10 @@
     flex-direction: column;
     text-align: center;
     gap: 6px;
+  }
+
+  .category-numbers {
+    justify-content: center;
   }
 }
 

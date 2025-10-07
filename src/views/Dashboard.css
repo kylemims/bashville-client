@@ -96,7 +96,7 @@
 
 .dashboard-notes-button {
   background-color: var(--color-secondary);
-  border: 1px solid var(--bg-input);
+  border: 1px solid var(--bg-secondary);
   color: var(--text);
   padding: 0.5rem 1rem;
   border-radius: var(--radius);
@@ -121,10 +121,10 @@
 }
 .dashboard-create-button {
   background-color: var(--color-accent);
-  border: 1px solid var(--bg-input);
   color: var(--bg-primary);
   padding: 0.5rem 1rem;
   border-radius: var(--radius);
+  border: 1px solid var(--bg-secondary);
   font-size: 0.875rem;
   font-weight: 600;
   text-align: center;
