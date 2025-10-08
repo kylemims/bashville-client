@@ -16,6 +16,8 @@ export const NotesTab = ({
   showQuickNote = false,
   onCloseQuickNote,
   onOpenQuickNote,
+  showFilterSidebar,
+  onCloseFilterSidebar,
 }) => {
   const [notes, setNotes] = useState([]);
   const [stats, setStats] = useState(null); // Add missing stats state
@@ -29,7 +31,7 @@ export const NotesTab = ({
     is_important: null,
     project: project?.id || null,
   });
-  const [sortBy, setSortBy] = useState("-created_at"); // Most recent first
+  const [sortBy, setSortBy] = useState("sort_by"); // Most recent first
   const [viewMode, setViewMode] = useState("grid"); // "grid" or "columns"
   const [useBlockMode, setUseBlockMode] = useState(true); // New block-based architecture
   const [groupBy, setGroupBy] = useState("none"); // "none", "project", "category", "priority"
@@ -307,7 +309,7 @@ export const NotesTab = ({
           </div>
 
           {/* Filters Group */}
-          <div className="ribbon-group">
+          {/* <div className="ribbon-group">
             <div className="group-label">Filter & Sort</div>
             <div className="group-controls">
               <NoteFilters
@@ -318,6 +320,9 @@ export const NotesTab = ({
                 compact={true}
               />
               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="ribbon-select">
+                <option value="sort_by" className="sort-by-label">
+                  Sort By:
+                </option>
                 <option value="-created_at">Newest First</option>
                 <option value="created_at">Oldest First</option>
                 <option value="-updated_at">Recently Updated</option>
@@ -327,7 +332,7 @@ export const NotesTab = ({
                 <option value="-is_important,created_at">Important First</option>
               </select>
             </div>
-          </div>
+          </div> */}
 
           {/* View Group */}
           <div className="ribbon-group">
@@ -335,23 +340,15 @@ export const NotesTab = ({
             <div className="group-controls">
               <div className="view-mode-selector">
                 <ActionButton
-                  variant={useBlockMode ? "primary" : "secondary"}
-                  size="xs"
-                  onClick={() => setUseBlockMode(!useBlockMode)}
-                  title="Toggle Block Mode"
-                  className="ribbon-icon-button">
-                  <MaterialIcon icon="view_module" size={16} />
-                </ActionButton>
-                <ActionButton
-                  variant={viewMode === "grid" ? "primary" : "secondary"}
+                  variant={viewMode === "grid" ? "primary" : "glass"}
                   size="xs"
                   onClick={() => setViewMode("grid")}
                   title="Grid View"
                   className="ribbon-icon-button">
-                  <MaterialIcon icon="grid_view" size={16} />
+                  <MaterialIcon icon="grid_view" size={20} />
                 </ActionButton>
                 <ActionButton
-                  variant={viewMode === "columns" ? "primary" : "secondary"}
+                  variant={viewMode === "columns" ? "primary" : "cold"}
                   size="xs"
                   onClick={() => setViewMode("columns")}
                   title="Column View"
@@ -372,27 +369,6 @@ export const NotesTab = ({
               )}
             </div>
           </div>
-
-          {/* Stats Group */}
-          {stats && (
-            <div className="ribbon-group">
-              <div className="group-label">Stats</div>
-              <div className="group-controls stats-display">
-                <div className="stat-item">
-                  <MaterialIcon icon="note" size={16} />
-                  <span>{stats.total_notes}</span>
-                </div>
-                <div className="stat-item">
-                  <MaterialIcon icon="check_circle" size={16} />
-                  <span>{stats.completed_notes}</span>
-                </div>
-                <div className="stat-item">
-                  <MaterialIcon icon="star" size={16} />
-                  <span>{stats.important_notes}</span>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
@@ -434,6 +410,46 @@ export const NotesTab = ({
 
         {!loading && notes.length > 0 && renderNotesContent()}
       </div>
+      {showFilterSidebar && (
+        <div className="filter-sidebar-container">
+          <div className="filter-sidebar-header">
+            <span className="filter-sidebar-title">FILTER + SORT</span>
+            <button
+              type="button"
+              className="filter-sidebar-close-button"
+              onClick={onCloseFilterSidebar}
+              title="Close">
+              <MaterialIcon icon="close" size={18} />
+            </button>
+          </div>
+          <div className="filter-sidebar-content">
+            <div className="filter-sidebar-ribbon-group">
+              <div className="filter-sidebar-group-controls">
+                <NoteFilters
+                  filters={filters}
+                  onFiltersChange={handleFiltersChange}
+                  onClearFilters={clearFilters}
+                  resultCount={getFilteredNoteCount()}
+                  compact={true}
+                  className="filter-sidebar-flex"
+                />
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="ribbon-select">
+                  <option value="sort_by" className="sort-by-label">
+                    Sort By:
+                  </option>
+                  <option value="-created_at">Newest First</option>
+                  <option value="created_at">Oldest First</option>
+                  <option value="-updated_at">Recently Updated</option>
+                  <option value="title">Title A-Z</option>
+                  <option value="-title">Title Z-A</option>
+                  <option value="category">Category</option>
+                  <option value="-is_important,created_at">Important First</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

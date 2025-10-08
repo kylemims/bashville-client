@@ -14,6 +14,7 @@ export const Notes = () => {
   // ✅ UI/shell state lifted here because header buttons live here
   const [showQuickNote, setShowQuickNote] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  const [showFilterSidebar, setShowFilterSidebar] = useState(false);
 
   return (
     <div className="page-content page-enter">
@@ -37,21 +38,25 @@ export const Notes = () => {
             <div className="header-actions">
               {/* ✅ Moved buttons up; they toggle parent state */}
               <ActionButton
-                variant="secondary"
-                size="md"
-                onClick={() => setShowStats((v) => !v)}
-                title="Toggle Statistics">
-                <MaterialIcon icon="analytics" size={18} />
-                Stats
-              </ActionButton>
-
-              <ActionButton
-                variant="secondary"
-                size="md"
+                variant="cold"
+                size="sm"
                 onClick={() => setShowQuickNote((v) => !v)}
                 title="Quick Note">
-                <MaterialIcon icon="add" size={18} />
-                Note
+                <MaterialIcon icon="note_stack_add" size={24} />
+              </ActionButton>
+              <ActionButton
+                variant="cold"
+                size="sm"
+                onClick={() => setShowFilterSidebar((v) => !v)}
+                title="Filter & Sort">
+                <MaterialIcon icon="filter_alt" size={24} />
+              </ActionButton>
+              <ActionButton
+                variant="cold"
+                size="xs"
+                onClick={() => setShowStats((v) => !v)}
+                title="Toggle Statistics">
+                <MaterialIcon icon="bar_chart" size={24} />
               </ActionButton>
 
               {/* <ActionButton
@@ -75,6 +80,8 @@ export const Notes = () => {
             showQuickNote={showQuickNote}
             onCloseQuickNote={() => setShowQuickNote(false)}
             onOpenQuickNote={() => setShowQuickNote(true)}
+            showFilterSidebar={showFilterSidebar}
+            onCloseFilterSidebar={() => setShowFilterSidebar(false)}
           />
         </div>
       </div>

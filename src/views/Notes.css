@@ -58,6 +58,11 @@
   gap: 12px;
 }
 
+.header-actions button {
+  gap: 5px;
+  padding: 0px 12px;
+}
+
 /* ===== NOTES PAGE CONTENT ===== */
 .notes-page-content {
   flex: 1; /* Take remaining space */

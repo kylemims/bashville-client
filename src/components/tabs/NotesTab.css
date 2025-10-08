@@ -132,17 +132,13 @@
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s ease;
+  width: 100px;
 }
 
 .ribbon-select:focus {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(254, 227, 148, 0.2);
-}
-
-.ribbon-select option {
-  background: var(--bg-primary);
-  color: var(--text);
 }
 
 /* Stats Display */
@@ -491,12 +487,20 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
-  border-bottom: 2px solid var(--border);
-  background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  /* border-bottom: 2px solid var(--bg-primary); */
+  /* background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary) 80%, var(--bg-secondary)); */
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--bg-primary),
+    rgba(84, 133, 109, 0.1) 60%,
+    transparent 100%
+  );
   border-radius: 12px 12px 0 0;
   position: sticky;
   top: 0;
   z-index: 10;
+  border-bottom: 2px solid var(--bg-primary) !important;
 }
 
 .column-title {
@@ -664,4 +668,72 @@
 .notes-column[data-category="reminder"] .column-count {
   background: var(--color-primary);
   color: var(--bg-primary);
+}
+
+/* filter & sort sidebar */
+
+.filter-sidebar-container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-secondary);
+  border: 4px inset rgba(173, 173, 164, 0.4);
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  box-shadow: 0px 0px 4px 2px rgba(222, 218, 196, 0.1);
+  top: 30;
+  bottom: 20;
+  right: 0;
+  position: absolute;
+  overflow: auto;
+  min-height: 400px;
+  min-width: 250px;
+  z-index: 5000;
+}
+
+.filter-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  letter-spacing: 1px;
+  background-color: var(--bg-input);
+  width: 100%;
+  padding: 0.5rem 1rem;
+}
+
+.filter-sidebar-close-button {
+  background: var(--bg-secondary);
+  border: 1px solid rgb(63, 61, 61, 0.8);
+  border-radius: 100%;
+  color: var(--text);
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-sidebar-close-button:hover {
+  background: var(--mutedx);
+  color: var(--color-secondary);
+  transition: ease 0.3s;
+  transform: translateY(-2px);
+}
+
+.filter-sidebar-content,
+.filter-sidebar-group-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.filter-sidebar-ribbon-group {
+  padding: 0.5rem;
+  width: 100%;
+}
+
+.filter-sidebar-ribbon-group select.ribbon-select {
+  width: 100%;
+  padding: 0.5rem 0.25rem;
 }

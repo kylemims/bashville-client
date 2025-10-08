@@ -7,7 +7,7 @@ export const NoteFilters = ({ filters, onFiltersChange, onClearFilters, resultCo
   const [isExpanded, setIsExpanded] = useState(false);
 
   const categoryOptions = [
-    { value: "", label: "All Categories" },
+    { value: "", label: "Category" },
     { value: "todo", label: "Todo" },
     { value: "bug", label: "Bug" },
     { value: "wishlist", label: "Wishlist" },
@@ -18,13 +18,13 @@ export const NoteFilters = ({ filters, onFiltersChange, onClearFilters, resultCo
   ];
 
   const completionOptions = [
-    { value: null, label: "All Status" },
+    { value: null, label: "Status" },
     { value: true, label: "Completed" },
     { value: false, label: "Incomplete" },
   ];
 
   const importanceOptions = [
-    { value: null, label: "All Priority" },
+    { value: null, label: "Priority" },
     { value: true, label: "Important" },
     { value: false, label: "Normal" },
   ];
@@ -45,7 +45,7 @@ export const NoteFilters = ({ filters, onFiltersChange, onClearFilters, resultCo
   // Compact mode for ribbon interface
   if (compact) {
     return (
-      <div className="note-filters compact">
+      <div className="filter-sidebar-content">
         <select
           value={filters.category || ""}
           onChange={(e) => handleFilterChange("category", e.target.value)}

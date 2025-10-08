@@ -9,6 +9,7 @@
   min-height: 180px;
   position: relative;
   margin: 0;
+  padding: 0.25rem 0.5rem;
 }
 
 .block-note-card:hover {

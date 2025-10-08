@@ -122,6 +122,45 @@
   background: var(--mutedx);
   color: var(--color-secondary);
 }
+
+.action-button--glass {
+  /* background-color: #d8cfcf;
+  border-radius: 12px;
+  box-shadow: inset 4px 4px 10px #999797, inset 10px -10px 20px #867f7f;
+  color: #4d4d4d;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 15px 0px;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid rgb(36, 34, 34); */
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--text);
+  border: 1px solid var(--muted);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  gap: 0.4rem;
+  backdrop-filter: blur(10px);
+}
+.action-button--glass:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: var(--color-accent);
+  color: var(--color-primary);
+}
+.action-button--cold {
+  background: none;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0rem;
+  font-size: 1.2rem;
+  height: 38px;
+  width: 42px;
+  /* min-height: 30px; */
+}
+
+.action-button--cold:hover:not(:disabled) {
+  background: var(--mutedx);
+  color: var(--color-accent);
+}
 .action-button--add-field {
   background: var(--bg-secondary);
   color: var(--color-accent);
