@@ -9,6 +9,7 @@ function App() {
       <Router>
         <AuthProvider>
           <Navbar />
+          <div className="spacer"></div>
           <main>
             <ApplicationViews />
           </main>

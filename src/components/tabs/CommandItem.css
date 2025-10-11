@@ -2,10 +2,10 @@
   background: var(--bg-primary);
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 1rem;
+  padding: 0.875rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  /* align-items: center; */
   transition: all 0.2s ease;
   border-color: var(--color-primary);
   box-shadow: 0 4px 15px rgba(137, 174, 78, 0.206);
@@ -23,20 +23,20 @@
 
 .command-content {
   flex: 1;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
 .command-label {
   font-weight: 600;
   color: var(--color-primary);
   margin-bottom: 0.25rem;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
 }
 
 .command-text {
   font-family: "Fira Code", monospace;
   color: var(--color-accent);
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   display: inline-block;
@@ -44,6 +44,7 @@
 
 .command-actions {
   display: flex;
+  flex-direction: column;
   align-items: flex-end;
   /* gap: 0.2rem; */
   flex-shrink: 0;

@@ -186,6 +186,9 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
                 <MaterialIcon icon="check_circle" size={16} color="var(--color-accent)" />
               )}
             </div>
+            <div>
+              <p>{note.project_title}</p>
+            </div>
             <div
               className="note-category"
               style={{

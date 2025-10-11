@@ -1,4 +1,7 @@
 export const hexToRgb = (hex) => {
+  if (!hex || typeof hex !== "string") {
+    return [0, 0, 0]; // Return black as fallback
+  }
   let c = hex.replace("#", "");
   if (c.length === 3)
     c = c
@@ -20,6 +23,9 @@ export const luminance = ([r, g, b]) => {
 
 // Calculate contrast ratio (WCAG)
 export const contrastRatio = (hex1, hex2) => {
+  if (!hex1 || !hex2 || typeof hex1 !== "string" || typeof hex2 !== "string") {
+    return 1; // Return minimum contrast as fallback
+  }
   const lum1 = luminance(hexToRgb(hex1));
   const lum2 = luminance(hexToRgb(hex2));
   const brightest = Math.max(lum1, lum2);
@@ -33,12 +39,18 @@ export const isContrastAccessible = (hex1, hex2, minRatio = 4.5) => {
 };
 
 export const getOptimalTextColor = (backgroundHex) => {
+  if (!backgroundHex || typeof backgroundHex !== "string") {
+    return "#000000"; // Return black as fallback
+  }
   const lum = luminance(hexToRgb(backgroundHex));
 
   return lum > 0.5 ? "#000000" : "#ffffff";
 };
 
 export const getBestTextColor = (backgroundHex) => {
+  if (!backgroundHex || typeof backgroundHex !== "string") {
+    return "#000000"; // Return black as fallback
+  }
   const whiteContrast = contrastRatio("#ffffff", backgroundHex);
   const blackContrast = contrastRatio("#000000", backgroundHex);
 

@@ -9,9 +9,10 @@ export const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
 
+  // Style function for NavLink active/inactive states
   const linkStyle = ({ isActive }) => ({
     color: isActive ? "var(--color-primary)" : "var(--text)",
-    fontWeight: isActive ? 800 : 600,
+    fontWeight: isActive ? 900 : 600,
   });
 
   const toggleMenu = (e) => {
@@ -64,10 +65,13 @@ export const Navbar = () => {
           {isAuthenticated ? (
             // Authenticated user menu
             <>
-              <NavLink to="/dashboard" style={linkStyle} onClick={closeMenu}>
+              <NavLink className="" to="/dashboard" onClick={closeMenu} style={linkStyle}>
                 Dashboard
               </NavLink>
-              <NavLink to="/projects/new" style={linkStyle} onClick={closeMenu}>
+              <NavLink className="" to="/notes" onClick={closeMenu} style={linkStyle}>
+                Notes
+              </NavLink>
+              <NavLink className="navbar-nav-link" to="/projects/new" onClick={closeMenu} style={linkStyle}>
                 New Project
               </NavLink>
 

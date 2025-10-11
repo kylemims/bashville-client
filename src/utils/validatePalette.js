@@ -13,6 +13,7 @@ function isColorTooExtreme(colors) {
   ];
 
   for (const color of colorList) {
+    if (!color || typeof color !== "string") continue; // Skip invalid colors
     const lum = luminance(hexToRgb(color));
     // Check for extremely bright colors (pure white or near-white with saturation)
     if (lum > 0.95) return true;
@@ -23,6 +24,26 @@ function isColorTooExtreme(colors) {
 }
 
 export function validatePalette(colors) {
+  // Ensure colors object exists and has required properties
+  if (!colors || typeof colors !== "object") {
+    return {
+      overallScore: 0,
+      issues: ["Invalid color palette data"],
+      checks: {},
+      hasAccessibilityIssues: true,
+      hasDesignIssues: true,
+    };
+  }
+
+  // Ensure all required color properties exist with fallbacks
+  const safeColors = {
+    primary_hex: colors.primary_hex || "#fee394",
+    secondary_hex: colors.secondary_hex || "#d46a6a",
+    accent_hex: colors.accent_hex || "#46cba7",
+    ui_hex: colors.ui_hex || "#efefef",
+    background_hex: colors.background_hex || "#0c0806",
+  };
+
   const checks = {
     // Test real-world contrast scenarios, not auto-optimized ones
 
@@ -30,10 +51,10 @@ export function validatePalette(colors) {
     backgroundReadability: {
       label: "Background readability",
       passes:
-        isContrastAccessible("#000000", colors.background_hex) ||
-        isContrastAccessible("#ffffff", colors.background_hex),
+        isContrastAccessible("#000000", safeColors.background_hex) ||
+        isContrastAccessible("#ffffff", safeColors.background_hex),
       element: "page background",
-      background: colors.background_hex,
+      background: safeColors.background_hex,
       text: "default text",
     },
 
@@ -41,10 +62,10 @@ export function validatePalette(colors) {
     uiContrast: {
       label: "UI element contrast",
       passes:
-        isContrastAccessible("#000000", colors.ui_hex, 3.0) ||
-        isContrastAccessible("#ffffff", colors.ui_hex, 3.0),
+        isContrastAccessible("#000000", safeColors.ui_hex, 3.0) ||
+        isContrastAccessible("#ffffff", safeColors.ui_hex, 3.0),
       element: "cards and navigation",
-      background: colors.ui_hex,
+      background: safeColors.ui_hex,
       text: "interface text",
     },
 
@@ -52,37 +73,37 @@ export function validatePalette(colors) {
     primaryButtonReadability: {
       label: "Primary button text",
       passes:
-        isContrastAccessible("#000000", colors.primary_hex, 4.5) ||
-        isContrastAccessible("#ffffff", colors.primary_hex, 4.5),
+        isContrastAccessible("#000000", safeColors.primary_hex, 4.5) ||
+        isContrastAccessible("#ffffff", safeColors.primary_hex, 4.5),
       element: "primary button",
-      background: colors.primary_hex,
+      background: safeColors.primary_hex,
       text: "button text",
     },
 
     secondaryButtonReadability: {
       label: "Secondary button text",
       passes:
-        isContrastAccessible("#000000", colors.secondary_hex, 4.5) ||
-        isContrastAccessible("#ffffff", colors.secondary_hex, 4.5),
+        isContrastAccessible("#000000", safeColors.secondary_hex, 4.5) ||
+        isContrastAccessible("#ffffff", safeColors.secondary_hex, 4.5),
       element: "secondary button",
-      background: colors.secondary_hex,
+      background: safeColors.secondary_hex,
       text: "button text",
     },
 
     accentButtonReadability: {
       label: "Accent button text",
       passes:
-        isContrastAccessible("#000000", colors.accent_hex, 4.5) ||
-        isContrastAccessible("#ffffff", colors.accent_hex, 4.5),
+        isContrastAccessible("#000000", safeColors.accent_hex, 4.5) ||
+        isContrastAccessible("#ffffff", safeColors.accent_hex, 4.5),
       element: "accent button",
-      background: colors.accent_hex,
+      background: safeColors.accent_hex,
       text: "button text",
     },
 
     // Color differentiation - can users tell colors apart?
     primarySecondaryDiff: {
       label: "Primary vs Secondary distinction",
-      passes: isContrastAccessible(colors.primary_hex, colors.secondary_hex, 2.0),
+      passes: isContrastAccessible(safeColors.primary_hex, safeColors.secondary_hex, 2.0),
       element: "color distinction",
       background: "various",
       text: "color differentiation",
@@ -90,7 +111,7 @@ export function validatePalette(colors) {
 
     uiBackgroundDiff: {
       label: "UI vs Background distinction",
-      passes: isContrastAccessible(colors.ui_hex, colors.background_hex, 1.5),
+      passes: isContrastAccessible(safeColors.ui_hex, safeColors.background_hex, 1.5),
       element: "layout clarity",
       background: "various",
       text: "visual hierarchy",
@@ -99,7 +120,7 @@ export function validatePalette(colors) {
     // Extreme color checks
     extremelyBright: {
       label: "Overly bright colors",
-      passes: !isColorTooExtreme(colors),
+      passes: !isColorTooExtreme(safeColors),
       element: "color intensity",
       background: "various",
       text: "visual comfort",

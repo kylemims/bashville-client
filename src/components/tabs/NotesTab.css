@@ -30,7 +30,7 @@
 }
 
 .ribbon-tab.active {
-  color: var(--color-primary);
+  color: var(--color-secondary);
   background: var(--bg-secondary);
   border-bottom-color: var(--color-primary);
 }
@@ -45,7 +45,7 @@
   padding: 12px;
   gap: 20px;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .ribbon-group {
@@ -86,7 +86,15 @@
 .search-controls .search-input-group {
   display: flex;
   align-items: center;
-  gap: 6px;
+  /* gap: 6px; */
+}
+
+.search-input-group button {
+  margin-left: -10px;
+  background-color: var(--bg-input);
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border: 2px outset black;
 }
 
 .ribbon-search-input {
@@ -113,13 +121,16 @@
 /* Ribbon Buttons - Let ActionButton handle all styling */
 .notes-ribbon .ribbon-button {
   /* Only minimal adjustments for ribbon context */
-  font-size: 13px !important;
+  /* font-size: 13px !important; */
   white-space: nowrap !important;
+  /* background: none; */
 }
 
 .notes-ribbon .ribbon-icon-button {
   /* Only minimal adjustments for icon buttons */
-  min-width: 32px !important;
+  width: 30px;
+  height: 28px;
+  /* background: none; */
 }
 
 /* Ribbon Selects */
@@ -467,18 +478,19 @@
   gap: 24px;
   overflow-x: auto;
   padding: 8px 0 20px 0;
-  min-height: 400px;
+  /* min-height: 400px; */
   align-items: flex-start;
+  min-height: 100%;
 }
 
 .notes-column {
   flex: 0 0 340px;
-  background: var(--bg-secondary);
+  background: rgb(20, 18, 18);
   border: 1px solid var(--border);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  max-height: 75vh;
+  max-height: 100dvh;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -528,7 +540,7 @@
   padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
   overflow-y: auto;
   min-height: 0; /* Important for proper scrolling */
 }

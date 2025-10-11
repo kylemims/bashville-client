@@ -12,6 +12,7 @@ export const ColorPaletteCard = ({
   onDelete,
   onQuickColorEdit,
   disabled,
+  layout = "default", // "default" or "column"
 }) => {
   const [editingColor, setEditingColor] = useState(null);
 
@@ -34,7 +35,11 @@ export const ColorPaletteCard = ({
   };
 
   return (
-    <div className={`color-palette-card ${isSelected ? "selected" : ""}`} onClick={onClick}>
+    <div
+      className={`color-palette-card ${isSelected ? "selected" : ""} ${
+        layout === "column" ? "layout-column" : ""
+      }`}
+      onClick={onClick}>
       <div className="palette-header">
         <h3 className="palette-name">{palette.name}</h3>
         {isSelected && (
@@ -69,7 +74,7 @@ export const ColorPaletteCard = ({
         </div>
       </div>
 
-      <div className="color-banner">
+      <div className={`color-banner ${layout === "column" ? "color-banner-column" : ""}`}>
         {colorFields.map((color) => (
           <div
             key={color.key}

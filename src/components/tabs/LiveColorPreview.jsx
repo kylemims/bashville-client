@@ -12,6 +12,11 @@ export const LiveColorPreview = ({
 }) => {
   const [mounted, setMounted] = useState(false);
 
+  // Debug: Check what data we're receiving
+  console.log("🎨 LiveColorPreview received formData:", formData);
+  console.log("🎨 LiveColorPreview isVisible:", isVisible);
+  console.log("🎨 LiveColorPreview formData.style_preferences:", formData?.style_preferences);
+
   // Use our new color system hook
   const { semanticColors, getColor, getHeroButton, getFeatureColor, getThemeShadow, getElementRadius } =
     useColorSystem(formData, formData?.style_preferences);
@@ -166,7 +171,19 @@ export const LiveColorPreview = ({
     });
   }, [formData, mounted, semanticColors, getHeroBackgroundStyle, getElementRadius]);
 
-  if (!isVisible || !formData) {
+  if (!isVisible) {
+    console.log("🎨 LiveColorPreview: Not visible, returning null");
+    return null;
+  }
+
+  if (!formData) {
+    console.log("🎨 LiveColorPreview: No formData, returning null");
+    return null;
+  }
+
+  // Check if we have the minimum required color data
+  if (!formData.primary_hex && !formData.secondary_hex && !formData.accent_hex) {
+    console.log("🎨 LiveColorPreview: No color data found, returning null");
     return null;
   }
 

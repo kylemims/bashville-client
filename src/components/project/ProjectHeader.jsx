@@ -62,7 +62,6 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
           <ActionButton variant="back" onClick={onBack} title="Back to Dashboard">
             <MaterialIcon icon="arrow_back" size={20} />
           </ActionButton>
-          <h1 className="project-title">{title}</h1>
         </div>
         <div className="project-actions">
           {isEditing ? (
@@ -119,19 +118,19 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
           <ActionButton
             onClick={onGenerateSetup}
             variant="accent"
-            size="sm"
+            size="xs"
             aria-label="Generate Setup Script & README"
             disabled={isEditing}>
-            <MaterialIcon icon="markdown" size={24} />
+            <MaterialIcon icon="markdown" size={20} />
           </ActionButton>
 
           <ActionButton
             onClick={onProjectDelete}
             variant="back-secondary"
-            size="sm"
+            size="xs"
             aria-label="Delete Project"
             disabled={isEditing}>
-            <MaterialIcon icon="delete" size={24} />
+            <MaterialIcon icon="delete" size={20} />
           </ActionButton>
         </div>
       </div>

@@ -176,7 +176,7 @@ a {
 }
 
 .page-content {
-  padding: 1rem 0;
+  padding: 3rem 0;
 }
 
 .page-card {
@@ -274,4 +274,8 @@ a {
 
 html {
   scroll-behavior: smooth;
+}
+
+.spacer {
+  height: 30px;
 }

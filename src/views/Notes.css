@@ -78,6 +78,10 @@
   border-radius: 0;
 }
 
+.notes-page-content .page-content {
+  padding: 0px 12px;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 768px) {
   .notes-page-header {

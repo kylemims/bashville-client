@@ -301,7 +301,7 @@ export const NotesTab = ({
                   onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                   className="ribbon-search-input"
                 />
-                <ActionButton variant="primary" size="sm" onClick={handleSearch} disabled={loading}>
+                <ActionButton variant="muted" size="xs" onClick={handleSearch} disabled={loading}>
                   <MaterialIcon icon="search" size={16} />
                 </ActionButton>
               </div>
@@ -340,7 +340,7 @@ export const NotesTab = ({
             <div className="group-controls">
               <div className="view-mode-selector">
                 <ActionButton
-                  variant={viewMode === "grid" ? "primary" : "glass"}
+                  variant={viewMode === "grid" ? "primary" : "cold"}
                   size="xs"
                   onClick={() => setViewMode("grid")}
                   title="Grid View"
@@ -353,7 +353,7 @@ export const NotesTab = ({
                   onClick={() => setViewMode("columns")}
                   title="Column View"
                   className="ribbon-icon-button">
-                  <MaterialIcon icon="view_column" size={16} />
+                  <MaterialIcon icon="view_column" size={20} />
                 </ActionButton>
               </div>
               {viewMode === "columns" && (

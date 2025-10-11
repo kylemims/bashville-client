@@ -146,21 +146,22 @@ export const ProjectDetail = () => {
 
   return (
     <div className="page-content page-enter">
-      <div className="project-tab-title-row">
-        <ProjectHeader
-          title={state.project.title}
-          onBack={() => navigate(ROUTES.DASHBOARD)}
-          onGenerateSetup={handleGenerateSetup}
-          onProjectDelete={handleDeleteProject}
-          onProjectUpdate={handleProjectUpdate}
+      <div className="project-title-tabs-container-row">
+        <div className="project-tab-title-row">
+          <ProjectHeader
+            title={state.project.title}
+            onBack={() => navigate(ROUTES.DASHBOARD)}
+            onGenerateSetup={handleGenerateSetup}
+            onProjectDelete={handleDeleteProject}
+            onProjectUpdate={handleProjectUpdate}
+          />
+        </div>
+        <ProjectTabs
+          activeTab={state.activeTab}
+          onTabChange={(tab) => updateState({ activeTab: tab })}
+          onAddNew={handleAddNew}
         />
       </div>
-      <ProjectTabs
-        activeTab={state.activeTab}
-        onTabChange={(tab) => updateState({ activeTab: tab })}
-        onAddNew={handleAddNew}
-      />
-
       <div className="tab-content">
         {state.activeTab === "commands" ? (
           <CommandsTab

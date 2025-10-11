@@ -1,8 +1,8 @@
 .project-tabs-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  /* justify-content: flex-end; */
+  /* align-items: center; */
   /* border-bottom: 1px solid var(--muted); */
   /* margin-bottom: 2rem; */
   /* padding-bottom: 0.5rem; */
@@ -62,7 +62,6 @@
   transition: all 0.2s ease;
   /* border-right: 1px solid var(--bg-primary); */
   width: 130px;
-  border-bottom: 2px solid transparent;
 }
 
 button.all-tabs-select {
@@ -71,25 +70,37 @@ button.all-tabs-select {
   justify-content: center;
 }
 
-.all-tabs-select.active {
-  border-bottom: 2px solid var(--color-accent);
-  background: linear-gradient(90deg, #46cba730, var(--bg-secondary), var(--bg-secondary), var(--bg-primary));
+.all-tabs-select:hover {
+  /* border-bottom: 2px solid var(--color-accent); */
+  /* background: linear-gradient(90deg, #d1c45f30, var(--bg-secondary), #d1c45f30, var(--bg-primary)); */
+  background: linear-gradient(150deg, #d46a6a30, #46cba730) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(254, 227, 148, 0.3);
+  transition: ease all 0.2s;
 }
 
-.all-tabs-select:focus {
+.all-tabs-select.active {
+  border-bottom: 2px solid var(--color-accent);
+  background: linear-gradient(150deg, #46cba760, #d46a6a60, #46cba770);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: ease all 0.2s;
+}
+
+/* .all-tabs-select:focus {
   outline: none;
-  /* border-color: var(--color-primary); */
   border-bottom: 2px solid var(--color-accent);
   box-shadow: 0 2px 0 0px rgba(254, 227, 148, 0.2);
-  background: linear-gradient(90deg, #46cba730, var(--bg-secondary), var(--bg-secondary), var(--bg-primary));
-}
+  background: linear-gradient(90deg, #46cba750, var(--bg-secondary), var(--bg-secondary), var(--bg-primary));
+} */
 
 .all-tabs-select option {
   /* background: var(--bg-primary); */
   color: var(--text);
 }
 
-.project-tabs-container :nth-child(4) {
+/* .project-tabs-container :nth-child(4) {
   background: linear-gradient(
     90deg,
     var(--bg-primary),
@@ -99,6 +110,9 @@ button.all-tabs-select {
     var(--bg-primary)
   );
 }
+.project-tabs-container:hover :nth-child(4) {
+  background: linear-gradient(90deg, #d1c45f30, var(--bg-secondary), #d1c45f30, var(--bg-primary));
+} */
 
 @media (max-width: 768px) {
   .project-tabs-container {

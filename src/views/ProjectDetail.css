@@ -1,5 +1,13 @@
 .project-tab-title-row {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.project-tab-title-row h1 {
+  text-wrap-mode: nowrap;
+  color: var(--color-primary);
 }
 
 .tab-ribbon-style {
@@ -11,4 +19,14 @@
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.project-title-tabs-container-row {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: end;
+
+  /* gap: 1rem; */
+  /* margin-bottom: 1rem; */
 }

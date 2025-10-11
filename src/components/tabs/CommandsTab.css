@@ -1,12 +1,18 @@
 /* Main tab container */
 .commands-tab {
   display: grid;
-  grid-template-columns: 500px 1fr;
+  grid-template-columns: 5fr 4fr;
   /* flex-direction: column; */
   gap: 2rem;
   /* padding-left: 20px;
   padding-right: 20px; */
   padding-bottom: 20px;
+}
+
+@media (min-width: 1300px) {
+  .commands-tab {
+    grid-template-columns: 3fr 4fr;
+  }
 }
 
 /* Section containers */
@@ -25,18 +31,7 @@
   transform: translateY(-1px);
 }
 
-.section-title {
-  color: var(--color-primary);
-  /* font-size: 1.2rem; */
-  font-weight: 800;
-  margin-bottom: 1.5rem;
-  /* margin-left: 2rem; */
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.section-title::after {
+/* .section-title::after {
   content: "";
   height: 2px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
@@ -44,6 +39,36 @@
   margin-top: 0.3rem;
   margin-right: 0.5rem;
   flex: 1;
+} */
+
+.command-section-title {
+  display: flex;
+  align-items: center;
+  color: var(--color-primary);
+  font-size: 1.1rem;
+  font-weight: 800;
+  /* margin-bottom: 10px; */
+  flex: 0;
+  /* margin-right: 0.5rem; */
+  text-wrap: nowrap;
+  /* text-transform: uppercase; */
+}
+
+.command-section-action-button {
+  background: linear-gradient(150deg, #fee39420, #fee39420, #fee39420);
+  /* background: var(--color-primary); */
+}
+.command-section-action-button:hover {
+  background: linear-gradient(150deg, #46cba760, #d46a6a60, #46cba770) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(254, 227, 148, 0.1);
+  transition: ease all 0.2s;
+}
+
+.add-new-command-text:hover {
+  color: var(--color-primary);
+  /* font-size: 0.875rem; */
+  font-weight: 600;
 }
 
 .command-header-row {
@@ -51,12 +76,22 @@
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  /* margin-bottom: 1.5rem; */
 }
-
+.command-header-stash-row {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  /* margin-bottom: 1.5rem; */
+}
 .command-gradient-line {
   flex: 1;
-  height: 2px;
+  height: 2.5px;
   background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
   border-radius: 2px;
   margin-top: 0.1rem;
@@ -85,9 +120,10 @@
 
 /* Command list (for project commands) */
 .command-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
+  display: grid;
+  gap: 1rem;
+  /* grid-template-columns: repeat(2, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 /* Available commands grid */

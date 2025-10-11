@@ -128,8 +128,9 @@ export const CommandsTab = ({
   return (
     <div className="commands-tab">
       <div className="section-project">
-        <div className="section-header">
-          <h3 className="section-title">Project Commands</h3>
+        <div className="command-header-row">
+          <h3 className="command-section-title">{project.title}</h3>
+          <div className="command-gradient-line"></div>
         </div>
 
         <ErrorMessage message={error} onDismiss={() => setError("")} />
@@ -163,16 +164,18 @@ export const CommandsTab = ({
 
       <div className="section-stash">
         <div className="command-header-row">
-          <h3 className="section-title-available">Command Stash</h3>
-          <div className="command-gradient-line"></div>
+          <h3 className="command-section-title">Command Stash</h3>
           <ActionButton
             variant="add-field"
             size="xs"
             onClick={() => onNewCommandFormChange(true)}
-            // className="section-action-button"
-            title="Add Model">
-            <MaterialIcon icon="add" size={26} color="var(--muted)" />
+            className="command-section-action-button"
+            title="Add New Command">
+            <MaterialIcon icon="add" size={20} color="var(--muted)" />
+
+            <span className="add-new-command-text">Add New</span>
           </ActionButton>
+          <div className="command-gradient-line"></div>
         </div>
         <div className="available-commands-grid">
           {availableCommands.length > 0 ? (

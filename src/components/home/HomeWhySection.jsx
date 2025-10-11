@@ -56,7 +56,7 @@ export const HomeWhySection = () => {
             <h3 className="why-title">{c.title}</h3>
             <p className="why-blurb">{c.blurb}</p>
             <div className="why-actions">
-              <ActionButton variant="tab" size="sm" onClick={c.cta.onClick}>
+              <ActionButton variant="accent" size="sm" onClick={c.cta.onClick}>
                 {c.cta.label}
               </ActionButton>
             </div>

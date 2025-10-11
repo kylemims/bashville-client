@@ -10,6 +10,7 @@ import { ErrorMessage } from "../common/ErrorMessage";
 import { HoverTooltip } from "../common/HoverTooltip.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
+import { LiveColorPreview } from "./LiveColorPreview.jsx";
 import "./ColorsTab.css";
 
 export const ColorsTab = ({
@@ -24,9 +25,40 @@ export const ColorsTab = ({
   const [editingPalette, setEditingPalette] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isMobilePreview, setIsMobilePreview] = useState(false);
 
-  const currentPalette = project.color_palette_preview;
+  const handleTogglePreview = (isMobile) => {
+    setIsMobilePreview(isMobile);
+  };
 
+  // Get the current project's color palette - either selected or project default
+  const currentPalette = selectedPaletteId
+    ? availablePalettes.find((p) => p.id === selectedPaletteId)
+    : project.color_palette_preview || null;
+
+  // Prepare data for LiveColorPreview with proper structure and ensure minimum required fields
+  const paletteForPreview = currentPalette
+    ? {
+        primary_hex: currentPalette.primary_hex || "#fee394",
+        secondary_hex: currentPalette.secondary_hex || "#d46a6a",
+        accent_hex: currentPalette.accent_hex || "#46cba7",
+        background_hex: currentPalette.background_hex || "#0c0806",
+        ui_hex: currentPalette.ui_hex || "#efefef",
+        style_preferences: currentPalette.style_preferences || {},
+        ...currentPalette,
+      }
+    : {
+        primary_hex: "#fee394",
+        secondary_hex: "#d46a6a",
+        accent_hex: "#46cba7",
+        background_hex: "#0c0806",
+        ui_hex: "#efefef",
+        style_preferences: {},
+      };
+
+  // Debug: Check what data we're working with
+  console.log("🎯 ColorsTab currentPalette:", currentPalette);
+  console.log("🎯 ColorsTab paletteForPreview:", paletteForPreview);
   const handleQuickColorEdit = async (paletteId, colorUpdate) => {
     try {
       setLoading(true);
@@ -113,24 +145,46 @@ export const ColorsTab = ({
 
   return (
     <div className="colors-tab">
-      <div className="section">
-        <div className="command-header-row">
-          <h3 className="section-title-available">Project Colors</h3>
-          <div className="command-gradient-line"></div>
-        </div>
+      <div className="color-tab-main-section">
+        {/* <div className="command-header-row"><div className="command-gradient-line"></div></div> */}
 
         <ErrorMessage message={error} />
 
         {currentPalette && (
-          <div className="current-palette">
-            <ColorPaletteCard
-              palette={currentPalette}
-              isSelected={true}
-              onEdit={() => setEditingPalette(currentPalette.id)}
-              onDelete={() => handleDeletePalette(currentPalette.id)}
-              onQuickColorEdit={handleQuickColorEdit}
-              disabled={loading}
-            />
+          <div
+            className={`current-palette-section ${
+              editingPalette === currentPalette.id ? "with-preview" : "with-preview"
+            }`}>
+            <div className="current-palette-display">
+              <ColorPaletteCard
+                palette={currentPalette}
+                isSelected={true}
+                onEdit={() => setEditingPalette(currentPalette.id)}
+                onDelete={() => handleDeletePalette(currentPalette.id)}
+                onQuickColorEdit={handleQuickColorEdit}
+                disabled={loading}
+                layout="column"
+              />
+            </div>
+
+            <div className="live-preview-display">
+              {editingPalette && editingPalette === currentPalette.id ? (
+                <ColorPaletteForm
+                  palette={currentPalette}
+                  onSubmit={(data) => handleUpdatePalette(currentPalette.id, data)}
+                  onCancel={() => setEditingPalette(null)}
+                  disabled={loading}
+                  isEditing
+                />
+              ) : (
+                <LiveColorPreview
+                  formData={paletteForPreview}
+                  isVisible={true}
+                  isMobilePreview={isMobilePreview}
+                  onTogglePreview={handleTogglePreview}
+                />
+              )}
+            </div>
           </div>
         )}
 
@@ -142,7 +196,7 @@ export const ColorsTab = ({
           />
         )}
 
-        {editingPalette && (
+        {editingPalette && editingPalette !== currentPalette?.id && (
           <ColorPaletteForm
             palette={availablePalettes.find((p) => p.id === editingPalette)}
             onSubmit={(data) => handleUpdatePalette(editingPalette, data)}

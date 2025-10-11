@@ -61,10 +61,10 @@ export const CommandItem = ({ command, isEditing, onEdit, onSave, onCancel, onDe
       </div>
       <div className="command-actions">
         <ActionButton onClick={onEdit} variant="edit" size="xs" disabled={disabled}>
-          <MaterialIcon icon="edit" size={20} color="var(--muted)" className="hover-primary" />
+          <MaterialIcon icon="edit" size={16} color="var(--muted)" className="hover-primary" />
         </ActionButton>
         <ActionButton onClick={onDelete} variant="delete" size="xs" disabled={disabled}>
-          <MaterialIcon icon="delete" size={20} color="var(--color-secondary)" className="hover-primary" />
+          <MaterialIcon icon="delete" size={16} color="var(--color-secondary)" className="hover-primary" />
         </ActionButton>
       </div>
     </div>
