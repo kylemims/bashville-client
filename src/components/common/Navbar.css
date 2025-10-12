@@ -10,7 +10,7 @@
 }
 
 .navbar-container .navbar {
-  max-width: 1800px;
+  /* max-width: 1800px; */
   margin: 0 auto;
   padding: 0 1rem;
   /* position: fixed; */
@@ -21,7 +21,7 @@
 
 /* @media (min-width: 1220px) { */
 .navbar-container {
-  max-width: 2200px;
+  /* max-width: 2200px; */
   /* padding: 0 1rem; */
   display: flex;
   justify-content: space-between;

@@ -47,7 +47,7 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
   const categoryConfig = {
     bug: { icon: "bug_report", color: "var(--color-secondary)", label: "Bug" },
     todo: { icon: "task_alt", color: "var(--color-accent)", label: "Todo" },
-    wishlist: { icon: "star", color: "var(--color-primary)", label: "Wishlist" },
+    wishlist: { icon: "wand_stars", color: "var(--color-primary)", label: "Wishlist" },
     code: { icon: "code", color: "var(--muted)", label: "Code" },
     question: { icon: "help", color: "var(--color-accent)", label: "Question" },
     reminder: { icon: "schedule", color: "var(--color-primary)", label: "Reminder" },
@@ -59,9 +59,9 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
 
   // Priority display configurations
   const priorityConfig = {
-    low: { color: "var(--muted)", label: "Low", icon: "keyboard_arrow_down" },
-    medium: { color: "var(--color-primary)", label: "Medium", icon: "remove" },
-    high: { color: "var(--color-secondary)", label: "High", icon: "keyboard_arrow_up" },
+    low: { icon: "water", color: "#4A7CA8", label: "Low" },
+    medium: { icon: "water", color: "var(--color-primary)", label: "Medium" },
+    high: { icon: "water", color: "var(--color-secondary)", label: "High" },
   };
 
   const priorityDisplay = priorityConfig[note.priority_level] || priorityConfig.medium;
@@ -201,11 +201,11 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
             <div
               className="note-priority"
               style={{
-                backgroundColor: priorityDisplay.color,
-                color: "var(--bg-primary)",
+                // backgroundColor: priorityDisplay.color,
+                color: "priorityDisplay.color",
               }}>
-              <MaterialIcon icon={priorityDisplay.icon} size={10} />
-              <span>{priorityDisplay.label}</span>
+              <MaterialIcon icon={priorityDisplay.icon} size={18} color={priorityDisplay.color} />
+              {/* <span>{priorityDisplay.label}</span> */}
             </div>
 
             <span className="block-count">{blocks.length} blocks</span>

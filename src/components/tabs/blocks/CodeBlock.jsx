@@ -205,7 +205,9 @@ export function CodeBlock({ block, onUpdate, onDelete, onMoveUp, onMoveDown, isF
           </div>
         ) : (
           <div className="code-content code-placeholder">
-            <span style={{ color: "var(--muted)", fontStyle: "italic", padding: "12px", display: "block" }}>
+            <span
+              onClick={startEditing}
+              style={{ color: "var(--muted)", fontStyle: "italic", padding: "12px", display: "block" }}>
               Click edit to add code...
             </span>
           </div>

@@ -18,6 +18,7 @@
   position: relative;
   margin: 0;
   padding: 0.25rem 0.5rem;
+  min-width: 300px;
 }
 
 .block-note-card:hover {
@@ -134,14 +135,14 @@
 }
 
 .note-priority {
-  display: flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  padding: 2px 8px !important;
-  border-radius: 12px !important;
-  font-weight: 500 !important;
-  font-size: 11px !important;
-  text-transform: capitalize !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 11px;
+  text-transform: capitalize;
   white-space: nowrap;
 }
 
