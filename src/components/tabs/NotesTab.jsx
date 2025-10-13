@@ -7,6 +7,7 @@ import { BlockBasedNoteCard } from "../project/BlockBasedNoteCard.jsx";
 import { QuickNoteInput } from "./QuickNoteInput.jsx";
 import { NoteFilters } from "./NoteFilters.jsx";
 import { NoteStats } from "./NoteStats.jsx";
+import { useNavigate } from "react-router-dom";
 import "./NotesTab.css";
 
 export const NotesTab = ({
@@ -35,6 +36,7 @@ export const NotesTab = ({
   const [viewMode, setViewMode] = useState("grid"); // "grid" or "columns"
   const [useBlockMode, setUseBlockMode] = useState(true); // New block-based architecture
   const [groupBy, setGroupBy] = useState("none"); // "none", "project", "category", "priority"
+  const navigate = useNavigate();
 
   // Load notes when component mounts or filters change
   const loadNotes = useCallback(async () => {
@@ -153,6 +155,10 @@ export const NotesTab = ({
     }
   };
 
+  const onProjectClick = () => {
+    navigate(`/projects/${project?.id}`);
+  };
+
   const handleFiltersChange = (newFilters) => {
     setFilters((prevFilters) => ({ ...prevFilters, ...newFilters }));
   };
@@ -219,6 +225,7 @@ export const NotesTab = ({
               note={note}
               onUpdate={handleNoteUpdate}
               onDelete={() => handleNoteDelete(note.id)}
+              navigateProject={onProjectClick}
             />
           ))}
         </div>
@@ -243,6 +250,7 @@ export const NotesTab = ({
                   note={note}
                   onUpdate={handleNoteUpdate}
                   onDelete={() => handleNoteDelete(note.id)}
+                  navigateProject={onProjectClick}
                 />
               ))}
             </div>

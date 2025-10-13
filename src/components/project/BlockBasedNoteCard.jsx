@@ -7,7 +7,7 @@ import { CodeBlock } from "../tabs/blocks/CodeBlock.jsx";
 import { NoteMigrationHelper } from "./NoteMigrationHelper.jsx";
 import "./BlockBasedNoteCard.css";
 
-export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
+export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAddingBlock, setIsAddingBlock] = useState(false);
   const [isEditingMeta, setIsEditingMeta] = useState(false);
@@ -268,6 +268,12 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete }) {
               <MaterialIcon icon="code" size={14} />
             </button>
           </div>
+        </div>
+        <div className="note-card-title-icon-group">
+          <button type="button" className="proj-card-title-icon-btn" navigateProject={navigateProject}>
+            <MaterialIcon icon="diagnosis" size={18} />
+            {note.project_title}
+          </button>
         </div>
       </div>
 
