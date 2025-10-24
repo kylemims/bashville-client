@@ -87,62 +87,64 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
   ];
 
   return (
-    <div className="palette-form-container">
+    // <div className="palette-form-container">
+    <>
       <h3>{isEditing ? "Edit Color Palette" : "Create New Color Palette"}</h3>
 
       <div className="palette-form-with-preview">
-        <form onSubmit={handleSubmit} className="palette-form">
-          <FormField
-            label="Palette Name"
-            type="text"
-            value={formData.name}
-            onChange={(value) => handleChange("name", value)}
-            placeholder="Dark Theme Magic"
-            required
-            disabled={disabled}
-            autoFocus={!isEditing}
-          />
+        <div className="form-advanced-section">
+          <form onSubmit={handleSubmit} className="palette-form">
+            <FormField
+              label="Palette Name"
+              type="text"
+              value={formData.name}
+              onChange={(value) => handleChange("name", value)}
+              placeholder="Dark Theme Magic"
+              required
+              disabled={disabled}
+              autoFocus={!isEditing}
+            />
 
-          <div className="color-fields-grid">
-            {colorFields.map((field) => (
-              <div key={field.name} className="color-field">
-                <div className="color-field-header">
-                  <FormField
-                    label={field.label}
-                    type="color"
-                    value={formData[field.name]}
-                    onChange={(value) => handleChange(field.name, value)}
-                    disabled={disabled}
-                  />
-                  <FormField
-                    type="text"
-                    value={formData[field.name]}
-                    onChange={(value) => handleChange(field.name, value)}
-                    placeholder={field.placeholder}
-                    disabled={disabled}
-                    className="hex-input"
-                  />
+            <div className="color-fields-grid">
+              {colorFields.map((field) => (
+                <div key={field.name} className="color-field">
+                  <div className="color-field-header">
+                    <FormField
+                      label={field.label}
+                      type="color"
+                      value={formData[field.name]}
+                      onChange={(value) => handleChange(field.name, value)}
+                      disabled={disabled}
+                    />
+                    <FormField
+                      type="text"
+                      value={formData[field.name]}
+                      onChange={(value) => handleChange(field.name, value)}
+                      placeholder={field.placeholder}
+                      disabled={disabled}
+                      className="hex-input"
+                    />
+                  </div>
+                  <p className="color-field-example">{field.example}</p>
                 </div>
-                <p className="color-field-example">{field.example}</p>
-              </div>
-            ))}
-          </div>
-          <div className="color-form-actions">
-            <ActionButton type="submit" variant="primary" disabled={disabled || !formData.name.trim()}>
-              {isEditing ? "Update Palette" : "Create Palette"}
-            </ActionButton>
-            <ActionButton type="button" variant="secondary" onClick={onCancel} disabled={disabled}>
-              Cancel
-            </ActionButton>
-          </div>
-          {/* Advanced Style Controls */}
-          <AdvancedStyleControls
-            formData={formData}
-            onStyleChange={handleStyleChange}
-            className="advanced-controls"
-          />
-        </form>
-
+              ))}
+            </div>
+            <div className="color-form-actions">
+              <ActionButton type="submit" variant="primary" disabled={disabled || !formData.name.trim()}>
+                {isEditing ? "Update Palette" : "Create Palette"}
+              </ActionButton>
+              <ActionButton type="button" variant="secondary" onClick={onCancel} disabled={disabled}>
+                Cancel
+              </ActionButton>
+            </div>
+            {/* Advanced Style Controls */}
+            <AdvancedStyleControls
+              formData={formData}
+              onStyleChange={handleStyleChange}
+              className="advanced-controls"
+            />
+          </form>
+        </div>
         {/* Sticky Live Preview */}
         <div className="palette-preview-section">
           <div className="sticky-preview">
@@ -202,6 +204,7 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
           ))}
         </div>
       </div>
-    </div>
+    </>
+    // </div>
   );
 };

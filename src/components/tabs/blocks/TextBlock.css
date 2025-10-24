@@ -1,13 +1,22 @@
 .text-block-display {
-  min-height: 20px;
+  min-height: 80px;
   line-height: 1.5;
-  color: var(--text);
+  color: #e0e0e0;
+  border: 1px solid;
+  border-color: rgb(81, 78, 78, 0.5);
   cursor: text;
   white-space: pre-wrap;
   word-wrap: break-word;
-  padding: 4px 0;
+  padding: 12px 12px;
   border-radius: 3px;
   transition: background-color 0.15s ease;
+  background-color: var(--bg-input);
+}
+
+.text-block-display::content {
+  margin-left: 20px;
+  color: var(--color-accent);
+  padding: 4px 10px;
 }
 
 .text-block-display:hover {
@@ -21,13 +30,14 @@
 
 .text-block-edit {
   width: 100%;
+  /* background-color: red; */
 }
 
 .text-block-textarea {
   width: 100%;
-  min-height: 20px;
-  padding: 4px 0;
-  background: transparent;
+  min-height: 40px;
+  padding: 4px 10px;
+  background-color: var(--bg-primary);
   border: none;
   outline: none;
   color: var(--text);
@@ -40,6 +50,7 @@
 
 .text-block-textarea::placeholder {
   color: var(--muted);
+  padding: 4px 10px;
 }
 
 .text-block-hint {

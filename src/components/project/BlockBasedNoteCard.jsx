@@ -7,7 +7,7 @@ import { CodeBlock } from "../tabs/blocks/CodeBlock.jsx";
 import { NoteMigrationHelper } from "./NoteMigrationHelper.jsx";
 import "./BlockBasedNoteCard.css";
 
-export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject }) {
+export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject, availableProjects = [] }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAddingBlock, setIsAddingBlock] = useState(false);
   const [isEditingMeta, setIsEditingMeta] = useState(false);
@@ -180,15 +180,9 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject }
         <div
           className={`note-card-preview ${note.is_completed ? "completed" : ""}`}
           onClick={() => setIsExpanded(true)}>
-          <div className="note-preview-header">
-            <div className="note-title-row">
-              {note.is_completed && (
-                <MaterialIcon icon="check_circle" size={16} color="var(--color-accent)" />
-              )}
-            </div>
-            <div>
-              <p>{note.project_title}</p>
-            </div>
+          <div className="note-title-row">
+            <div className="note-preview-header"></div>
+
             <div
               className="note-category"
               style={{
@@ -196,7 +190,7 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject }
                 color: categoryDisplay.color === "var(--text)" ? "var(--bg-primary)" : "var(--bg-primary)",
               }}>
               <MaterialIcon icon={categoryDisplay.icon} size={12} />
-              <span>{categoryDisplay.label}</span>
+              <span className="note-category-label-text">{categoryDisplay.label}</span>
             </div>
             <div
               className="note-priority"
@@ -204,16 +198,19 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject }
                 // backgroundColor: priorityDisplay.color,
                 color: "priorityDisplay.color",
               }}>
-              <MaterialIcon icon={priorityDisplay.icon} size={18} color={priorityDisplay.color} />
+              <MaterialIcon icon={priorityDisplay.icon} size={28} color={priorityDisplay.color} />
               {/* <span>{priorityDisplay.label}</span> */}
             </div>
 
-            <span className="block-count">{blocks.length} blocks</span>
-            <MaterialIcon icon="expand_more" size={20} />
+            <span className="block-count">
+              {blocks.length} blocks
+              <MaterialIcon icon="expand_more" size={20} />
+            </span>
           </div>
         </div>
         <div className="note-meta">
           <div>
+            {note.is_completed && <MaterialIcon icon="check_circle" size={16} color="var(--color-accent)" />}
             <h3 className={`note-title ${note.is_completed ? "completed" : ""}`}>{note.title}</h3>
 
             {/* Tags display */}
@@ -269,12 +266,23 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject }
             </button>
           </div>
         </div>
-        <div className="note-card-title-icon-group">
-          <button type="button" className="proj-card-title-icon-btn" navigateProject={navigateProject}>
-            <MaterialIcon icon="diagnosis" size={18} />
-            {note.project_title}
-          </button>
-        </div>
+        {note.project_title && (
+          <div className="note-card-title-icon-group">
+            <button
+              type="button"
+              className="proj-card-title-icon-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (navigateProject && note.project) {
+                  navigateProject(note.project);
+                }
+              }}
+              title={`Go to ${note.project_title} project`}>
+              <MaterialIcon icon="heart_arrow" size={18} />
+              {note.project_title}
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Modal overlay for expanded view */}
@@ -442,6 +450,33 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject }
                         disabled={updating}
                       />
                     </div>
+                  </div>
+                  <div className="meta-field">
+                    <label className="meta-label">
+                      <MaterialIcon icon="folder" size={16} />
+                      Project
+                    </label>
+                    <select
+                      value={note.project || ""}
+                      onChange={(e) => {
+                        e.stopPropagation();
+                        const projectId = e.target.value || null;
+                        handleNoteUpdate({
+                          project: projectId,
+                          blocks: note.blocks, // Include blocks for Django validation
+                        });
+                      }}
+                      onFocus={(e) => e.stopPropagation()}
+                      onClick={(e) => e.stopPropagation()}
+                      className="meta-select"
+                      disabled={updating}>
+                      <option value="">No Project</option>
+                      {availableProjects.map((project) => (
+                        <option key={project.id} value={project.id}>
+                          {project.title}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div className="meta-field">
                     <label className="meta-label">Tags</label>

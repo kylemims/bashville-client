@@ -60,63 +60,62 @@ export const NewProject = () => {
 
   return (
     <div className="page-content page-enter">
-      <div className="container">
-        <div className="page-card" style={{ maxWidth: "800px", margin: "0 auto" }}>
-          <h1 className="card-title text-2xl">New Project</h1>
+      <div className="page-card new-project-card">
+        <div></div>
+        <h1 className="card-title text-2xl">New Project</h1>
 
-          <ErrorMessage message={error} onDismiss={() => setError("")} />
+        {/* <div className="new-project-fields"> */}
+        <ErrorMessage message={error} onDismiss={() => setError("")} />
+        <form onSubmit={handleSubmit}>
+          <FormField
+            label="Project Title"
+            type="text"
+            value={formData.title}
+            onChange={(value) => handleInputChange("title", value)}
+            placeholder="name your project"
+            required
+            disabled={loading}
+            autoFocus
+          />
+          <FormField
+            label="Description"
+            type="textarea"
+            value={formData.description}
+            onChange={(value) => handleInputChange("description", value)}
+            placeholder="Brief description of your project..."
+            disabled={loading}
+          />
 
-          <form onSubmit={handleSubmit}>
-            <FormField
-              label="Project Title"
-              type="text"
-              value={formData.title}
-              onChange={(value) => handleInputChange("title", value)}
-              placeholder="name your project"
-              required
+          {/* </div> */}
+          <div className="form-field">
+            <label className="form-label">
+              Project Layout <span className="required">*</span>
+            </label>
+            <LayoutSelector
+              selectedType={formData.project_type}
+              onTypeChange={(type) => handleInputChange("project_type", type)}
               disabled={loading}
-              autoFocus
             />
+          </div>
 
-            <FormField
-              label="Description"
-              type="textarea"
-              value={formData.description}
-              onChange={(value) => handleInputChange("description", value)}
-              placeholder="Brief description of your project..."
-              disabled={loading}
-            />
+          <div className="form-actions">
+            <ActionButton
+              type="submit"
+              variant="primary"
+              disabled={loading || !isFormValid}
+              style={{ flex: 1 }}>
+              {loading ? "Creating Project..." : "Create Project"}
+            </ActionButton>
 
-            <div className="form-field">
-              <label className="form-label">
-                Project Layout <span className="required">*</span>
-              </label>
-              <LayoutSelector
-                selectedType={formData.project_type}
-                onTypeChange={(type) => handleInputChange("project_type", type)}
-                disabled={loading}
-              />
-            </div>
-
-            <div className="form-actions">
-              <ActionButton
-                type="submit"
-                variant="primary"
-                disabled={loading || !isFormValid}
-                style={{ flex: 1 }}>
-                {loading ? "Creating Project..." : "Create Project"}
-              </ActionButton>
-
-              <ActionButton
-                type="button"
-                onClick={() => navigate(ROUTES.DASHBOARD)}
-                variant="secondary"
-                disabled={loading}>
-                Cancel
-              </ActionButton>
-            </div>
-          </form>
-        </div>
+            <ActionButton
+              type="button"
+              onClick={() => navigate(ROUTES.DASHBOARD)}
+              variant="secondary"
+              disabled={loading}>
+              Cancel
+            </ActionButton>
+          </div>
+        </form>
       </div>
     </div>
   );

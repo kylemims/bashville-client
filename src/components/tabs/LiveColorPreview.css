@@ -1,17 +1,5 @@
 /* LiveColorPreview.css */
 
-.live-preview-container {
-  width: 100%;
-  background: var(--preview-background, #ffffff);
-  border: 2px solid var(--border, #e5e7eb);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  padding-bottom: 1rem;
-  transition: background-color 0.3s ease;
-}
-
 /* Dark mode preview styling */
 .live-preview-container.dark-mode-preview {
   border-color: #374151;
@@ -120,12 +108,13 @@
 /* LiveColorPreview.css */
 .live-preview-container {
   width: 100%;
-  background: var(--preview-background, #ffffff);
-  border: 2px solid var(--border, #e5e7eb);
+  /* background: var(--preview-background, #ffffff); */
+  /* border: 2px solid var(--border, #e5e7eb); */
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 6px rgba(178, 167, 167, 0.8); */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  transition: all 0.3s ease;
 }
 
 .indicator-row {
@@ -134,9 +123,9 @@
   gap: 0.5rem;
   width: 100%;
   background-color: #374151;
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
-  border-bottom: 1px solid var(--border, #e5e7eb);
+  margin-bottom: 0rem;
+  padding: 0rem;
+  border-bottom: 1px solid var(--border);
 }
 
 /* Style indicators */

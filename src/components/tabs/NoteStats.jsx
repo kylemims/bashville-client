@@ -17,7 +17,7 @@ export const NoteStats = ({ stats, projectTitle, onCloseStats }) => {
 
   const categoryConfig = {
     bug: { icon: "bug_report", color: "var(--color-secondary)", label: "Bugs" },
-    todo: { icon: "task_alt", color: "var(--accent)", label: "Todos" },
+    todo: { icon: "task_alt", color: "var(--color-accent)", label: "Todos" },
     wishlist: { icon: "star", color: "var(--color-primary)", label: "Wishlist" },
     code: { icon: "code", color: "var(--muted)", label: "Code" },
     question: { icon: "help", color: "var(--color-accent)", label: "Questions" },
@@ -29,7 +29,7 @@ export const NoteStats = ({ stats, projectTitle, onCloseStats }) => {
   const importanceRate = total_notes > 0 ? Math.round((important_notes / total_notes) * 100) : 0;
 
   const getProductivityColor = (score) => {
-    if (score >= 80) return "var(--accent)";
+    if (score >= 80) return "var(--color-accent)";
     if (score >= 60) return "var(--color-primary)";
     if (score >= 40) return "var(--muted)";
     return "var(--color-secondary)";
@@ -73,7 +73,7 @@ export const NoteStats = ({ stats, projectTitle, onCloseStats }) => {
                 {completed_notes} of {total_notes}
               </div>
             </div>
-            <MaterialIcon icon="check_circle" size={24} color="var(--accent)" />
+            <MaterialIcon icon="check_circle" size={24} color="var(--color-accent)" />
           </div>
 
           <div className="stat-card importance-card">
@@ -144,11 +144,11 @@ export const NoteStats = ({ stats, projectTitle, onCloseStats }) => {
             </h5>
             <div className="activity-summary">
               <div className="activity-item">
-                <MaterialIcon icon="add_circle" size={14} color="var(--accent)" />
+                <MaterialIcon icon="add_circle" size={14} color="var(--color-accent)" />
                 <span>{recent_activity.notes_created_today || 0} notes created today</span>
               </div>
               <div className="activity-item">
-                <MaterialIcon icon="check_circle" size={14} color="var(--accent)" />
+                <MaterialIcon icon="check_circle" size={14} color="var(--color-accent)" />
                 <span>{recent_activity.notes_completed_today || 0} notes completed today</span>
               </div>
               <div className="activity-item">
@@ -194,7 +194,7 @@ export const NoteStats = ({ stats, projectTitle, onCloseStats }) => {
 
             {total_notes > 0 && completionRate > 80 && (
               <div className="insight-item">
-                <MaterialIcon icon="celebration" size={14} color="var(--accent)" />
+                <MaterialIcon icon="celebration" size={14} color="var(--color-accent)" />
                 <span>Great completion rate! You're staying on top of your tasks</span>
               </div>
             )}

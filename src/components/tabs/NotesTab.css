@@ -314,8 +314,9 @@
 /* ===== NOTES GRID ===== */
 .notes-content {
   flex: 1; /* Take remaining height */
-  overflow-y: auto; /* Allow scrolling */
+  /* overflow-y: auto; */
   min-height: 200px;
+  padding: 0px 30px;
 }
 
 .notes-grid {
@@ -476,21 +477,22 @@
 .notes-columns {
   display: flex;
   gap: 24px;
-  overflow-x: auto;
-  padding: 8px 0 20px 0;
+  /* overflow-x: auto; */
+  /* padding: 8px 0 20px 0; */
   /* min-height: 400px; */
   align-items: flex-start;
   min-height: 100%;
+  /* overflow-y: clip; */
 }
 
 .notes-column {
   flex: 0 0 340px;
-  background: rgb(20, 18, 18);
+  background: rgba(84, 79, 79, 0.6);
   border: 1px solid var(--border);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  max-height: 100dvh;
+  /* max-height: 100dvh; */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -499,6 +501,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 16px 20px;
+  gap: 0.5rem;
   /* border-bottom: 2px solid var(--bg-primary); */
   /* background: linear-gradient(180deg, var(--bg-secondary), var(--bg-primary) 80%, var(--bg-secondary)); */
   background: linear-gradient(
@@ -513,6 +516,12 @@
   top: 0;
   z-index: 10;
   border-bottom: 2px solid var(--bg-primary) !important;
+}
+
+.column-header .command-gradient-line {
+  flex: 1;
+  height: 2px;
+  border-radius: var(--radius);
 }
 
 .column-title {
@@ -537,11 +546,11 @@
 
 .column-notes {
   flex: 1;
-  padding: 20px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   min-height: 0; /* Important for proper scrolling */
 }
 
@@ -585,7 +594,7 @@
 /* ===== PROPER SCROLLING FOR COLUMNS ===== */
 .notes-columns {
   scrollbar-width: thin;
-  scrollbar-color: var(--muted) var(--bg-secondary);
+  scrollbar-color: var(--mutedx) var(--bg-secondary);
 }
 
 .notes-columns::-webkit-scrollbar {
@@ -748,4 +757,34 @@
 .filter-sidebar-ribbon-group select.ribbon-select {
   width: 100%;
   padding: 0.5rem 0.25rem;
+}
+
+/* ===== MODE INDICATOR ===== */
+.notes-mode-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background: rgba(70, 203, 167, 0.1);
+  border: 1px solid rgba(70, 203, 167, 0.3);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.mode-indicator-link {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  transition: color 0.2s ease;
+}
+
+.mode-indicator-link:hover {
+  color: var(--color-primary);
 }

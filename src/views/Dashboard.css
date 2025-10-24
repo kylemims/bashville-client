@@ -8,9 +8,13 @@
 
 .dashboard-controls {
   display: flex;
-  /* padding: 0 0.5rem; */
+  padding: 0px 30px;
   align-items: center;
   gap: 1rem;
+}
+
+.dashboard-section {
+  padding: 0px 30px;
 }
 
 .project-type-filter {
@@ -79,6 +83,7 @@
 
 .dashboard-title-section {
   flex: 1;
+  padding: 0 30px;
 }
 
 .dashboard-title {
@@ -138,4 +143,8 @@
   text-decoration: none;
   transform: translateY(-1px);
   transition: all 0.2s ease;
+}
+
+.project-dashboard-section {
+  padding: 0 30px;
 }

@@ -153,36 +153,42 @@ export const ColorsTab = ({
         {currentPalette && (
           <div
             className={`current-palette-section ${
-              editingPalette === currentPalette.id ? "with-preview" : "with-preview"
+              editingPalette === currentPalette.id ? "" : "with-preview"
             }`}>
-            <div className="current-palette-display">
-              <ColorPaletteCard
-                palette={currentPalette}
-                isSelected={true}
-                onEdit={() => setEditingPalette(currentPalette.id)}
-                onDelete={() => handleDeletePalette(currentPalette.id)}
-                onQuickColorEdit={handleQuickColorEdit}
-                disabled={loading}
-                layout="column"
-              />
-            </div>
+            {!editingPalette && (
+              <div className="current-palette-display">
+                <ColorPaletteCard
+                  palette={currentPalette}
+                  isSelected={true}
+                  onEdit={() => setEditingPalette(currentPalette.id)}
+                  onDelete={() => handleDeletePalette(currentPalette.id)}
+                  onQuickColorEdit={handleQuickColorEdit}
+                  disabled={loading}
+                  layout="column"
+                />
+              </div>
+            )}
 
             <div className="live-preview-display">
               {editingPalette && editingPalette === currentPalette.id ? (
-                <ColorPaletteForm
-                  palette={currentPalette}
-                  onSubmit={(data) => handleUpdatePalette(currentPalette.id, data)}
-                  onCancel={() => setEditingPalette(null)}
-                  disabled={loading}
-                  isEditing
-                />
+                <div>
+                  <ColorPaletteForm
+                    palette={currentPalette}
+                    onSubmit={(data) => handleUpdatePalette(currentPalette.id, data)}
+                    onCancel={() => setEditingPalette(null)}
+                    disabled={loading}
+                    isEditing
+                  />
+                </div>
               ) : (
-                <LiveColorPreview
-                  formData={paletteForPreview}
-                  isVisible={true}
-                  isMobilePreview={isMobilePreview}
-                  onTogglePreview={handleTogglePreview}
-                />
+                <div>
+                  <LiveColorPreview
+                    formData={paletteForPreview}
+                    isVisible={true}
+                    isMobilePreview={isMobilePreview}
+                    onTogglePreview={handleTogglePreview}
+                  />
+                </div>
               )}
             </div>
           </div>

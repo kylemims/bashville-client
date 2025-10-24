@@ -11,8 +11,8 @@
   justify-content: space-between;
   padding: 8px 12px 8px 12px;
   padding-right: 100px;
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid var(--border);
+  background: rgba(201, 206, 203, 0.1);
+  border-bottom: 1px solid var(--bg-primary);
   position: relative;
 }
 
@@ -85,6 +85,7 @@
   line-height: 1.5;
   overflow-x: auto;
   position: relative;
+  border: 1px solid rgb(81, 78, 78, 0.5);
 }
 
 .code-expand-overlay {

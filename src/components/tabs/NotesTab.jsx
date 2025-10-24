@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { getNotes, createQuickNote, deleteNote, getNoteStats, searchNotes } from "../../services/noteService";
+import { getProjects } from "../../services/projectService";
 import { ErrorMessage } from "../common/ErrorMessage.jsx";
 import { ActionButton } from "../common/ActionButton.jsx";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
@@ -22,6 +23,7 @@ export const NotesTab = ({
 }) => {
   const [notes, setNotes] = useState([]);
   const [stats, setStats] = useState(null); // Add missing stats state
+  const [projects, setProjects] = useState([]); // Available projects for assignment
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,6 +38,7 @@ export const NotesTab = ({
   const [viewMode, setViewMode] = useState("grid"); // "grid" or "columns"
   const [useBlockMode, setUseBlockMode] = useState(true); // New block-based architecture
   const [groupBy, setGroupBy] = useState("none"); // "none", "project", "category", "priority"
+  const [showAllNotes, setShowAllNotes] = useState(false); // Toggle between project-specific and all user notes
   const navigate = useNavigate();
 
   // Load notes when component mounts or filters change
@@ -49,9 +52,15 @@ export const NotesTab = ({
         ordering: sortBy,
       };
 
-      // Only include project filter if we're in project context
-      if (project?.id) {
+      // Handle project filtering based on showAllNotes toggle
+      if (showAllNotes) {
+        // Remove project filter to show all notes
+        delete queryParams.project;
+        console.log("🌍 Loading ALL notes - queryParams:", queryParams);
+      } else if (project?.id) {
+        // Set project filter to show only current project's notes
         queryParams.project = project.id;
+        console.log("📁 Loading project-specific notes - queryParams:", queryParams);
       }
 
       const response = await getNotes(queryParams);
@@ -62,23 +71,43 @@ export const NotesTab = ({
     } finally {
       setLoading(false);
     }
-  }, [filters, sortBy, project?.id]);
+  }, [filters, sortBy, project?.id, showAllNotes]);
 
   const loadStats = useCallback(async () => {
     try {
-      const projectId = project?.id || null;
+      // Use project ID only if we're not showing all notes
+      const projectId = project?.id && !showAllNotes ? project.id : null;
       const statsData = await getNoteStats(projectId);
       setStats(statsData);
     } catch (err) {
       console.error("❌ Failed to load stats:", err);
       // Don't show error for stats, it's not critical
     }
-  }, [project?.id]);
+  }, [project?.id, showAllNotes]);
+
+  const loadProjects = useCallback(async () => {
+    try {
+      const projectsData = await getProjects();
+      setProjects(projectsData);
+    } catch (err) {
+      console.error("❌ Failed to load projects:", err);
+      // Don't show error for projects, it's not critical for note viewing
+    }
+  }, []);
+
+  // Update filters when showAllNotes changes
+  useEffect(() => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      project: showAllNotes ? null : project?.id || null,
+    }));
+  }, [showAllNotes, project?.id]);
 
   useEffect(() => {
     loadNotes();
     loadStats();
-  }, [loadNotes, loadStats]);
+    loadProjects();
+  }, [loadNotes, loadStats, loadProjects]);
 
   const handleQuickNoteCreate = async (noteData) => {
     try {
@@ -155,8 +184,12 @@ export const NotesTab = ({
     }
   };
 
-  const onProjectClick = () => {
-    navigate(`/projects/${project?.id}`);
+  const onProjectClick = (projectId) => {
+    // If no projectId provided, use the current project (for backward compatibility)
+    const targetProjectId = projectId || project?.id;
+    if (targetProjectId) {
+      navigate(`/projects/${targetProjectId}`);
+    }
   };
 
   const handleFiltersChange = (newFilters) => {
@@ -226,6 +259,7 @@ export const NotesTab = ({
               onUpdate={handleNoteUpdate}
               onDelete={() => handleNoteDelete(note.id)}
               navigateProject={onProjectClick}
+              availableProjects={projects}
             />
           ))}
         </div>
@@ -241,6 +275,7 @@ export const NotesTab = ({
           <div key={groupName} className="notes-column" data-category={groupName.toLowerCase()}>
             <div className="column-header">
               <h4 className="column-title">{groupName}</h4>
+              <div className="command-gradient-line"></div>
               <span className="column-count">{groupNotes.length}</span>
             </div>
             <div className="column-notes">
@@ -251,6 +286,7 @@ export const NotesTab = ({
                   onUpdate={handleNoteUpdate}
                   onDelete={() => handleNoteDelete(note.id)}
                   navigateProject={onProjectClick}
+                  availableProjects={projects}
                 />
               ))}
             </div>
@@ -291,6 +327,19 @@ export const NotesTab = ({
                   className="ribbon-button">
                   <MaterialIcon icon="add" size={16} />
                   <span>Quick Note</span>
+                </ActionButton>
+              )}
+              {project && (
+                <ActionButton
+                  variant={showAllNotes ? "primary" : "secondary"}
+                  size="sm"
+                  onClick={() => setShowAllNotes(!showAllNotes)}
+                  className="ribbon-button"
+                  title={
+                    showAllNotes ? "Show only this project's notes" : "Show all notes from all projects"
+                  }>
+                  <MaterialIcon icon={showAllNotes ? "folder" : "dashboard"} size={16} />
+                  <span>{showAllNotes ? "Project Notes" : "All Notes"}</span>
                 </ActionButton>
               )}
             </div>
@@ -382,6 +431,17 @@ export const NotesTab = ({
 
       {/* Error Message */}
       <ErrorMessage message={error} onDismiss={() => setError("")} />
+
+      {/* Mode Indicator */}
+      {/* {project && showAllNotes && (
+        <div className="notes-mode-indicator">
+          <MaterialIcon icon="info" size={16} />
+          <span>Showing all notes from all projects • </span>
+          <button type="button" className="mode-indicator-link" onClick={() => setShowAllNotes(false)}>
+            Show only "{project.title}" notes
+          </button>
+        </div>
+      )} */}
 
       {/* Notes List */}
       <div className="notes-content">

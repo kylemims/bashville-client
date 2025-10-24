@@ -148,8 +148,10 @@
 /* Enhanced layout for form with preview and advanced controls */
 .palette-form-with-preview {
   display: grid;
+
   /* grid-template-columns: 1fr 500px; */
-  grid-template-columns: minmax(400px, 1fr) minmax(500px, 1fr);
+  /* grid-template-columns: minmax(400px, 1fr) minmax(500px, 1fr); */
+  grid-template-columns: 1fr 2fr;
   gap: 2rem;
   align-items: start;
 }

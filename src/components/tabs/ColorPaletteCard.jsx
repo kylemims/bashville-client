@@ -48,6 +48,7 @@ export const ColorPaletteCard = ({
             <span>Current Palette</span>
           </div>
         )}
+        {/* <div className="palette-name-selected-stack"> */}
         <div className="palette-actions">
           <ActionButton
             onClick={(e) => {
@@ -72,6 +73,7 @@ export const ColorPaletteCard = ({
             <span className="material-symbols-outlined available-delete">delete</span>{" "}
           </ActionButton>
         </div>
+        {/* </div> */}
       </div>
 
       <div className={`color-banner ${layout === "column" ? "color-banner-column" : ""}`}>

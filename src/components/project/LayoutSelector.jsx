@@ -64,14 +64,20 @@ export const LayoutSelector = ({ selectedType, onTypeChange, disabled = false })
 
   const TypeCard = ({ type }) => {
     const isSelected = selectedType === type.value;
-    const isHovered = hoveredType === type.value;
+    // const isHovered = hoveredType === type.value;
 
     return (
       <div
         className={`layout-card ${isSelected ? "selected" : ""} ${disabled ? "disabled" : ""}`}
         onClick={() => handleTypeSelect(type)}
-        onMouseEnter={() => !disabled && setHoveredType(type.value)}
-        onMouseLeave={() => setHoveredType(null)}
+        onMouseEnter={(e) => {
+          e.stopPropagation();
+          !disabled && setHoveredType(type.value);
+        }}
+        onMouseLeave={(e) => {
+          e.stopPropagation();
+          setHoveredType(null);
+        }}
         role="button"
         tabIndex={disabled ? -1 : 0}
         aria-label={`Select ${type.label} layout`}>
@@ -100,24 +106,24 @@ export const LayoutSelector = ({ selectedType, onTypeChange, disabled = false })
           <h3 className="layout-title">{type.label}</h3>
           <p className="layout-description">{type.description}</p>
 
-          {(isSelected || isHovered) && (
-            <div className="layout-features">
-              <div className="layout-meta">
-                <span className="setup-time">
-                  <MaterialIcon icon="schedule" size={14} color="var(--muted)" />
-                  Setup: {type.estimatedTime}
-                </span>
-              </div>
-              <ul className="feature-list">
-                {type.features.map((feature, index) => (
-                  <li key={index} className="feature-item">
-                    <MaterialIcon icon="check_circle" size={12} color="var(--color-accent)" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+          {/* {(isSelected || isHovered) && ( */}
+          <div className="layout-features">
+            <div className="layout-meta">
+              <span className="setup-time">
+                <MaterialIcon icon="schedule" size={14} color="var(--muted)" />
+                Setup: {type.estimatedTime}
+              </span>
             </div>
-          )}
+            <ul className="feature-list">
+              {type.features.map((feature, index) => (
+                <li key={index} className="feature-item">
+                  <MaterialIcon icon="check_circle" size={12} color="var(--color-accent)" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* )} */}
         </div>
       </div>
     );
