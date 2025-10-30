@@ -59,11 +59,18 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
     <div className="project-header">
       <div className="header-main-row">
         <div className="project-title-section">
-          <ActionButton variant="back" onClick={onBack} title="Back to Dashboard">
-            <MaterialIcon icon="arrow_back" size={20} />
+          <ActionButton variant="accent" onClick={onBack} title="Back to Dashboard">
+            <MaterialIcon icon="arrow_back_2" size={22} />
           </ActionButton>
-        </div>
-        <div className="project-actions">
+          <ActionButton
+            onClick={onGenerateSetup}
+            variant="accent"
+            size="sm"
+            aria-label="Generate Setup Script & README"
+            disabled={isEditing}>
+            <MaterialIcon icon="rocket_launch" size={22} />
+          </ActionButton>
+          {/* <div className="project-actions"> */}
           {isEditing ? (
             <div className="project-title-edit">
               <input
@@ -81,23 +88,23 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
               <div className="title-edit-actions">
                 <ActionButton
                   onClick={handleEditSave}
-                  variant="primary"
+                  variant="accent"
                   size="sm"
                   disabled={isUpdating || !editTitle.trim()}
                   title="Save (Enter)">
                   {isUpdating ? (
-                    <MaterialIcon icon="hourglass_empty" size={16} />
+                    <MaterialIcon icon="hourglass_empty" size={22} />
                   ) : (
-                    <MaterialIcon icon="check" size={16} />
+                    <MaterialIcon icon="check" size={22} />
                   )}
                 </ActionButton>
                 <ActionButton
                   onClick={handleEditCancel}
-                  variant="secondary"
+                  variant="accent"
                   size="sm"
                   disabled={isUpdating}
                   title="Cancel (Esc)">
-                  <MaterialIcon icon="close" size={16} />
+                  <MaterialIcon icon="close" size={22} />
                 </ActionButton>
               </div>
               {error && <span className="title-edit-error">{error}</span>}
@@ -105,33 +112,25 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
           ) : (
             <ActionButton
               onClick={handleEditStart}
-              variant="raw"
-              size="xs"
+              variant="accent"
+              size="sm"
               title="Edit project name"
               aria-label="Edit project name"
               disabled={isEditing}
               className="title-header-edit">
-              <MaterialIcon icon="edit" size={16} />
+              <MaterialIcon icon="person_edit" size={22} />
             </ActionButton>
           )}
 
           <ActionButton
-            onClick={onGenerateSetup}
-            variant="accent"
-            size="xs"
-            aria-label="Generate Setup Script & README"
-            disabled={isEditing}>
-            <MaterialIcon icon="markdown" size={20} />
-          </ActionButton>
-
-          <ActionButton
             onClick={onProjectDelete}
-            variant="back-secondary"
-            size="xs"
+            variant="accent"
+            size="sm"
             aria-label="Delete Project"
             disabled={isEditing}>
-            <MaterialIcon icon="delete" size={20} />
+            <MaterialIcon icon="delete" size={22} />
           </ActionButton>
+          {/* </div> */}
         </div>
       </div>
     </div>

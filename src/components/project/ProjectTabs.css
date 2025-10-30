@@ -18,6 +18,10 @@
 .project-tabs :first-child {
   border-top-left-radius: var(--radius);
 }
+.project-tabs :last-child {
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: 0px;
+}
 
 .project-tabs-actions {
   display: flex;
@@ -53,15 +57,22 @@
   /* display: flex; */
   padding: 12px 18px;
   /* border-radius: 4px; */
-  border: none;
   /* background-color: var(--bg-secondary); */
-  background: linear-gradient(90deg, var(--bg-primary), var(--bg-secondary), var(--bg-primary));
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary),
+    var(--bg-secondary),
+    var(--bg-primary),
+    var(--bg-secondary)
+  );
   color: var(--color-primary);
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  /* border-right: 1px solid var(--bg-primary); */
   width: 130px;
+  border: none;
+  border-right: 2px solid var(--bg-primary);
+  border-bottom: 2px solid var(--bg-secondary);
 }
 
 button.all-tabs-select {
@@ -75,7 +86,7 @@ button.all-tabs-select {
   /* background: linear-gradient(90deg, #d1c45f30, var(--bg-secondary), #d1c45f30, var(--bg-primary)); */
   background: linear-gradient(150deg, #d46a6a30, #46cba730) !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(254, 227, 148, 0.3);
+  box-shadow: 0 4px 12px rgba(254, 227, 148, 0.1);
   transition: ease all 0.2s;
 }
 

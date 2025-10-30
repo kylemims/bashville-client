@@ -6,7 +6,15 @@
   gap: 2rem;
   /* padding-left: 20px;
   padding-right: 20px; */
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
+  padding: 0px 30px;
+}
+
+.commands-tab .section-project {
+  border-top-right-radius: var(--radius);
+}
+.commands-tab .section-stash {
+  border-top-left-radius: var(--radius);
 }
 
 @media (min-width: 1300px) {
@@ -21,8 +29,9 @@
   background: var(--bg-secondary);
   border-radius: 8px;
   border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
   padding: 1.5rem;
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
 }
 
 .section-project {

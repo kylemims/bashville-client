@@ -278,7 +278,7 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject, 
                 }
               }}
               title={`Go to ${note.project_title} project`}>
-              <MaterialIcon icon="heart_arrow" size={18} />
+              <MaterialIcon icon="visibility" size={18} />
               {note.project_title}
             </button>
           </div>

@@ -68,7 +68,7 @@
 .action-button--bgsecondary {
   background: var(--bg-secondary);
   color: var(--text);
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
   padding: 0.75rem 1.5rem;
   font-size: 0.9rem;
   gap: 0.5rem;
@@ -82,7 +82,7 @@
 .action-button--back {
   background: var(--bg-secondary);
   color: var(--muted);
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
   padding: 0.5rem;
   font-size: 1.2rem;
   min-width: 40px;
@@ -96,7 +96,7 @@
 .action-button--clear {
   background: var(--mutedx);
   color: var(--text-primary);
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
   padding: 0.5rem;
   font-size: 1.2rem;
   min-width: 40px;
@@ -111,7 +111,7 @@
 .action-button--back-secondary {
   background: var(--bg-secondary);
   color: var(--muted);
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
   padding: 0.5rem;
   font-size: 1.2rem;
   min-width: 40px;
@@ -135,7 +135,7 @@
   border: 2px solid rgb(36, 34, 34); */
   background: rgba(255, 255, 255, 0.6);
   color: var(--text);
-  border: 1px solid var(--muted);
+  /* border: 1px solid var(--muted); */
   padding: 0.75rem 1.5rem;
   font-size: 0.9rem;
   gap: 0.4rem;
@@ -149,7 +149,7 @@
 .action-button--cold {
   background: none;
   color: var(--text);
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
   padding: 0rem;
   font-size: 1.2rem;
   height: 38px;

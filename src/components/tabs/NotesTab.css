@@ -2,11 +2,21 @@
 
 /* ===== RIBBON INTERFACE - Microsoft Word style ===== */
 .notes-ribbon {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  background: linear-gradient(
+    45deg,
+    var(--bg-primary),
+    var(--bg-secondary),
+    var(--bg-primary),
+    #ffffff05,
+    #ffffff05,
+    #ffffff08,
+    var(--bg-primary)
+  );
+  /* border: 1px solid var(--border); */
   border-radius: 8px;
   margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0px 30px;
 }
 
 .ribbon-tabs {
@@ -143,7 +153,7 @@
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 100px;
+  max-width: 200px;
 }
 
 .ribbon-select:focus {
@@ -477,7 +487,7 @@
 .notes-columns {
   display: flex;
   gap: 24px;
-  /* overflow-x: auto; */
+  overflow-x: auto;
   /* padding: 8px 0 20px 0; */
   /* min-height: 400px; */
   align-items: flex-start;
