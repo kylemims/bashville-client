@@ -195,11 +195,11 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject, 
             <div
               className="note-priority"
               style={{
-                // backgroundColor: priorityDisplay.color,
-                color: "priorityDisplay.color",
+                backgroundColor: priorityDisplay.color,
+                color: priorityDisplay.color === "var(--bg-primary)" ? "var(--text)" : "var(--bg-primary)",
               }}>
-              <MaterialIcon icon={priorityDisplay.icon} size={28} color={priorityDisplay.color} />
-              {/* <span>{priorityDisplay.label}</span> */}
+              <MaterialIcon icon={priorityDisplay.icon} size={18} />
+              <span>{priorityDisplay.label}</span>
             </div>
 
             <span className="block-count">

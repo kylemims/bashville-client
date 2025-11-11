@@ -19,7 +19,7 @@
   min-height: 200px;
   position: relative;
   margin: 0;
-  padding: 0.5rem 0.5rem;
+  /* padding: 0.5rem 0.5rem; */
   min-width: 300px;
   justify-content: space-between;
 }
@@ -61,6 +61,7 @@
   gap: 8px;
   color: var(--muted);
   justify-content: flex-start;
+  padding: 1rem 0.5rem;
 }
 
 .quick-actions {
@@ -119,11 +120,13 @@
 .note-meta {
   display: flex;
   align-items: center;
+  /* flex-direction: column; */
   justify-content: space-between;
   font-size: 12px;
   color: var(--muted);
   opacity: 0.8;
   gap: 8px;
+  padding: 0.5rem 0.5rem;
 }
 
 .note-meta > div:first-child {
@@ -152,6 +155,14 @@
 
 .note-priority {
   width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  justify-content: center;
 }
 
 .note-tags {
@@ -248,6 +259,9 @@
   justify-content: space-between;
   gap: 8px;
   flex: 1;
+  background-color: var(--bg-input);
+  width: 100%;
+  padding: 5px 5px;
 }
 
 .note-title.completed {
