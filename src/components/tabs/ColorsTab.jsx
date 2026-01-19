@@ -32,13 +32,15 @@ export const ColorsTab = ({
   };
 
   // Get the current project's color palette - either selected or project default
-  const currentPalette = selectedPaletteId
-    ? availablePalettes.find((p) => p.id === selectedPaletteId)
+  const currentPalette =
+    selectedPaletteId ?
+      availablePalettes.find((p) => p.id === selectedPaletteId)
     : project.color_palette_preview || null;
 
   // Prepare data for LiveColorPreview with proper structure and ensure minimum required fields
-  const paletteForPreview = currentPalette
-    ? {
+  const paletteForPreview =
+    currentPalette ?
+      {
         primary_hex: currentPalette.primary_hex || "#fee394",
         secondary_hex: currentPalette.secondary_hex || "#d46a6a",
         accent_hex: currentPalette.accent_hex || "#46cba7",
@@ -56,9 +58,6 @@ export const ColorsTab = ({
         style_preferences: {},
       };
 
-  // Debug: Check what data we're working with
-  console.log("🎯 ColorsTab currentPalette:", currentPalette);
-  console.log("🎯 ColorsTab paletteForPreview:", paletteForPreview);
   const handleQuickColorEdit = async (paletteId, colorUpdate) => {
     try {
       setLoading(true);
@@ -67,7 +66,7 @@ export const ColorsTab = ({
 
       const updatedPalette = await updateColorPalette(paletteId, updatedPaletteData);
       const updatedPalettes = availablePalettes.map((palette) =>
-        palette.id === paletteId ? updatedPalette : palette
+        palette.id === paletteId ? updatedPalette : palette,
       );
 
       onPalettesUpdate(updatedPalettes);
@@ -112,7 +111,7 @@ export const ColorsTab = ({
       setLoading(true);
       const updatedPalette = await updateColorPalette(paletteId, paletteData);
       const updatedPalettes = availablePalettes.map((palette) =>
-        palette.id === paletteId ? updatedPalette : palette
+        palette.id === paletteId ? updatedPalette : palette,
       );
       onPalettesUpdate(updatedPalettes);
       setEditingPalette(null);
@@ -170,7 +169,7 @@ export const ColorsTab = ({
             )}
 
             <div className="live-preview-display">
-              {editingPalette && editingPalette === currentPalette.id ? (
+              {editingPalette && editingPalette === currentPalette.id ?
                 <div>
                   <ColorPaletteForm
                     palette={currentPalette}
@@ -180,8 +179,7 @@ export const ColorsTab = ({
                     isEditing
                   />
                 </div>
-              ) : (
-                <div>
+              : <div>
                   <LiveColorPreview
                     formData={paletteForPreview}
                     isVisible={true}
@@ -189,7 +187,7 @@ export const ColorsTab = ({
                     onTogglePreview={handleTogglePreview}
                   />
                 </div>
-              )}
+              }
             </div>
           </div>
         )}

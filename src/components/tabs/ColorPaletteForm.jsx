@@ -89,7 +89,9 @@ export const ColorPaletteForm = ({ palette, onSubmit, onCancel, disabled, isEdit
   return (
     // <div className="palette-form-container">
     <>
-      <h3>{isEditing ? "Edit Color Palette" : "Create New Color Palette"}</h3>
+      <h3 className="edit-color-palette-header">
+        {isEditing ? "Edit Color Palette" : "Create New Color Palette"}
+      </h3>
 
       <div className="palette-form-with-preview">
         <div className="form-advanced-section">

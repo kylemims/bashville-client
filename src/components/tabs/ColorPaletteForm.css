@@ -14,7 +14,7 @@
 
 .palette-form {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 1rem;
 }
 
@@ -174,12 +174,13 @@
 }
 
 .sticky-preview {
-  position: sticky;
-  top: 1rem; /* Reduced from 2rem for better alignment */
+  position: relative;
+  top: -2rem; /* Reduced from 2rem for better alignment */
   background: var(--bg-secondary);
-  border: 1px solid var(--border);
+  /* border: 1px solid var(--border); */
   border-radius: 8px;
   padding: 1rem;
+  padding-top: 0rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 10; /* Ensure it stays above other content */
   /* Ensure smooth scrolling behavior */
@@ -237,14 +238,13 @@
 
 /* Preview Toggle Styles */
 .preview-toggle-container {
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
 }
 
 .preview-toggle-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
 }
 
 .preview-toggle-header h4 {
@@ -258,6 +258,9 @@
   display: flex;
   background: var(--bg-primary);
   border-radius: 8px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+
   border: 1px solid var(--border);
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -271,7 +274,7 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: var(--muted);
+  color: var(--color-primary);
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -288,13 +291,13 @@
 }
 
 .preview-toggle-btn.active {
-  background: var(--color-primary);
-  color: var(--bg-primary);
+  background: linear-gradient(150deg, #46cba760, #d46a6a60, #46cba770);
+  color: var(--color-primary);
   font-weight: 600;
 }
 
 .preview-toggle-btn.active:hover {
-  background: var(--color-primary);
+  background: linear-gradient(150deg, #d46a6a30, #46cba730) !important;
   color: var(--bg-primary);
 }
 
