@@ -142,14 +142,14 @@
   gap: 3px;
   background: var(--color-accent);
   color: var(--bg-primary);
-  padding: 2px 8px;
-  border-radius: 12px;
+  padding: 0px;
+  border-radius: 999px;
   font-weight: 500;
   font-size: 11px;
   text-transform: capitalize;
   justify-content: center;
   width: fit-content;
-  padding: 2px 8px;
+  padding: 3px 8px;
   /* justify-content: flex-start; */
 }
 
@@ -158,7 +158,7 @@
   display: flex;
   align-items: center;
   gap: 3px;
-  padding: 2px 8px;
+  padding: 2px 12px;
   border-radius: 12px;
   font-size: 11px;
   font-weight: 500;
@@ -262,6 +262,12 @@
   background-color: var(--bg-input);
   width: 100%;
   padding: 5px 5px;
+}
+
+.note-title-category-priority-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .note-title.completed {
@@ -424,10 +430,10 @@
   height: 100vh;
   background: rgba(0, 0, 0, 0.75);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   z-index: 1100;
-  padding: 40px 20px;
+  padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
   overflow-x: hidden;
@@ -445,12 +451,12 @@
   width: 100%;
   max-width: 800px;
   min-height: fit-content;
-  max-height: calc(100vh - 80px);
+  max-height: 90vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
-  margin: 0 auto;
+  margin: auto;
 }
 
 .note-modal-content .note-priority,
@@ -525,14 +531,14 @@
 /* ===== MODAL RESPONSIVE ===== */
 @media (max-width: 768px) {
   .note-modal-overlay {
-    padding: 20px 10px;
-    align-items: flex-start;
+    padding: 10px;
+    align-items: center;
   }
 
   .note-modal-content {
     max-width: 100%;
-    max-height: calc(100vh - 40px);
-    margin: 0 auto;
+    max-height: 95vh;
+    margin: auto;
     border-radius: 8px;
   }
 
@@ -588,7 +594,7 @@
 
 .proj-card-title-icon-btn {
   display: flex;
-  padding: 6px 12px;
+  padding: 4px 10px;
   border: 0.5px solid var(--mutedx);
   align-items: center;
   border-radius: var(--radius);
@@ -596,7 +602,7 @@
   /* background-color: var(--bg-secondary); */
   background: linear-gradient(150deg, #d46a6a30, #46cba730);
   color: var(--color-primary);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s ease;
   /* border-right: 1px solid var(--bg-primary); */

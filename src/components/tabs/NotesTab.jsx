@@ -35,9 +35,9 @@ export const NotesTab = ({
     project: project?.id || null,
   });
   const [sortBy, setSortBy] = useState("sort_by"); // Most recent first
-  const [viewMode, setViewMode] = useState("grid"); // "grid" or "columns"
+  const [viewMode, setViewMode] = useState("columns"); // "grid" or "columns"
   const [useBlockMode, setUseBlockMode] = useState(true); // New block-based architecture
-  const [groupBy, setGroupBy] = useState("none"); // "none", "project", "category", "priority"
+  const [groupBy, setGroupBy] = useState("category"); // "none", "project", "category", "priority"
   const [showAllNotes, setShowAllNotes] = useState(false); // Toggle between project-specific and all user notes
   const navigate = useNavigate();
 
@@ -309,123 +309,67 @@ export const NotesTab = ({
           placeholder={project ? `Quick note for ${project.title}...` : "Quick note..."}
         />
       )}
-      {/* Ribbon Interface - Microsoft Word style */}
-      <div className="notes-ribbon">
-        <div className="ribbon-content">
-          {/* Actions Group */}
-          <div className="ribbon-group">
-            <div className="group-label">Actions</div>
-            <div className="group-controls">
-              {!showQuickNote && (
-                <ActionButton
-                  variant="accent"
-                  size="sm"
-                  onClick={() => {
-                    console.log("Quick Note button clicked");
-                    onOpenQuickNote?.();
-                  }}
-                  className="ribbon-button">
-                  <MaterialIcon icon="add" size={16} />
-                  <span>Quick Note</span>
-                </ActionButton>
-              )}
-              {project && (
-                <ActionButton
-                  variant={showAllNotes ? "primary" : "secondary"}
-                  size="sm"
-                  onClick={() => setShowAllNotes(!showAllNotes)}
-                  className="ribbon-button"
-                  title={
-                    showAllNotes ? "Show only this project's notes" : "Show all notes from all projects"
-                  }>
-                  <MaterialIcon icon={showAllNotes ? "folder" : "dashboard"} size={16} />
-                  <span>{showAllNotes ? "Project Notes" : "All Notes"}</span>
-                </ActionButton>
-              )}
-            </div>
+
+      {/* Consolidated Compact Header */}
+      <div className="notes-compact-header">
+        {/* Left section: Search */}
+        <div className="header-section header-left-search">
+          <div className="search-input-group">
+            <input
+              type="text"
+              placeholder="Search notes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+              className="header-search-input"
+            />
+            <ActionButton variant="muted" size="xs" onClick={handleSearch} disabled={loading}>
+              <MaterialIcon icon="search" size={16} />
+            </ActionButton>
+          </div>
+        </div>
+
+        {/* Right section: View controls and project toggle */}
+        <div className="header-section header-right-unified">
+          {project && (
+            <ActionButton
+              variant={showAllNotes ? "primary" : "secondary"}
+              size="sm"
+              onClick={() => setShowAllNotes(!showAllNotes)}
+              className="header-button"
+              title={showAllNotes ? "Show only this project's notes" : "Show all notes from all projects"}>
+              <MaterialIcon icon={showAllNotes ? "folder" : "dashboard"} size={16} />
+              <span className="button-text">{showAllNotes ? "Project Notes" : "All Notes"}</span>
+            </ActionButton>
+          )}
+
+          <div className="view-mode-selector">
+            <ActionButton
+              variant={viewMode === "grid" ? "primary" : "cold"}
+              size="xs"
+              onClick={() => setViewMode("grid")}
+              title="Grid View"
+              className="header-icon-button">
+              <MaterialIcon icon="grid_view" size={20} />
+            </ActionButton>
+            <ActionButton
+              variant={viewMode === "columns" ? "primary" : "cold"}
+              size="xs"
+              onClick={() => setViewMode("columns")}
+              title="Column View"
+              className="header-icon-button">
+              <MaterialIcon icon="view_column" size={20} />
+            </ActionButton>
           </div>
 
-          {/* Search Group */}
-          <div className="ribbon-group">
-            <div className="group-label">Search</div>
-            <div className="group-controls search-controls">
-              <div className="search-input-group">
-                <input
-                  type="text"
-                  placeholder="Search notes..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                  className="ribbon-search-input"
-                />
-                <ActionButton variant="muted" size="xs" onClick={handleSearch} disabled={loading}>
-                  <MaterialIcon icon="search" size={16} />
-                </ActionButton>
-              </div>
-            </div>
-          </div>
-
-          {/* Filters Group */}
-          {/* <div className="ribbon-group">
-            <div className="group-label">Filter & Sort</div>
-            <div className="group-controls">
-              <NoteFilters
-                filters={filters}
-                onFiltersChange={handleFiltersChange}
-                onClearFilters={clearFilters}
-                resultCount={getFilteredNoteCount()}
-                compact={true}
-              />
-              <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="ribbon-select">
-                <option value="sort_by" className="sort-by-label">
-                  Sort By:
-                </option>
-                <option value="-created_at">Newest First</option>
-                <option value="created_at">Oldest First</option>
-                <option value="-updated_at">Recently Updated</option>
-                <option value="title">Title A-Z</option>
-                <option value="-title">Title Z-A</option>
-                <option value="category">Category</option>
-                <option value="-is_important,created_at">Important First</option>
-              </select>
-            </div>
-          </div> */}
-
-          {/* View Group */}
-          <div className="ribbon-group">
-            <div className="group-label">View</div>
-            <div className="group-controls">
-              <div className="view-mode-selector">
-                <ActionButton
-                  variant={viewMode === "grid" ? "primary" : "cold"}
-                  size="xs"
-                  onClick={() => setViewMode("grid")}
-                  title="Grid View"
-                  className="ribbon-icon-button">
-                  <MaterialIcon icon="grid_view" size={20} />
-                </ActionButton>
-                <ActionButton
-                  variant={viewMode === "columns" ? "primary" : "cold"}
-                  size="xs"
-                  onClick={() => setViewMode("columns")}
-                  title="Column View"
-                  className="ribbon-icon-button">
-                  <MaterialIcon icon="view_column" size={20} />
-                </ActionButton>
-              </div>
-              {viewMode === "columns" && (
-                <select
-                  value={groupBy}
-                  onChange={(e) => setGroupBy(e.target.value)}
-                  className="ribbon-select">
-                  <option value="none">No Grouping</option>
-                  <option value="project">Group by Project</option>
-                  <option value="category">Group by Category</option>
-                  <option value="priority">Group by Priority</option>
-                </select>
-              )}
-            </div>
-          </div>
+          {viewMode === "columns" && (
+            <select value={groupBy} onChange={(e) => setGroupBy(e.target.value)} className="header-select">
+              <option value="none">No Grouping</option>
+              <option value="project">Group by Project</option>
+              <option value="category">Group by Category</option>
+              <option value="priority">Group by Priority</option>
+            </select>
+          )}
         </div>
       </div>
 
@@ -457,11 +401,11 @@ export const NotesTab = ({
             <MaterialIcon icon="note_add" size={48} color="var(--muted)" />
             <h4>No notes found</h4>
             <p>
-              {searchQuery || Object.values(filters).some((f) => f && f !== project?.id)
-                ? "Try adjusting your search or filters"
-                : project
-                ? `Start taking notes for ${project.title}`
-                : "Create your first note to get started"}
+              {searchQuery || Object.values(filters).some((f) => f && f !== project?.id) ?
+                "Try adjusting your search or filters"
+              : project ?
+                `Start taking notes for ${project.title}`
+              : "Create your first note to get started"}
             </p>
             <ActionButton
               variant="primary"

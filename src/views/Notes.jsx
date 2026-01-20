@@ -19,55 +19,39 @@ export const Notes = () => {
   return (
     <div className="page-content page-enter">
       <div className="notes-page">
-        <div className="notes-page-header">
-          <div className="header-content">
-            <div className="header-main">
-              <ActionButton
-                variant="back"
-                onClick={() => navigate(ROUTES.DASHBOARD)}
-                title="Back to Dashboard">
-                <MaterialIcon icon="arrow_back" size={20} />
-              </ActionButton>
+        <div className="notes-page-header-unified">
+          <div className="unified-header-left">
+            <ActionButton variant="back" onClick={() => navigate(ROUTES.DASHBOARD)} title="Back to Dashboard">
+              <MaterialIcon icon="arrow_back" size={20} />
+            </ActionButton>
 
-              <div className="header-text">
-                <h1 className="page-title">All Notes</h1>
-                <p className="page-subtitle">View and manage notes across all your projects</p>
-              </div>
-            </div>
+            <h1 className="page-title-compact" title="View and manage notes across all your projects">
+              All Notes
+            </h1>
+          </div>
 
-            <div className="header-actions">
-              {/* ✅ Moved buttons up; they toggle parent state */}
-              <ActionButton
-                variant="cold"
-                size="sm"
-                onClick={() => setShowQuickNote((v) => !v)}
-                title="Quick Note">
-                <MaterialIcon icon="note_stack_add" size={24} />
-              </ActionButton>
-              <ActionButton
-                variant="cold"
-                size="sm"
-                onClick={() => setShowFilterSidebar((v) => !v)}
-                title="Filter & Sort">
-                <MaterialIcon icon="filter_alt" size={24} />
-              </ActionButton>
-              <ActionButton
-                variant="cold"
-                size="xs"
-                onClick={() => setShowStats((v) => !v)}
-                title="Toggle Statistics">
-                <MaterialIcon icon="bar_chart" size={24} />
-              </ActionButton>
-
-              {/* <ActionButton
-                variant="secondary"
-                size="md"
-                onClick={() => navigate(ROUTES.DASHBOARD)}
-                title="Back to Dashboard">
-                <MaterialIcon icon="dashboard" size={18} />
-                Dashboard
-              </ActionButton> */}
-            </div>
+          <div className="unified-header-right">
+            <ActionButton
+              variant="cold"
+              size="sm"
+              onClick={() => setShowQuickNote((v) => !v)}
+              title="Quick Note">
+              <MaterialIcon icon="note_stack_add" size={24} />
+            </ActionButton>
+            <ActionButton
+              variant="cold"
+              size="sm"
+              onClick={() => setShowFilterSidebar((v) => !v)}
+              title="Filter & Sort">
+              <MaterialIcon icon="filter_alt" size={24} />
+            </ActionButton>
+            <ActionButton
+              variant="cold"
+              size="xs"
+              onClick={() => setShowStats((v) => !v)}
+              title="Toggle Statistics">
+              <MaterialIcon icon="bar_chart" size={24} />
+            </ActionButton>
           </div>
         </div>
 
