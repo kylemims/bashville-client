@@ -99,6 +99,68 @@ button.all-tabs-select {
   transition: ease all 0.2s;
 }
 
+/* Mobile Dropdown Styles */
+.project-tabs-mobile {
+  display: none;
+  width: 100%;
+}
+
+.project-tabs-dropdown {
+  width: 100%;
+  padding: 12px 18px;
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary),
+    var(--bg-secondary),
+    var(--bg-primary),
+    var(--bg-secondary)
+  );
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23fee394' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+}
+
+.project-tabs-dropdown:hover {
+  background: linear-gradient(150deg, #d46a6a30, #46cba730);
+  border-color: var(--color-accent);
+}
+
+.project-tabs-dropdown:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.project-tabs-dropdown option {
+  background-color: var(--bg-secondary);
+  color: var(--text);
+  padding: 10px;
+}
+
+/* Responsive Breakpoint */
+@media (max-width: 768px) {
+  /* Hide desktop tabs, show mobile dropdown */
+  .project-tabs {
+    display: none;
+  }
+
+  .project-tabs-mobile {
+    display: block;
+  }
+
+  .project-tabs-container {
+    width: 100%;
+  }
+}
+
 /* .all-tabs-select:focus {
   outline: none;
   border-bottom: 2px solid var(--color-accent);

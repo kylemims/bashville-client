@@ -80,7 +80,7 @@ export const GenerateProjectModal = ({ project, isOpen, onClose }) => {
         </div>
 
         <div className="modal-content">
-          {!generationResult ? (
+          {!generationResult ?
             <div className="generation-start">
               <div className="project-summary">
                 <h3>{project?.title || "Untitled Project"}</h3>
@@ -110,17 +110,16 @@ export const GenerateProjectModal = ({ project, isOpen, onClose }) => {
 
               <div className="generation-actions">
                 <ActionButton variant="primary" size="lg" onClick={handleGenerate} disabled={isGenerating}>
-                  {isGenerating ? (
+                  {isGenerating ?
                     <>
                       <LoadingSpinner size="sm" />
                       Generating Project...
                     </>
-                  ) : (
-                    <>
+                  : <>
                       <MaterialIcon icon="auto_fix_high" size={20} />
                       Generate Complete Project
                     </>
-                  )}
+                  }
                 </ActionButton>
 
                 <p className="generation-note">
@@ -128,8 +127,7 @@ export const GenerateProjectModal = ({ project, isOpen, onClose }) => {
                 </p>
               </div>
             </div>
-          ) : (
-            <div className="generation-result">
+          : <div className="generation-result">
               <div className="result-header">
                 <h3>
                   <MaterialIcon icon="check_circle" size={20} color="var(--color-accent)" />
@@ -154,7 +152,7 @@ export const GenerateProjectModal = ({ project, isOpen, onClose }) => {
               </div>
 
               <div className="tab-content">
-                {activeTab === "files" ? (
+                {activeTab === "files" ?
                   <div className="file-explorer">
                     <div className="file-tree-panel">
                       <FileTree
@@ -165,30 +163,28 @@ export const GenerateProjectModal = ({ project, isOpen, onClose }) => {
                     </div>
 
                     <div className="file-preview-panel">
-                      {selectedFile ? (
+                      {selectedFile ?
                         <FilePreview
                           filename={selectedFile}
                           content={getSelectedFileContent()?.content || ""}
                         />
-                      ) : (
-                        <div className="no-file-selected">
+                      : <div className="no-file-selected">
                           <MaterialIcon icon="description" size={48} color="var(--muted)" />
                           <p>Select a file to preview its content</p>
                         </div>
-                      )}
+                      }
                     </div>
                   </div>
-                ) : (
-                  <ProjectDownloader
+                : <ProjectDownloader
                     project={project}
                     files={generationResult.files || []}
                     setupInstructions={generationResult.setup_instructions || { message: "", steps: [] }}
                     onDownloadComplete={handleDownloadComplete}
                   />
-                )}
+                }
               </div>
             </div>
-          )}
+          }
         </div>
       </div>
     </div>

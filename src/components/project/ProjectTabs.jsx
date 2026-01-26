@@ -10,8 +10,25 @@ export const ProjectTabs = ({ activeTab, onTabChange, onAddNew }) => {
     { key: "backend", label: "Backend", icon: "database" },
   ];
 
+  const activeTabData = tabs.find((tab) => tab.key === activeTab);
+
   return (
     <div className="project-tabs-container">
+      {/* Mobile Dropdown - shown on screens <= 768px */}
+      <div className="project-tabs-mobile">
+        <select
+          className="project-tabs-dropdown"
+          value={activeTab}
+          onChange={(e) => onTabChange(e.target.value)}>
+          {tabs.map((tab) => (
+            <option key={tab.key} value={tab.key}>
+              {tab.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {/* Desktop Tabs - shown on screens > 768px */}
       <div className="project-tabs">
         {tabs.map((tab) => (
           <button

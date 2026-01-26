@@ -290,18 +290,18 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject, 
             <div className="note-modal-content" onClick={(e) => e.stopPropagation()}>
               <div className="note-modal-header">
                 <div className="note-modal-title-section">
-                  <input
+                  {/* <input
                     type="text"
                     value={note.title}
                     onChange={(e) =>
                       handleNoteUpdate({
                         title: e.target.value,
-                        blocks: note.blocks, // Include blocks for Django validation
+                        blocks: note.blocks, 
                       })
                     }
                     className="note-modal-title-input"
                     placeholder="Note title..."
-                  />
+                  /> */}
                   <div className="note-modal-meta-compact">
                     <div
                       className="note-category"
@@ -556,18 +556,6 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject, 
               {/* Modal footer */}
               <div className="note-modal-footer">
                 <div className="note-meta">
-                  <div>
-                    <span className="note-category">{note.category_display}</span>
-                    <div
-                      className="note-priority"
-                      style={{
-                        backgroundColor: priorityDisplay.color,
-                        color: "var(--bg-primary)",
-                      }}>
-                      <MaterialIcon icon={priorityDisplay.icon} size={10} />
-                      <span>{priorityDisplay.label}</span>
-                    </div>
-                  </div>
                   <span className="note-date">Updated {new Date(note.updated_at).toLocaleDateString()}</span>
                 </div>
               </div>

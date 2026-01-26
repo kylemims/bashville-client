@@ -13,7 +13,7 @@ import { ActionButton } from "../components/common/ActionButton";
 import { ProjectHeader } from "../components/project/ProjectHeader";
 import { ProjectTabs } from "../components/project/ProjectTabs";
 import { BackendTab } from "../components/tabs/BackendTab.jsx";
-import { GenerateProjectModal } from "../components/project/GenerateProjectModal.jsx";
+import { ProjectLaunchModal } from "../components/project/ProjectLaunchModal.jsx";
 import { MaterialIcon } from "../components/common/MaterialIcon.jsx";
 import "./ProjectDetail.css";
 import { ROUTES } from "../utils/constants";
@@ -163,7 +163,7 @@ export const ProjectDetail = () => {
         />
       </div>
       <div className="tab-content">
-        {state.activeTab === "commands" ? (
+        {state.activeTab === "commands" ?
           <CommandsTab
             {...tabProps}
             availableCommands={state.availableCommands}
@@ -171,7 +171,7 @@ export const ProjectDetail = () => {
             showNewCommandForm={showNewCommandForm}
             onNewCommandFormChange={setShowNewCommandForm}
           />
-        ) : state.activeTab === "colors" ? (
+        : state.activeTab === "colors" ?
           <ColorsTab
             {...tabProps}
             availablePalettes={state.availablePalettes}
@@ -179,7 +179,7 @@ export const ProjectDetail = () => {
             showNewPaletteForm={showNewPaletteForm}
             onNewPaletteFormChange={setShowNewPaletteForm}
           />
-        ) : state.activeTab === "notes" ? (
+        : state.activeTab === "notes" ?
           <NotesTab
             project={state.project}
             showQuickNote={showQuickNote}
@@ -192,12 +192,10 @@ export const ProjectDetail = () => {
               setShowQuickNote(false);
             }}
           />
-        ) : (
-          <BackendTab project={state.project} />
-        )}
+        : <BackendTab project={state.project} />}
 
         {showSetupGenerator && (
-          <GenerateProjectModal
+          <ProjectLaunchModal
             project={state.project}
             isOpen={showSetupGenerator}
             onClose={() => setShowSetupGenerator(false)}

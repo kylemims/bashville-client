@@ -435,7 +435,7 @@
   z-index: 1100;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow-y: clip;
   overflow-x: hidden;
 }
 
@@ -450,13 +450,15 @@
   border-radius: 12px;
   width: 100%;
   max-width: 800px;
-  min-height: fit-content;
+  /* min-height: fit-content; */
   max-height: 90vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
   margin: auto;
+  margin-top: 50px;
+  padding: 10px;
 }
 
 .note-modal-content .note-priority,
@@ -540,6 +542,7 @@
     max-height: 95vh;
     margin: auto;
     border-radius: 8px;
+    margin-top: 50px;
   }
 
   .note-modal-header {

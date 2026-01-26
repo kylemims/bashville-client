@@ -7,7 +7,7 @@ import { LoadingSpinner } from "../components/common/LoadingSpinner";
 import { ErrorMessage } from "../components/common/ErrorMessage";
 import { ProjectCard } from "../components/project/ProjectCard";
 import { EmptyState } from "../components/project/EmptyState";
-import { SetupGenerator } from "../components/project/SetupGenerator";
+import { ProjectLaunchModal } from "../components/project/ProjectLaunchModal";
 import "./Dashboard.css";
 
 export const Dashboard = () => {
@@ -123,18 +123,16 @@ export const Dashboard = () => {
 
       <ErrorMessage message={error} onDismiss={() => setError(null)} />
 
-      {filteredProjects.length === 0 ? (
-        projects.length === 0 ? (
+      {filteredProjects.length === 0 ?
+        projects.length === 0 ?
           <EmptyState />
-        ) : (
-          <div className="project-dashboard-section">
+        : <div className="project-dashboard-section">
             <div className="project-dashboard-stats">
               <span className="stats-text">No projects match the selected filter</span>
             </div>
           </div>
-        )
-      ) : (
-        <div className="project-dashboard-section">
+
+      : <div className="project-dashboard-section">
           <div className="project-dashboard-stats">
             <span className="stats-text">
               {filterType !== "all" && ` (${projectTypes.find((t) => t.value === filterType)?.label})`}
@@ -153,10 +151,14 @@ export const Dashboard = () => {
             ))}
           </div>
         </div>
-      )}
+      }
 
       {showSetupGenerator && selectedProject && (
-        <SetupGenerator project={selectedProject} onClose={handleCloseSetupGenerator} />
+        <ProjectLaunchModal
+          project={selectedProject}
+          isOpen={showSetupGenerator}
+          onClose={handleCloseSetupGenerator}
+        />
       )}
     </div>
   );

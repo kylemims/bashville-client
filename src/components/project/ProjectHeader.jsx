@@ -60,7 +60,7 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
       <div className="header-main-row">
         <div className="project-title-section">
           <ActionButton variant="accent" onClick={onBack} title="Back to Dashboard">
-            <MaterialIcon icon="arrow_back_2" size={22} />
+            <MaterialIcon icon="arrow_back" size={22} />
           </ActionButton>
           <ActionButton
             onClick={onGenerateSetup}
@@ -71,7 +71,7 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
             <MaterialIcon icon="rocket_launch" size={22} />
           </ActionButton>
           {/* <div className="project-actions"> */}
-          {isEditing ? (
+          {isEditing ?
             <div className="project-title-edit">
               <input
                 type="text"
@@ -92,11 +92,9 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
                   size="sm"
                   disabled={isUpdating || !editTitle.trim()}
                   title="Save (Enter)">
-                  {isUpdating ? (
+                  {isUpdating ?
                     <MaterialIcon icon="hourglass_empty" size={22} />
-                  ) : (
-                    <MaterialIcon icon="check" size={22} />
-                  )}
+                  : <MaterialIcon icon="check" size={22} />}
                 </ActionButton>
                 <ActionButton
                   onClick={handleEditCancel}
@@ -109,8 +107,7 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
               </div>
               {error && <span className="title-edit-error">{error}</span>}
             </div>
-          ) : (
-            <ActionButton
+          : <ActionButton
               onClick={handleEditStart}
               variant="accent"
               size="sm"
@@ -120,7 +117,7 @@ export const ProjectHeader = ({ title, onBack, onGenerateSetup, onProjectDelete,
               className="title-header-edit">
               <MaterialIcon icon="person_edit" size={22} />
             </ActionButton>
-          )}
+          }
 
           <ActionButton
             onClick={onProjectDelete}

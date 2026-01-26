@@ -1,0 +1,462 @@
+/* ProjectLaunchModal.css */
+
+.project-launch-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 40px; /* Position below navbar */
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+  overflow: hidden; /* Lock page scroll */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.project-launch-modal {
+  background: var(--bg-primary);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  width: calc(100vw - 100px); /* Account for navbar space */
+  max-width: 1400px;
+  height: 90vh;
+  max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.3s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project-launch-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.5rem 2rem;
+  border-bottom: 2px solid var(--border);
+  background: var(--bg-secondary);
+  border-radius: 14px 14px 0 0;
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.project-launch-modal .header-content {
+  flex: 1;
+}
+
+.project-launch-modal .modal-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.project-launch-modal .project-description {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.project-launch-modal .modal-tabs {
+  display: flex;
+  background: var(--bg-secondary);
+  border-bottom: 2px solid var(--border);
+  padding: 0;
+  flex-shrink: 0; /* Prevent tabs from shrinking */
+  gap: 0;
+}
+
+.project-launch-modal .modal-tabs .tab {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--muted);
+  transition: all 0.2s ease;
+  border-radius: 0;
+  margin: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-bottom: 3px solid transparent;
+}
+
+.project-launch-modal .modal-tabs .tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.project-launch-modal .modal-tabs .tab.active {
+  background: var(--bg-primary);
+  color: var(--color-primary);
+  border-bottom: 3px solid var(--color-primary);
+}
+
+.project-launch-modal .modal-content {
+  flex: 1;
+  overflow: auto; /* Make content scrollable */
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-primary);
+  min-height: 0; /* Allow flex child to shrink below content size */
+}
+
+/* Bash Script Tab */
+.script-preview-container {
+  flex: 1;
+  overflow: auto;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.script-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.script-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.script-info p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.script-info code {
+  background: var(--color-accent);
+  color: var(--bg-primary);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.script-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.action-feedback {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.action-feedback.success {
+  background: rgba(70, 203, 167, 0.15);
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.script-content,
+.readme-content {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  overflow: auto;
+  font-family: "Monaco", "Menlo", "Courier New", monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text);
+  max-height: 400px;
+  min-height: 300px;
+}
+
+.script-content code,
+.readme-content code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.readme-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.readme-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.readme-header h3 {
+  margin: 0;
+  color: var(--color-secondary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.readme-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Files Tab */
+.generate-prompt {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.prompt-content {
+  text-align: center;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.prompt-content h3 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.prompt-content > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.project-summary {
+  width: 100%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-label {
+  font-weight: 500;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.summary-value {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.generation-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.file-explorer {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100%;
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+}
+
+.file-tree-panel {
+  border-right: 2px solid var(--border);
+  overflow: auto;
+  background: var(--bg-secondary);
+}
+
+.file-preview-panel {
+  overflow: auto;
+  background: var(--bg-primary);
+}
+
+.no-file-selected {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: var(--muted);
+  padding: 2rem;
+}
+
+.no-file-selected p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* Download Tab */
+.download-unavailable {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.download-unavailable h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.download-unavailable p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 400px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .project-launch-overlay {
+    padding-top: 60px;
+  }
+
+  .project-launch-modal {
+    width: 98vw;
+    height: calc(100vh - 80px);
+  }
+
+  .file-explorer {
+    grid-template-columns: 250px 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .project-launch-overlay {
+    padding-top: 0;
+  }
+
+  .project-launch-modal {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    max-height: none;
+  }
+
+  .project-launch-modal .modal-header {
+    border-radius: 0;
+    padding: 1rem;
+  }
+
+  .project-launch-modal .modal-header h2 {
+    font-size: 1.25rem;
+  }
+
+  .script-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .script-actions,
+  .readme-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .script-actions .action-button,
+  .readme-actions .action-button {
+    flex: 1;
+  }
+
+  .file-explorer {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .file-tree-panel {
+    border-right: none;
+    border-bottom: 2px solid var(--border);
+    max-height: 200px;
+  }
+
+  .script-preview-container {
+    padding: 1rem;
+  }
+}
