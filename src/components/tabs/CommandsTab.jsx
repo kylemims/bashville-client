@@ -17,7 +17,7 @@ export const CommandsTab = ({
 }) => {
   console.log(
     "  - availableCommands types:",
-    availableCommands?.map((cmd) => ({ id: cmd.id, type: typeof cmd.id }))
+    availableCommands?.map((cmd) => ({ id: cmd.id, type: typeof cmd.id })),
   );
 
   const [selectedCommands, setSelectedCommands] = useState(project.commands_preview?.map((c) => c.id) || []);
@@ -30,8 +30,9 @@ export const CommandsTab = ({
   const handleToggleCommand = async (commandId) => {
     const numericCommandId = typeof commandId === "string" ? parseInt(commandId) : commandId;
 
-    const newSelected = selectedCommands.includes(numericCommandId)
-      ? selectedCommands.filter((id) => id !== numericCommandId)
+    const newSelected =
+      selectedCommands.includes(numericCommandId) ?
+        selectedCommands.filter((id) => id !== numericCommandId)
       : [...selectedCommands, numericCommandId];
 
     setSelectedCommands(newSelected);
@@ -101,7 +102,7 @@ export const CommandsTab = ({
   const handleDeleteFromStash = async (commandId) => {
     if (
       !window.confirm(
-        "Are you sure you want to permanently delete this command from your stash? This cannot be undone."
+        "Are you sure you want to permanently delete this command from your stash? This cannot be undone.",
       )
     )
       return;
@@ -143,7 +144,7 @@ export const CommandsTab = ({
           />
         )}
         <div className="command-list">
-          {projectCommands.length > 0 ? (
+          {projectCommands.length > 0 ?
             projectCommands.map((command) => (
               <CommandItem
                 key={command.id}
@@ -156,15 +157,14 @@ export const CommandsTab = ({
                 disabled={loading}
               />
             ))
-          ) : (
-            <p className="empty-message">No commands in this project yet.</p>
-          )}
+          : <p className="empty-message">No commands in this project yet.</p>}
         </div>
       </div>
 
       <div className="section-stash">
         <div className="command-header-row">
           <h3 className="command-section-title">Command Stash</h3>
+          <div className="command-gradient-line"></div>
           <ActionButton
             variant="add-field"
             size="xs"
@@ -175,13 +175,12 @@ export const CommandsTab = ({
 
             <span className="add-new-command-text">Add New</span>
           </ActionButton>
-          <div className="command-gradient-line"></div>
         </div>
         <div className="available-commands-grid">
-          {availableCommands.length > 0 ? (
+          {availableCommands.length > 0 ?
             availableCommands.map((command) => (
               <div key={command.id} className="available-command-wrapper">
-                {editingCommand === command.id ? (
+                {editingCommand === command.id ?
                   // ✅ Show CommandItem in edit mode
                   <CommandItem
                     command={command}
@@ -192,8 +191,7 @@ export const CommandsTab = ({
                     onDelete={() => handleDeleteFromStash(command.id)}
                     disabled={loading}
                   />
-                ) : (
-                  <div
+                : <div
                     className={`command-card-available ${
                       selectedCommands.includes(command.id) ? "selected" : ""
                     }`}
@@ -225,16 +223,16 @@ export const CommandsTab = ({
                         }}
                         disabled={loading}
                         aria-label={`Delete ${command.label}`}>
-                        <span className="material-symbols-outlined available-delete text-lg">delete</span>{" "}
+                        <span className="material-symbols-outlined available-delete text-lg">
+                          delete
+                        </span>{" "}
                       </ActionButton>
                     </div>
                   </div>
-                )}
+                }
               </div>
             ))
-          ) : (
-            <p className="empty-message">No commands available. Create your first command above!</p>
-          )}
+          : <p className="empty-message">No commands available. Create your first command above!</p>}
         </div>
       </div>
     </div>
