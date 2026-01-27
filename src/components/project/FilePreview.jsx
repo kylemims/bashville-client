@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { MaterialIcon } from "../common/MaterialIcon.jsx";
-import { ActionButton } from "../common/ActionButton.jsx";
+// import { ActionButton } from "../common/ActionButton.jsx";
 import { copyToClipboard } from "../../utils/copyToClipboard.js";
 import "./FilePreview.css";
 
@@ -36,28 +36,28 @@ export const FilePreview = ({ filename, content, onCopy }) => {
     }
   };
 
-  const getFileIcon = (filename) => {
-    const ext = filename.split(".").pop().toLowerCase();
-    switch (ext) {
-      case "jsx":
-      case "js":
-        return "code";
-      case "css":
-        return "palette";
-      case "json":
-        return "data_object";
-      case "html":
-        return "html";
-      case "md":
-        return "description";
-      case "sh":
-        return "terminal";
-      case "py":
-        return "code";
-      default:
-        return "description";
-    }
-  };
+  // const getFileIcon = (filename) => {
+  //   const ext = filename.split(".").pop().toLowerCase();
+  //   switch (ext) {
+  //     case "jsx":
+  //     case "js":
+  //       return "code";
+  //     case "css":
+  //       return "palette";
+  //     case "json":
+  //       return "data_object";
+  //     case "html":
+  //       return "html";
+  //     case "md":
+  //       return "description";
+  //     case "sh":
+  //       return "terminal";
+  //     case "py":
+  //       return "code";
+  //     default:
+  //       return "description";
+  //   }
+  // };
 
   const handleCopy = async () => {
     try {
@@ -106,12 +106,12 @@ export const FilePreview = ({ filename, content, onCopy }) => {
     <div className="file-preview">
       <div className="file-preview-header">
         <div className="file-info">
-          <MaterialIcon
+          {/* <MaterialIcon
             icon={getFileIcon(filename)}
             size={20}
             color="var(--color-primary)"
             className="file-icon"
-          />
+          /> */}
           <div className="file-details">
             <span className="file-name">{filename}</span>
             <div className="file-meta">
@@ -125,27 +125,26 @@ export const FilePreview = ({ filename, content, onCopy }) => {
               )}
             </div>
           </div>
-        </div>
 
-        <div className="file-actions">
-          {copyFeedback && (
-            <span className={`copy-feedback ${copyFeedback === "Copied!" ? "success" : "error"}`}>
-              {copyFeedback}
-            </span>
-          )}
-          <ActionButton
-            variant="secondary"
-            size="sm"
-            onClick={handleCopy}
-            title="Copy file content to clipboard">
-            <MaterialIcon icon="content_copy" size={16} />
-            Copy
-          </ActionButton>
+          <div className="file-actions">
+            {copyFeedback && (
+              <span className={`copy-feedback ${copyFeedback === "Copied!" ? "success" : "error"}`}>
+                {copyFeedback}
+              </span>
+            )}
+            {/* <ActionButton
+              variant="muted"
+              size="xs"
+              onClick={handleCopy}
+              title="Copy file content to clipboard"> */}
+            <MaterialIcon className="copy-icon-btn" icon="content_copy" size={16} onClick={handleCopy} />
+            {/* </ActionButton> */}
+          </div>
         </div>
       </div>
 
       <div className="file-content">
-        {processedContent ? (
+        {processedContent ?
           <SyntaxHighlighter
             language={hasTemplateError ? "text" : language}
             style={tomorrow}
@@ -171,12 +170,11 @@ export const FilePreview = ({ filename, content, onCopy }) => {
             }}>
             {processedContent}
           </SyntaxHighlighter>
-        ) : (
-          <div className="empty-content">
+        : <div className="empty-content">
             <MaterialIcon icon="description" size={48} color="var(--muted)" />
             <p>No content to display</p>
           </div>
-        )}
+        }
       </div>
     </div>
   );
