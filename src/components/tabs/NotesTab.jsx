@@ -323,7 +323,12 @@ export const NotesTab = ({
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               className="header-search-input"
             />
-            <ActionButton variant="muted" size="xs" onClick={handleSearch} disabled={loading}>
+            <ActionButton
+              className="note-search-input-button"
+              variant="muted"
+              size="xs"
+              onClick={handleSearch}
+              disabled={loading}>
               <MaterialIcon icon="search" size={16} />
             </ActionButton>
           </div>

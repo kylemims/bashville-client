@@ -200,6 +200,7 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject, 
                 <span>{priorityDisplay.label}</span>
               </div>
             </div>
+            <span className="note-date">{new Date(note.created_at).toLocaleDateString()}</span>
             <span className="block-count">
               {blocks.length} blocks
               <MaterialIcon icon="expand_more" size={20} />
@@ -225,7 +226,6 @@ export function BlockBasedNoteCard({ note, onUpdate, onDelete, navigateProject, 
               </div>
             )}
           </div>
-          <span className="note-date">{new Date(note.created_at).toLocaleDateString()}</span>
         </div>
         <div className="note-preview-actions">
           <div className="quick-actions">

@@ -2,7 +2,8 @@
   background-color: #0c080650;
   backdrop-filter: blur(8px);
   border-color: #222;
-  padding: 1rem 0rem;
+  padding-top: 14px;
+  padding-bottom: 10px;
   /* margin-bottom: 2rem; */
   position: fixed;
   top: 0;

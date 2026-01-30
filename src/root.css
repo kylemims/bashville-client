@@ -185,7 +185,8 @@ a {
 }
 
 .page-content {
-  padding: 3rem 0;
+  padding-top: 2rem;
+  padding-bottom: 0px;
   overflow: auto;
 }
 

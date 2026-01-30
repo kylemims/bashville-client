@@ -16,11 +16,11 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 200px;
+  height: 220px;
   position: relative;
   margin: 0;
   /* padding: 0.5rem 0.5rem; */
-  min-width: 300px;
+  width: 360px;
   justify-content: space-between;
 }
 
@@ -262,6 +262,11 @@
   background-color: var(--bg-input);
   width: 100%;
   padding: 5px 5px;
+  height: 40px;
+}
+
+.note-date {
+  font-size: 12px;
 }
 
 .note-title-category-priority-group {
@@ -631,4 +636,7 @@
   align-items: center;
   gap: 8px;
   justify-content: flex-end;
+  padding-bottom: 8px;
+  padding-right: 4px;
+  padding-left: 4px;
 }

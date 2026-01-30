@@ -12,14 +12,19 @@
 
 /* ===== NOTES PAGE HEADER - UNIFIED SINGLE ROW ===== */
 .notes-page-header-unified {
+  position: fixed;
+  top: 40px; /* Adjust based on your navbar height */
+  left: 0;
+  right: 0;
   background: var(--bg-secondary);
   border-bottom: 1px solid var(--bg-input);
-  padding: 10px 24px;
+  padding: 4px 24px;
   margin-bottom: 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  z-index: 100;
 }
 
 .unified-header-left {
@@ -61,14 +66,10 @@
 /* ===== NOTES PAGE CONTENT ===== */
 .notes-page-content {
   flex: 1; /* Take remaining space */
-  /* max-width: 1600px; */
-  /* margin: 0 auto; */
-  /* padding: 0 24px 24px 24px; */
-  overflow-y: auto; /* Allow content scrolling */
-  /* height: 100%; */
-
-  /* top: 80px; */
-  height: 80dvh;
+  margin-top: 120px; /* Space for fixed headers (navbar + page-header + compact-header) */
+  overflow-x: auto; /* Allow horizontal scrolling */
+  overflow-y: hidden; /* Prevent vertical page scrolling */
+  height: calc(100vh - 120px); /* Full height minus fixed headers */
 }
 
 .notes-page-content .notes-tab {
@@ -85,6 +86,7 @@
   .notes-page-header-unified {
     padding: 10px 16px;
     flex-wrap: wrap;
+    top: 50px; /* Adjust for smaller navbar on mobile */
   }
 
   .unified-header-left,
@@ -100,13 +102,10 @@
     font-size: 20px;
   }
 
-  /* .notes-page-content {
-    padding: 0 1rem;
+  .notes-page-content {
+    margin-top: 140px; /* Adjust for wrapped headers on mobile */
+    height: calc(100vh - 140px);
   }
-
-  .notes-page-content .notes-tab {
-    padding: 20px 0;
-  } */
 }
 
 @media (max-width: 480px) {
